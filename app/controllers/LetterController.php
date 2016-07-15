@@ -8,6 +8,7 @@ use app\models\LetterSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\web\UploadedFile;
 
 /**
  * LetterController implements the CRUD actions for Letter model.
@@ -27,6 +28,42 @@ class LetterController extends Controller
                 ],
             ],
         ];
+    }
+
+	public function actionAjaxFileUpload()
+	{
+		if(!Yii::$app->request->isAjax)
+			die('kein Ajax');
+
+		$file = UploadedFile::getInstanceByName('letterFile');
+
+		$folder = $this->getUniqueId() . $this->getUniqueId();
+		$inFile = 'data/'.$folder.'/in'.$file->extension;
+
+		if($file->saveAs($inFile,true)){
+			$im = new Imagick();
+
+			$im->setResolution(300,300);
+			if( strcmp( strtolower($file->extension), 'pdf') == 0 ){
+				$im->readimage($inFile.'[0]');
+			} else {
+				$im->readimage($inFile);
+			}
+
+			$im->setImageFormat('jpeg');
+			$im->writeImage('data/'.$folder.'/thumb.jpg');
+			$im->clear();
+			$im->destroy();
+
+
+		}
+
+
+		$letter = new Letter();
+		$letter->folder = $folder;
+		$letter->save();
+
+
     }
 
     /**

@@ -13,15 +13,15 @@ use yii\widgets\ActiveForm;
     <?php $form = ActiveForm::begin(); ?>
 
     <?= \kartik\file\FileInput::widget([
-        'name' => 'files[]',
+        'name' => 'letterFile',
         'language' => 'de',
         'options' => ['multiple' => true],
-        'pluginOptions' => ['previewFileType' => 'any', 'uploadUrl' => \yii\helpers\Url::to(['/site/file-upload'])]
+        'pluginOptions' => ['previewFileType' => 'any', 'uploadUrl' => \yii\helpers\Url::to(['/letter/ajax-file-upload'])]
     ]); ?>
 
-    <div class="form-group">
-        <?= Html::submitButton($model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
-    </div>
+<!--    <div class="form-group">-->
+<!--        --><?//= Html::submitButton($model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+<!--    </div>-->
 
     <?php ActiveForm::end(); ?>
 
