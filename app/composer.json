@@ -13,7 +13,13 @@
     "yiisoft/yii2": "2.0.9",
     "yiisoft/yii2-composer": "2.0.4",
     "yiisoft/yii2-debug": "2.0.6",
-    "yiisoft/yii2-gii": "2.1.x-dev",
+    "yiisoft/yii2-gii": "2.0.5",
     "kartik-v/yii2-widget-fileinput": "v1.0.5"
+  },
+  "extra": {
+    "asset-installer-paths": {
+      "npm-asset-library": "vendor/npm",
+      "bower-asset-library": "vendor/bower"
+    }
   }
 }
