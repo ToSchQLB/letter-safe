@@ -42,9 +42,9 @@ class QueueController extends Controller
         $jobs = Queue::find()->all();
         echo chr(10).chr(13). exec('whoami').chr(10).chr(13);
         foreach ($jobs as $job) {
-            echo $job->id.': '.$job->job;
+            echo $job->id.': '.$job->job.chr(10).chr(13);
 
-            echo exec($job->job);
+            echo exec($job->job).chr(10).chr(13);
 
             $job->delete();
         }

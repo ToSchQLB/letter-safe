@@ -39,28 +39,21 @@ class LetterController extends Controller
 		$file = UploadedFile::getInstanceByName('letterFile');
 
 		$folder = uniqid();
-        $tmp = Yii::$app->basePath . '/web/data/'.$folder;
-        mkdir( Yii::$app->basePath . '/web/data/'.$folder);
-        chmod( Yii::$app->basePath . '/web/data/'.$folder , 0700);
-		$inFile = Yii::$app->basePath . '/web/data/'.$folder.'/in.'.$file->extension;
+        $folder_absolute = Yii::$app->basePath . '/web/data/'.$folder;
+        mkdir( $folder_absolute);
+        chmod( $folder_absolute, 0700);
+		$inFile = $folder_absolute.'/in.'.$file->extension;
 
 		if($file->saveAs($inFile,true)){
             chmod( $inFile, 0600);
-		    $job = "convert ".$inFile.' '. Yii::$app->basePath . '/web/data/'.$folder.'/thumb.jpeg';
 
-            $queue = new Queue();
-            $queue->job =$job;
-            $queue->save();
+            Queue::createNewJob("convert -thumbnail x300 -background white -alpha remove ".$inFile."[0] ".$folder_absolute."/thumb.jpeg");
+//            Queue::createNewJob("convert ".$inFile.' '. $folder_absolute.'/page.jpeg');
+            Queue::createNewJob("pdftohtml -xml ".$inFile." ".$folder_absolute."/data");
+            Queue::createNewJob("pdftoppm -png ".$inFile." ".$folder_absolute."/seite");
 
-            $job = "pdftohtml -xml ".$inFile." ".Yii::$app->basePath."/web/data/".$folder."/data";
-
-            $queue = new Queue();
-            $queue->job =$job;
-            $queue->save();
-
-            echo exec('php '.Yii::$app->basePath.'/yii queue/execute > /dev/null 2>&1 &');
+            //echo exec('php '.Yii::$app->basePath.'/yii queue/execute > /dev/null 2>&1 &');
 		}
-
 
 		$letter = new Letter();
 		$letter->folder = $folder;

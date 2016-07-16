@@ -19,9 +19,6 @@ use yii\widgets\ActiveForm;
         'pluginOptions' => ['previewFileType' => 'any', 'uploadUrl' => \yii\helpers\Url::to(['/letter/ajax-file-upload'])]
     ]); ?>
 
-<!--    <div class="form-group">-->
-<!--        --><?//= Html::submitButton($model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
-<!--    </div>-->
 
     <?php ActiveForm::end(); ?>
 
