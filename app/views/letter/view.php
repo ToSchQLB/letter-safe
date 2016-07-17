@@ -10,33 +10,6 @@ $this->title = $model->title;
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Letters'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="letter-view">
-
-    <h1><?= Html::encode($this->title) ?></h1>
-
-    <p>
-        <?= Html::a(Yii::t('app', 'Update'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a(Yii::t('app', 'Delete'), ['delete', 'id' => $model->id], [
-            'class' => 'btn btn-danger',
-            'data' => [
-                'confirm' => Yii::t('app', 'Are you sure you want to delete this item?'),
-                'method' => 'post',
-            ],
-        ]) ?>
-    </p>
-
-    <?= DetailView::widget([
-        'model' => $model,
-        'attributes' => [
-            'id',
-            'sender_id',
-            'title',
-            'message:ntext',
-            'folder',
-        ],
-    ]) ?>
-
-</div>
 <div class="col-lg-8">
     <?php
         $folder_relative = 'data/'.$model->folder;
@@ -45,12 +18,6 @@ $this->params['breadcrumbs'][] = $this->title;
         $doc = new DOMDocument();
         $doc->loadXML($xml);
 
-
-//        $xml = str_replace(array("\n", "\r", "\t"), '', $xml);    // removes newlines, returns and tabs
-//        // replace double quotes with single quotes, to ensure the simple XML function can parse the XML
-//        $xml = trim(str_replace('"', "'", $xml));
-//        $simpleXml = simplexml_load_string($xml);
-//        $data = json_encode($simpleXml);
         $page_count = $doc->getElementsByTagName('page')->length;
         for($p=1; $p<= $page_count; $p++){
             $pageDom = $doc->getElementsByTagName('page')->item($p-1);
@@ -84,4 +51,34 @@ $this->params['breadcrumbs'][] = $this->title;
 <!--        <div class="col-md-2"></div>-->
 <!--    </div>-->
 
+</div>
+<div class="col-lg-4">
+    <div class="panel panel-info">
+    	  <div class="panel-heading">
+    			<h3 class="panel-title"><?= Html::encode($this->title) ?></h3>
+    	  </div>
+    	  <div class="panel-body">
+              <p>
+                  <?= Html::a(Yii::t('app', 'Update'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
+                  <?= Html::a(Yii::t('app', 'Delete'), ['delete', 'id' => $model->id], [
+                      'class' => 'btn btn-danger',
+                      'data' => [
+                          'confirm' => Yii::t('app', 'Are you sure you want to delete this item?'),
+                          'method' => 'post',
+                      ],
+                  ]) ?>
+              </p>
+
+              <?= DetailView::widget([
+                  'model' => $model,
+                  'attributes' => [
+                      'id',
+                      'sender_id',
+                      'title',
+                      'message:ntext',
+                      'folder',
+                  ],
+              ]) ?>
+    	  </div>
+    </div>
 </div>
