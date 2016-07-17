@@ -4,9 +4,9 @@ use yii\helpers\Html;
 
 
 /* @var $this yii\web\View */
-/* @var $model app\models\Letter */
+/* @var $model app\models\Document */
 
-$this->title = Yii::t('app', 'Create Letter');
+$this->title = Yii::t('app', 'Add Document');
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Letters'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>

@@ -4,10 +4,10 @@ use yii\helpers\Html;
 use yii\grid\GridView;
 
 /* @var $this yii\web\View */
-/* @var $searchModel app\models\LetterSearch */
+/* @var $searchModel app\models\DocumentSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = Yii::t('app', 'Letters');
+$this->title = Yii::t('app', 'Documents');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="letter-index">
@@ -24,11 +24,16 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'id',
-            'sender_id',
+            //'id',
+            [
+                'label' => '',
+                'format'=>'raw',
+                'value' => function($data){ return Html::a(Html::img("./data/{$data->folder}/thumb.jpeg"),["document/view","id"=>$data->id]); }
+            ],
+            //'sender_id',
             'title',
-            'message:ntext',
-            'folder',
+            //'message:ntext',
+            //'folder',
 
             ['class' => 'yii\grid\ActionColumn'],
         ],

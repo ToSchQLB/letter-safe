@@ -4,8 +4,8 @@ namespace app\controllers;
 
 use app\models\Queue;
 use Yii;
-use app\models\Letter;
-use app\models\LetterSearch;
+use app\models\Document;
+use app\models\DocumentSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -14,7 +14,7 @@ use yii\web\UploadedFile;
 /**
  * LetterController implements the CRUD actions for Letter model.
  */
-class LetterController extends Controller
+class DocumentController extends Controller
 {
     /**
      * @inheritdoc
@@ -55,7 +55,7 @@ class LetterController extends Controller
             //echo exec('php '.Yii::$app->basePath.'/yii queue/execute > /dev/null 2>&1 &');
 		}
 
-		$letter = new Letter();
+		$letter = new Document();
 		$letter->folder = $folder;
 		$letter->save();
 
@@ -68,7 +68,7 @@ class LetterController extends Controller
      */
     public function actionIndex()
     {
-        $searchModel = new LetterSearch();
+        $searchModel = new DocumentSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -96,7 +96,7 @@ class LetterController extends Controller
      */
     public function actionCreate()
     {
-        $model = new Letter();
+        $model = new Document();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
@@ -143,12 +143,12 @@ class LetterController extends Controller
      * Finds the Letter model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return Letter the loaded model
+     * @return Document the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Letter::findOne($id)) !== null) {
+        if (($model = Document::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');

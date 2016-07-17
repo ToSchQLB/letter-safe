@@ -15,14 +15,14 @@ use Yii;
  *
  * @property Sender $sender
  */
-class Letter extends \yii\db\ActiveRecord
+class Document extends \yii\db\ActiveRecord
 {
     /**
      * @inheritdoc
      */
     public static function tableName()
     {
-        return 'letter';
+        return 'document';
     }
 
     /**

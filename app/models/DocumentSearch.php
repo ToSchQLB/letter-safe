@@ -5,12 +5,12 @@ namespace app\models;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use app\models\Letter;
+use app\models\Document;
 
 /**
  * LetterSearch represents the model behind the search form about `app\models\Letter`.
  */
-class LetterSearch extends Letter
+class DocumentSearch extends Document
 {
     /**
      * @inheritdoc
@@ -41,7 +41,7 @@ class LetterSearch extends Letter
      */
     public function search($params)
     {
-        $query = Letter::find();
+        $query = Document::find();
 
         // add conditions that should always apply here
 

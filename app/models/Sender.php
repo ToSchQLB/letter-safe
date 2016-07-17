@@ -16,7 +16,7 @@ use Yii;
  * @property string $state
  * @property string $country
  *
- * @property Letter[] $letters
+ * @property Document[] $letters
  */
 class Sender extends \yii\db\ActiveRecord
 {
@@ -62,6 +62,6 @@ class Sender extends \yii\db\ActiveRecord
      */
     public function getLetters()
     {
-        return $this->hasMany(Letter::className(), ['sender_id' => 'id']);
+        return $this->hasMany(Document::className(), ['sender_id' => 'id']);
     }
 }
