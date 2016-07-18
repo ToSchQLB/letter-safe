@@ -53,32 +53,9 @@ $this->params['breadcrumbs'][] = $this->title;
 
 </div>
 <div class="col-lg-4">
-    <div class="panel panel-info">
-    	  <div class="panel-heading">
-    			<h3 class="panel-title"><?= Html::encode($this->title) ?></h3>
-    	  </div>
-    	  <div class="panel-body">
-              <p>
-                  <?= Html::a(Yii::t('app', 'Update'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-                  <?php /* Html::a(Yii::t('app', 'Delete'), ['delete', 'id' => $model->id], [
-                      'class' => 'btn btn-danger',
-                      'data' => [
-                          'confirm' => Yii::t('app', 'Are you sure you want to delete this item?'),
-                          'method' => 'post',
-                      ],
-                  ]) */?>
-              </p>
 
-              <?= DetailView::widget([
-                  'model' => $model,
-                  'attributes' => [
-                      'id',
-                      'sender_id',
-                      'title',
-                      'message:ntext',
-                      'folder',
-                  ],
-              ]) ?>
-    	  </div>
-    </div>
+    <?= $this->render($mode == 'view' ? '_view' : '_update', [
+        'model' => $model,
+    ]) ?>
+
 </div>

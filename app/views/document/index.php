@@ -30,7 +30,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'format'=>'raw',
                 'value' => function($data){ return Html::a(Html::img("./data/{$data->folder}/thumb.jpeg"),["document/view","id"=>$data->id]); }
             ],
-            //'sender_id',
+            'date',
             'title',
             //'message:ntext',
             //'folder',

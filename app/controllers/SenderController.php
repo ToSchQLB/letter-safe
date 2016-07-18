@@ -2,19 +2,17 @@
 
 namespace app\controllers;
 
-use app\models\Queue;
 use Yii;
-use app\models\Document;
-use app\models\DocumentSearch;
+use app\models\Sender;
+use app\models\SenderSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-use yii\web\UploadedFile;
 
 /**
- * LetterController implements the CRUD actions for Letter model.
+ * SenderController implements the CRUD actions for Sender model.
  */
-class DocumentController extends Controller
+class SenderController extends Controller
 {
     /**
      * @inheritdoc
@@ -31,44 +29,25 @@ class DocumentController extends Controller
         ];
     }
 
-	public function actionAjaxFileUpload()
-	{
-		if(!Yii::$app->request->isAjax)
-			die('kein Ajax');
+    public function actionAjaxSelect2($q)
+    {
+        $response = Yii::$app->response;
+        $sender = Sender::find()->select(['id','name','adress1','zip','town'])->where(['like', 'name', $q])->asArray()->all();
 
-		$file = UploadedFile::getInstanceByName('letterFile');
+        $response = Yii::$app->response;
+        $response->format = \yii\web\Response::FORMAT_JSON;
+        $response->data = ['results' => $sender];
 
-		$folder = uniqid();
-        $folder_absolute = Yii::$app->basePath . '/web/data/'.$folder;
-        mkdir( $folder_absolute);
-        chmod( $folder_absolute, 0700);
-		$inFile = $folder_absolute.'/in.'.$file->extension;
-
-		if($file->saveAs($inFile,true)){
-            chmod( $inFile, 0600);
-
-            Queue::createNewJob("convert -thumbnail x300 -background white -alpha remove ".$inFile."[0] ".$folder_absolute."/thumb.jpeg");
-//            Queue::createNewJob("convert ".$inFile.' '. $folder_absolute.'/page.jpeg');
-            Queue::createNewJob("pdftohtml -xml ".$inFile." ".$folder_absolute."/data");
-            Queue::createNewJob("pdftoppm -png ".$inFile." ".$folder_absolute."/seite");
-
-            //echo exec('php '.Yii::$app->basePath.'/yii queue/execute > /dev/null 2>&1 &');
-		}
-
-		$letter = new Document();
-		$letter->folder = $folder;
-		$letter->save();
-
-
+        return $response;
     }
 
     /**
-     * Lists all Letter models.
+     * Lists all Sender models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $searchModel = new DocumentSearch();
+        $searchModel = new SenderSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -78,7 +57,7 @@ class DocumentController extends Controller
     }
 
     /**
-     * Displays a single Letter model.
+     * Displays a single Sender model.
      * @param integer $id
      * @return mixed
      */
@@ -86,18 +65,17 @@ class DocumentController extends Controller
     {
         return $this->render('view', [
             'model' => $this->findModel($id),
-            'mode' => 'view',
         ]);
     }
 
     /**
-     * Creates a new Letter model.
+     * Creates a new Sender model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new Document();
+        $model = new Sender();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
@@ -109,7 +87,7 @@ class DocumentController extends Controller
     }
 
     /**
-     * Updates an existing Letter model.
+     * Updates an existing Sender model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
@@ -121,15 +99,14 @@ class DocumentController extends Controller
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
-            return $this->render('view', [
+            return $this->render('update', [
                 'model' => $model,
-                'mode' => 'edit',
             ]);
         }
     }
 
     /**
-     * Deletes an existing Letter model.
+     * Deletes an existing Sender model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
@@ -142,15 +119,15 @@ class DocumentController extends Controller
     }
 
     /**
-     * Finds the Letter model based on its primary key value.
+     * Finds the Sender model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return Document the loaded model
+     * @return Sender the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Document::findOne($id)) !== null) {
+        if (($model = Sender::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');

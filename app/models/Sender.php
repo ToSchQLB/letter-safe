@@ -17,6 +17,7 @@ use Yii;
  * @property string $country
  *
  * @property Document[] $letters
+ * @property string fullAddress
  */
 class Sender extends \yii\db\ActiveRecord
 {
@@ -63,5 +64,15 @@ class Sender extends \yii\db\ActiveRecord
     public function getLetters()
     {
         return $this->hasMany(Document::className(), ['sender_id' => 'id']);
+    }
+
+    /**
+     * @return string
+     */
+    public function FullAddress()
+    {
+        $address = "";
+
+        return $address;
     }
 }
