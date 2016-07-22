@@ -39,7 +39,7 @@ class QueueController extends Controller
     }
 
     private function executeQueue(){
-        $jobs = Queue::find()->all();
+        $jobs = Queue::find()->limit(2)->all();
         echo chr(10).chr(13). exec('whoami').chr(10).chr(13);
         foreach ($jobs as $job) {
             echo $job->id.': '.$job->job.chr(10).chr(13);
@@ -51,7 +51,9 @@ class QueueController extends Controller
         if(Queue::find()->count() == 0){
             $this->unlock();
         }else{
-            $this->executeQueue();
+            $this->unlock();
+            echo 'php '.\Yii::getAlias('@app').'/yii queue/execute > /dev/null 2>&1 &';
+            echo exec('php '.\Yii::getAlias('@app').'/yii queue/execute > /dev/null 2>&1 &');
         }
     }
 

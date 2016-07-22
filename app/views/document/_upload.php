@@ -16,7 +16,7 @@ use yii\widgets\ActiveForm;
         'name' => 'letterFile',
         'language' => 'de',
         'options' => ['multiple' => true],
-        'pluginOptions' => ['previewFileType' => 'any', 'uploadUrl' => \yii\helpers\Url::to(['/letter/ajax-file-upload'])]
+        'pluginOptions' => ['previewFileType' => 'any', 'uploadUrl' => \yii\helpers\Url::to(['/document/ajax-file-upload'])]
     ]); ?>
 
 

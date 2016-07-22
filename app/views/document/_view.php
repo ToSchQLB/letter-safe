@@ -9,6 +9,7 @@
     <div class="panel-body">
         <p>
             <?= \yii\helpers\Html::a(Yii::t('app', 'Update'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
+            <?= \yii\helpers\Html::a(Yii::t('app', 'Download'), "./data/{$model->folder}/in.pdf", ['class' => 'btn btn-default']) ?>
             <?php /* Html::a(Yii::t('app', 'Delete'), ['delete', 'id' => $model->id], [
                       'class' => 'btn btn-danger',
                       'data' => [
@@ -24,7 +25,7 @@
                 //'id'
                 [
                     'attribute' => 'sender_id',
-                    'value' => isset($model->sender_id) ? $model->sender->fullAddress() : null
+                    'value' => isset($model->sender_id) ? $model->sender->getFullAddress() : null
                 ],
 //                'sender_id',
                 'title',

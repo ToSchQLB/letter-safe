@@ -31,12 +31,26 @@ class SenderController extends Controller
 
     public function actionAjaxSelect2($q)
     {
+        $result = [];
         $response = Yii::$app->response;
         $sender = Sender::find()->select(['id','name','adress1','zip','town'])->where(['like', 'name', $q])->asArray()->all();
 
+        for($c=0; $c < 30 && $c < count($sender); $c++){
+            array_push(
+                $result,
+                [
+                    'id'=>$sender[$c]['id'],
+                    'text'=>$sender[$c]['name'].'<br>'
+                        .$sender[$c]['adress1'].'<br>'
+                        .$sender[$c]['zip'].' '.$sender[$c]['town']]
+            );
+        }
+
         $response = Yii::$app->response;
         $response->format = \yii\web\Response::FORMAT_JSON;
-        $response->data = ['results' => $sender];
+//        $response->data = $result;
+        $response->data = ['results' => $result];
+//        $response->data = ['results' => $sender];
 
         return $response;
     }

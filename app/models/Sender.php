@@ -69,9 +69,9 @@ class Sender extends \yii\db\ActiveRecord
     /**
      * @return string
      */
-    public function FullAddress()
+    public function getFullAddress()
     {
-        $address = "";
+        $address = $this->name.'<br>'.$this->adress1.'<br>'.$this->zip.' '.$this->town;
 
         return $address;
     }

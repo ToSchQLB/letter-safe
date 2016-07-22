@@ -43,16 +43,19 @@ class DocumentController extends Controller
         mkdir( $folder_absolute);
         chmod( $folder_absolute, 0700);
 		$inFile = $folder_absolute.'/in.'.$file->extension;
+        $inFilePdf = $folder_absolute.'/in.pdf';
 
 		if($file->saveAs($inFile,true)){
             chmod( $inFile, 0600);
-
-            Queue::createNewJob("convert -thumbnail x300 -background white -alpha remove ".$inFile."[0] ".$folder_absolute."/thumb.jpeg");
-//            Queue::createNewJob("convert ".$inFile.' '. $folder_absolute.'/page.jpeg');
-            Queue::createNewJob("pdftohtml -xml ".$inFile." ".$folder_absolute."/data");
-            Queue::createNewJob("pdftoppm -png ".$inFile." ".$folder_absolute."/seite");
-
-            //echo exec('php '.Yii::$app->basePath.'/yii queue/execute > /dev/null 2>&1 &');
+            if(strcmp($file->extension,'pdf')!=0) {
+                Queue::createNewJob("convert {$folder_absolute}/*.{$file->extension} {$folder_absolute}/tmp.tiff");
+                Queue::createNewJob("tesseract -l deu {$folder_absolute}/tmp.tiff {$folder_absolute}/in pdf");
+            }
+            Queue::createNewJob("convert -thumbnail x300 -background white -alpha remove " . $inFilePdf . "[0] " . $folder_absolute . "/thumb.jpeg");
+            //            Queue::createNewJob("convert ".$inFile.' '. $folder_absolute.'/page.jpeg');
+            Queue::createNewJob("pdftohtml -xml " . $inFilePdf . " " . $folder_absolute . "/data");
+            Queue::createNewJob("pdftoppm -png " . $inFilePdf . " " . $folder_absolute . "/seite");
+//            echo exec('php '.Yii::$app->basePath.'/yii queue/execute > /dev/null 2>&1 &');
 		}
 
 		$letter = new Document();
