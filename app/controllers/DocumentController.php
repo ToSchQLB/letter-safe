@@ -50,12 +50,14 @@ class DocumentController extends Controller
             if(strcmp($file->extension,'pdf')!=0) {
                 Queue::createNewJob("convert {$folder_absolute}/*.{$file->extension} {$folder_absolute}/tmp.tiff");
                 Queue::createNewJob("tesseract -l deu {$folder_absolute}/tmp.tiff {$folder_absolute}/in pdf");
+                Queue::createNewJob("tesseract -l deu {$folder_absolute}/tmp.tiff {$folder_absolute}/text hocr");
+//                Queue::createNewJob("tesseract -l deu {$folder_absolute}/tmp.tiff {$folder_absolute}/text xml");
             }
             Queue::createNewJob("convert -thumbnail x300 -background white -alpha remove " . $inFilePdf . "[0] " . $folder_absolute . "/thumb.jpeg");
             //            Queue::createNewJob("convert ".$inFile.' '. $folder_absolute.'/page.jpeg');
             Queue::createNewJob("pdftohtml -xml " . $inFilePdf . " " . $folder_absolute . "/data");
             Queue::createNewJob("pdftoppm -png " . $inFilePdf . " " . $folder_absolute . "/seite");
-//            echo exec('php '.Yii::$app->basePath.'/yii queue/execute > /dev/null 2>&1 &');
+            echo exec('php '.Yii::$app->basePath.'/yii queue/execute > /dev/null 2>&1 &');
 		}
 
 		$letter = new Document();
