@@ -25,6 +25,7 @@
                 //'id'
                 [
                     'attribute' => 'sender_id',
+                    'format' => 'raw',
                     'value' => isset($model->sender_id) ? $model->sender->getFullAddress() : null
                 ],
 //                'sender_id',

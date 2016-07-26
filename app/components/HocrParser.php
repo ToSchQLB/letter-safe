@@ -8,7 +8,6 @@
 
 namespace app\components;
 
-use Yii;
 use yii\base\Object;
 
 
@@ -16,7 +15,7 @@ use yii\base\Object;
  * Class HocrPaser
  * @package app\components
  */
-class HocrPaser extends Object{
+class HocrParser extends Object{
 
 
 	/**
@@ -27,9 +26,17 @@ class HocrPaser extends Object{
 	/**
 	 * @var array
 	 */
-	private $textArray;
+	private $documentArray;
 
-	private $currentPage;
+    /**
+     * @var array temp-Array
+     */
+    private $currentPage;
+
+    /**
+     * @var int
+     */
+    public $pageCount;
 
 
 	/**
@@ -40,42 +47,73 @@ class HocrPaser extends Object{
 	{
 		$this->hocrFile = new \DOMDocument();
 		$this->hocrFile->loadXML(file_get_contents($file));
+        $this->pageCount = 0;
+        $this->documentArray = [];
 	}
 
 	/**
 	 *
 	 */
 	public function parse(){
-		$this->hocrFile->getElementsByTagName('body');
+		$this->analyseDomNode($this->hocrFile->getElementsByTagName('body'));
 	}
 
 	/**
 	 * @param \DOMNodeList $nodeList
 	 */
 	private function analyseDomNode($nodeList){
-		for($n =0 ; $n < $nodeList->length(); $n++){
-
+		for($n =0 ; $n < $nodeList->length; $n++){
 			/** @var \DOMNode $domNode */
 			$domNode = $nodeList->item($n);
 
-			$class = $domNode->attributes->getNamedItem('class')->textContent;
+            if(strcmp($domNode->nodeName, 'body') == 0 ){
+                $this->analyseDomNode($domNode->childNodes);
+            }else {
+                if($domNode->hasAttributes()) {
+                    $class = $domNode->attributes->getNamedItem('class')->textContent;
+                    switch ($class) {
+                        case 'ocrx_word':
+                            $title = $domNode->attributes->getNamedItem('title')->textContent;
+                            $titleData = explode(' ', $title);
+                            array_push($this->currentPage['text'], [
+                                'left' => $titleData[1],
+                                'top' => $titleData[2],
+                                'width' => $titleData[3] - $titleData[1],
+                                'height' => $titleData[4] - $titleData[2],
+                                'content' => $domNode->textContent
+                            ]);
+                            break;
+                        case 'ocr_page':
+                            $this->pageCount++;
+                            $title = $domNode->attributes->getNamedItem('title')->textContent;
+                            $data = explode(';',$title);
+                            $data = explode(' ', trim($data[1]));
+                            $this->currentPage = [
+                                'page' => $this->pageCount,
+                                'width'=> $data[3],
+                                'text' => []
+                            ];
+                            break;
+                    }
 
-			switch ($class){
-				case 'ocrx_word':
-					//Wort zum Array hinzufügen
-					break;
-				case 'ocr_page':
-					//
-					break;
-			}
+                    if (in_array($class, ['ocr_page', 'ocr_carea', 'ocr_par', 'ocr_line'])) {
+                        $this->analyseDomNode($domNode->childNodes);
+                    }
 
-
-			if(in_array($class, ['ocr_page','ocr_carea','ocr_par','ocr_line'])){
-				$this->analyseDomNode($domNode->childNodes);
-			}
-
-
+                    if (strcmp($class, 'ocr_page') == 0) {
+                        array_push($this->documentArray, $this->currentPage);
+                    }
+                }
+            }
 		}
 	}
+
+    /**
+     * Write a array to a JSON-File
+     * @param $file FilePath
+     */
+    public function save($file){
+	    file_put_contents($file,json_encode($this->documentArray));
+    }
 
 }

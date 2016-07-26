@@ -39,7 +39,8 @@ class DocumentController extends Controller
 		$file = UploadedFile::getInstanceByName('letterFile');
 
 		$folder = uniqid();
-        $folder_absolute = Yii::$app->basePath . '/web/data/'.$folder;
+        $basePath = Yii::$app->basePath;
+        $folder_absolute = $basePath . '/web/data/'.$folder;
         mkdir( $folder_absolute);
         chmod( $folder_absolute, 0700);
 		$inFile = $folder_absolute.'/in.'.$file->extension;
@@ -51,13 +52,13 @@ class DocumentController extends Controller
                 Queue::createNewJob("convert {$folder_absolute}/*.{$file->extension} {$folder_absolute}/tmp.tiff");
                 Queue::createNewJob("tesseract -l deu {$folder_absolute}/tmp.tiff {$folder_absolute}/in pdf");
                 Queue::createNewJob("tesseract -l deu {$folder_absolute}/tmp.tiff {$folder_absolute}/text hocr");
-//                Queue::createNewJob("tesseract -l deu {$folder_absolute}/tmp.tiff {$folder_absolute}/text xml");
+                Queue::createNewJob("php {$basePath}/yii hocr/execute \"{$folder_absolute}/text.hocr\" \"{$folder_absolute}/text.json\"");
+            } else {
+                Queue::createNewJob("pdftohtml -xml " . $inFilePdf . " " . $folder_absolute . "/data");
             }
             Queue::createNewJob("convert -thumbnail x300 -background white -alpha remove " . $inFilePdf . "[0] " . $folder_absolute . "/thumb.jpeg");
-            //            Queue::createNewJob("convert ".$inFile.' '. $folder_absolute.'/page.jpeg');
-            Queue::createNewJob("pdftohtml -xml " . $inFilePdf . " " . $folder_absolute . "/data");
             Queue::createNewJob("pdftoppm -png " . $inFilePdf . " " . $folder_absolute . "/seite");
-            echo exec('php '.Yii::$app->basePath.'/yii queue/execute > /dev/null 2>&1 &');
+            echo exec('php '.Yii::$app->basePath.'/yii queue/execute');// > /dev/null 2>&1 &');
 		}
 
 		$letter = new Document();

@@ -39,7 +39,7 @@ class QueueController extends Controller
     }
 
     private function executeQueue(){
-        $jobs = Queue::find()->limit(2)->all();
+        $jobs = Queue::find()->limit(1)->all();
         echo chr(10).chr(13). exec('whoami').chr(10).chr(13);
         foreach ($jobs as $job) {
             echo $job->id.': '.$job->job.chr(10).chr(13);

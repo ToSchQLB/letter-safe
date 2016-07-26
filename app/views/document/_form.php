@@ -20,17 +20,15 @@ use yii\widgets\ActiveForm;
                 'dataType' => 'json',
                 'data' => new \yii\web\JsExpression("function(params) { return {q:params.term}; }")
             ],
-//            'escapeMarkup' => new \yii\web\JsExpression('function (markup) { return markup; }'),
-//            'templateResult' => new \yii\web\JsExpression("function (sender) { return {id: sender.id, text:sender.name}; }"),
-//            'templateSelection' => new \yii\web\JsExpression('function(sender) { return sender.name; }'),
-
         ],
         'initValueText' => isset($model->sender_id) ? $model->sender->getFullAddress() : ''
     ]) ?>
 
-    <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'title')->textInput(['maxlength' => true,"onclick"=>"fillInput('document-title')"]) ?>
 
     <?= $form->field($model, 'date')->textInput() ?>
+
+    <?= Html::hiddenInput('activeInput') ?>
 
     <?php //$form->field($model, 'folder')->textInput(['maxlength' => true]) ?>
 
@@ -39,5 +37,24 @@ use yii\widgets\ActiveForm;
     </div>
 
     <?php ActiveForm::end(); ?>
+
+    <?php
+    $js = <<<JS
+function fillInput(name) {
+    $('input[name="activeInput"]').val(name); 
+}
+
+function writeToInput(text) {
+    alt = $('#'+$('input[name="activeInput"]').val()).val();
+    if(alt == '')
+        $('#'+$('input[name="activeInput"]').val()).val(text);
+    else
+        $('#'+$('input[name="activeInput"]').val()).val(alt + ' ' + text);
+}
+JS;
+
+    $this->registerJs($js, \yii\web\View::POS_END);
+
+    ?>
 
 </div>
