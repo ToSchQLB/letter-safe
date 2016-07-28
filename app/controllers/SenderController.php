@@ -29,6 +29,10 @@ class SenderController extends Controller
         ];
     }
 
+    /**
+     * @param string $q Suchbegriff
+     * @return \yii\console\Response|\yii\web\Response
+     */
     public function actionAjaxSelect2($q)
     {
         $result = [];
@@ -53,6 +57,19 @@ class SenderController extends Controller
 //        $response->data = ['results' => $sender];
 
         return $response;
+    }
+
+    public function actionAjaxCreate(){
+
+        $model = new Sender();
+
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            $response = Yii::$app->response;
+            $response->format = \yii\web\Response::FORMAT_JSON;
+            $response->data = $model->toArray();
+
+            return $response;
+        }
     }
 
     /**

@@ -9,8 +9,7 @@ use yii\widgets\ActiveForm;
 ?>
 
 <div class="letter-form">
-    <h1>TEST</h1>
-    <?php $form = ActiveForm::begin(); ?>
+    <?php $form = ActiveForm::begin(['id'=>'sender-update-form']); ?>
 
     <?= $form->field($model, 'sender_id')->widget(\kartik\select2\Select2::className(),[
         'pluginOptions' => [
@@ -23,6 +22,16 @@ use yii\widgets\ActiveForm;
         ],
         'initValueText' => isset($model->sender_id) ? $model->sender->getFullAddress() : ''
     ]) ?>
+
+    <a class="sender-button btn btn-primary col-md-12" href="javascript:toggleSenderForm()"><?= Yii::t('app/sender','Create Sender') ?></a>
+
+    <div class="senderform" style="display: none">
+        <?php
+            $sender = new \app\models\Sender();
+            echo $this->render('_sender-form',['model'=>$sender,'form'=>$form]);
+        ?>
+    </div>
+
 
     <?= $form->field($model, 'title')->textInput(['maxlength' => true,"onclick"=>"fillInput('document-title')"]) ?>
 
@@ -39,6 +48,7 @@ use yii\widgets\ActiveForm;
     <?php ActiveForm::end(); ?>
 
     <?php
+    $url = \yii\helpers\Url::to(['/sender/ajax-create']);
     $js = <<<JS
 function fillInput(name) {
     $('input[name="activeInput"]').val(name); 
@@ -50,6 +60,26 @@ function writeToInput(text) {
         $('#'+$('input[name="activeInput"]').val()).val(text);
     else
         $('#'+$('input[name="activeInput"]').val()).val(alt + ' ' + text);
+}
+
+function toggleSenderForm() {
+  $('.sender-button').toggle();
+  $('.senderform').toggle();
+  $('.field-document-sender_id').toggle();
+}
+
+function addSender(){
+    $.ajax('{$url}',{
+        data: $('#sender-update-form').serialize(),
+        method: 'POST',
+        dataType : 'JSON',
+        success: function(data){
+            // $('#document-sender_id').val(data.id);
+            $("#document-sender_id option").val(data.id);
+            $('#select2-document-sender_id-container').html(data.name);
+            toggleSenderForm();
+        }
+    })
 }
 JS;
 

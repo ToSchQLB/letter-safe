@@ -1,6 +1,10 @@
 <?php
 $params = require(__DIR__ . '/params.php');
 $config = [
+    // set source language to be English
+
+    'language' => 'de',
+    'sourceLanguage' => 'en',
     'id' => 'basic',
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
@@ -36,6 +40,14 @@ $config = [
             ],
         ],
         'db' => require(__DIR__ . '/db.php'),
+        'i18n' => [
+            'translations' => [
+                'app*' => [
+                    'class' => 'yii\i18n\PhpMessageSource',
+                    'basePath' => '@app/messages',
+                ],
+            ]
+        ]
         /*
         'urlManager' => [
             'enablePrettyUrl' => true,
