@@ -1428,7 +1428,7 @@ body
     line-height: 1.42857143;
 
     color: #333;
-    background-color: #f0f3f4;
+    background-color: #828282;
 }
 input,
 button,
@@ -1496,7 +1496,7 @@ img
 
     border: 1px solid #ddd;
     border-radius: 0;
-    background-color: #f0f3f4;
+    background-color: #828282;
 }
 .img-circle
 {
@@ -3099,7 +3099,7 @@ th
 }
 .table .table
 {
-    background-color: #f0f3f4;
+    background-color: #828282;
 }
 .table-condensed > thead > tr > th,
 .table-condensed > tbody > tr > th,
@@ -5294,7 +5294,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn
     color: #555;
     border: 1px solid #ddd;
     border-bottom-color: transparent;
-    background-color: #f0f3f4;
+    background-color: #828282;
 }
 .nav-tabs.nav-justified
 {
@@ -5353,7 +5353,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn
     .nav-tabs.nav-justified > .active > a:hover,
     .nav-tabs.nav-justified > .active > a:focus
     {
-        border-bottom-color: #f0f3f4;
+        border-bottom-color: #828282;
     }
 }
 .nav-pills > li
@@ -5443,7 +5443,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn
     .nav-tabs-justified > .active > a:hover,
     .nav-tabs-justified > .active > a:focus
     {
-        border-bottom-color: #f0f3f4;
+        border-bottom-color: #828282;
     }
 }
 .tab-content > .tab-pane
@@ -6573,7 +6573,7 @@ a.badge:focus
 
     border: 1px solid #ddd;
     border-radius: 0;
-    background-color: #f0f3f4;
+    background-color: #828282;
 }
 .thumbnail > img,
 .thumbnail a > img
@@ -8820,5 +8820,35 @@ button.close
     {
         display: none !important;
     }
+}
+.document-preview
+{
+    position: relative;
+    z-index: 2;
+    top: 0;
+    right: 0;
+    bottom: 1px;
+
+    overflow: hidden;
+
+    width: 100%;
+
+    -webkit-transition: background-position 2s ease 0s, z-index 0s linear .5s;
+         -o-transition: background-position 2s ease 0s, z-index 0s linear .5s;
+            transition: background-position 2s ease 0s, z-index 0s linear .5s;
+
+    background-repeat: no-repeat;
+    background-attachment: scroll;
+    background-position: 0 0;
+    -webkit-background-size: cover;
+            background-size: cover;
+}
+.document-preview:hover
+{
+    z-index: 4;
+
+    cursor: pointer;
+
+    background-position: 0 100%;
 }
 /*# sourceMappingURL=bootstrap.css.map */

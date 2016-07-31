@@ -29,7 +29,7 @@ use yii\helpers\Html;
             ['label' => Yii::t('app','Home'), 'url' => ['/site/index']],
             ['label' => Yii::t('app','Documents'), 'url' => ['/document/index']],
             ['label' => Yii::t('app','Senders'), 'url' => ['/sender/index']],
-            ['label' => 'add Document', 'url' => ['/document/create']]/*,
+            ['label' => Yii::t('app','Add Document'), 'url' => ['/document/create']]/*,
                 Yii::$app->user->isGuest ? (
                 ['label' => 'Login', 'url' => ['/site/login']]
                 ) : (

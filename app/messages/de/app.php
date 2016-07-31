@@ -17,22 +17,23 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
-    'Add Document' => '',
+    'Add Document' => 'Dokument hinzufügen',
     'Adress1' => 'Adresse',
     'Adress2' => 'Adresse',
     'Are you sure you want to delete this item?' => '',
     'Country' => 'Land',
     'Create' => '',
-    'Create Letter' => '',
+    'Create Letter' => '@@@@',
     'Create Sender' => '',
     'Create {modelClass}' => '{modelClass} anlegen',
     'Delete' => 'Löschen',
     'Documents' => 'Dokumente',
     'Download' => '',
     'Folder' => '',
+    'Home' => '',
     'ID' => '',
     'Job' => 'test',
-    'Letters' => '',
+    'Letters' => '@@@@',
     'Message' => '',
     'Name' => '',
     'New Sender' => '@@@@',
@@ -47,4 +48,6 @@ return [
     'Update' => 'Bearbeiten',
     'Update {modelClass}: ' => '{modelClass} bearbeiten',
     'Zip' => 'PLZ',
+    'cancel' => '',
+    'create' => '',
 ];
