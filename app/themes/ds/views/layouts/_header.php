@@ -26,8 +26,9 @@ use yii\helpers\Html;
     echo \yii\bootstrap\Nav::widget([
         'options' => ['class' => 'navbar-nav navbar-left'],
         'items' => [
-            ['label' => 'Home', 'url' => ['/site/index']],
-            ['label' => 'Documents', 'url' => ['/document/index']],
+            ['label' => Yii::t('app','Home'), 'url' => ['/site/index']],
+            ['label' => Yii::t('app','Documents'), 'url' => ['/document/index']],
+            ['label' => Yii::t('app','Senders'), 'url' => ['/sender/index']],
             ['label' => 'add Document', 'url' => ['/document/create']]/*,
                 Yii::$app->user->isGuest ? (
                 ['label' => 'Login', 'url' => ['/site/login']]

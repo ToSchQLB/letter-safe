@@ -6,9 +6,13 @@
  * Time: 23:23
  */
 ?>
-<div class="container-fluid">
-    <?= \yii\widgets\Breadcrumbs::widget([
-        'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
-    ]) ?>
+<div class="container-fluid" style="margin-top: 50px">
+    <div class="row">
+        <?= \yii\widgets\Breadcrumbs::widget([
+            'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
+        ]) ?>
+    </div>
+
     <?= $content ?>
 </div>
+
