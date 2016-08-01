@@ -28,7 +28,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         <h3 class="panel-title">{$model->title}</h3>
                   </div>
                   <div class="panel-body text-center" style="padding: 0">
-                    <div class="document-preview" style="background-image: url('./data/{$model->folder}/seite-1.png'); height: 200px;"></div>
+                    <div class="document-preview" style="background-image: url('./data/{$model->folder}/thumb.jpeg'); height: 200px;"></div>
                   </div>
             </div>
             </div>

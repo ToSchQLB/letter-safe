@@ -25,11 +25,12 @@ use yii\helpers\Html;
     ]);
     echo \yii\bootstrap\Nav::widget([
         'options' => ['class' => 'navbar-nav navbar-left'],
+        'encodeLabels' => false,
         'items' => [
-            ['label' => Yii::t('app','Home'), 'url' => ['/site/index']],
-            ['label' => Yii::t('app','Documents'), 'url' => ['/document/index']],
-            ['label' => Yii::t('app','Senders'), 'url' => ['/sender/index']],
-            ['label' => Yii::t('app','Add Document'), 'url' => ['/document/create']]/*,
+            ['label' => '<i class="fa fa-home" aria-hidden="true"></i> '.Yii::t('app','Home'), 'url' => ['/site/index']],
+            ['label' => '<i class="fa fa-file-text" aria-hidden="true"></i> ' .Yii::t('app','Documents'), 'url' => ['/document/index']],
+            ['label' => '<i class="fa fa-building" aria-hidden="true"></i> '.Yii::t('app','Senders'), 'url' => ['/sender/index']],
+            ['label' => '<i class="fa fa-plus-square" aria-hidden="true"></i> ' .Yii::t('app','Add Document'), 'url' => ['/document/create']]/*,
                 Yii::$app->user->isGuest ? (
                 ['label' => 'Login', 'url' => ['/site/login']]
                 ) : (

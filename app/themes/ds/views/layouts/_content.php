@@ -13,6 +13,8 @@
         ]) ?>
     </div>
 
-    <?= $content ?>
+    <div class="row">
+        <?= $content ?>
+    </div>
 </div>
 
