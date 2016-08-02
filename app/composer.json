@@ -15,7 +15,9 @@
     "yiisoft/yii2-debug": "2.0.6",
     "yiisoft/yii2-gii": "2.0.5",
     "kartik-v/yii2-widget-fileinput": "v1.0.5",
-    "kartik-v/yii2-widget-select2": "v2.0.8"
+    "kartik-v/yii2-widget-select2": "v2.0.8",
+    "kartik-v/yii2-datecontrol": "v1.9.4",
+    "kartik-v/yii2-widgets": "v3.4.0"
   },
   "extra": {
     "asset-installer-paths": {

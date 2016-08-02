@@ -37,6 +37,9 @@ $config = [
             // for the mailer to send real emails.
             'useFileTransport' => true,
         ],
+        'formatter' => [
+            'locale' => 'de-DE',
+        ],
         'log' => [
             'traceLevel' => YII_DEBUG ? 3 : 0,
             'targets' => [
@@ -65,6 +68,11 @@ $config = [
         */
     ],
     'params' => $params,
+    'modules' => [
+        'datecontrol' =>  [
+            'class' => '\kartik\datecontrol\Module'
+        ]
+    ]
 ];
 if (YII_ENV_DEV) {
     // configuration adjustments for 'dev' environment

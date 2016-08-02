@@ -30,7 +30,10 @@
                 ],
 //                'sender_id',
                 'title',
-                'date',
+                [
+                    'format' => ['date','php:d.m.Y'],
+                    'attribute' => 'date'
+                ]
                 //'message:ntext',
                 //'folder',
             ],

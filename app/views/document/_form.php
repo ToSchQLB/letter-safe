@@ -35,7 +35,13 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'title')->textInput(['maxlength' => true,"onclick"=>"fillInput('document-title')"]) ?>
 
-    <?= $form->field($model, 'date')->textInput() ?>
+    <?= $form->field($model, 'date')->widget(\kartik\datecontrol\DateControl::classname(), [
+        'type'=>\kartik\datecontrol\DateControl::FORMAT_DATE,
+        'autoWidget'=>false,
+        'options'=>[
+            "onclick"=>"fillInput('document-date')"
+        ]
+    ]); ?>
 
     <?= Html::hiddenInput('activeInput') ?>
 
@@ -60,6 +66,11 @@ function writeToInput(text) {
         $('#'+$('input[name="activeInput"]').val()).val(text);
     else
         $('#'+$('input[name="activeInput"]').val()).val(alt + ' ' + text);
+        
+    if($('input[name="activeInput"]').val() == 'document-date'){
+        $('#document-date-disp').val(text);
+        $('#document-date-disp').change();
+    }
 }
 
 function toggleSenderForm() {
