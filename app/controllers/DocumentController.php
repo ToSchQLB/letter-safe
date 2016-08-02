@@ -22,12 +22,12 @@ class DocumentController extends Controller
     public function behaviors()
     {
         return [
-            'verbs' => [
-                'class' => VerbFilter::className(),
-                'actions' => [
-                    'delete' => ['POST'],
-                ],
-            ],
+//            'verbs' => [
+//                'class' => VerbFilter::className(),
+//                'actions' => [
+//                    'delete' => ['POST'],
+//                ],
+//            ],
         ];
     }
 
@@ -142,7 +142,11 @@ class DocumentController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        $model = $this->findModel($id);
+
+        system('rm -rf '.Yii::$app->basePath.'/web/data/'.$model->folder);
+
+        $model->delete();
 
         return $this->redirect(['index']);
     }
