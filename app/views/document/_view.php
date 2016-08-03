@@ -10,14 +10,11 @@
         <p>
             <?= \yii\helpers\Html::a(Yii::t('app', 'Update'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
             <?= \yii\helpers\Html::a(Yii::t('app', 'Download'), "./data/{$model->folder}/in.pdf", ['class' => 'btn btn-default']) ?>
-            <?= \yii\helpers\Html::a(Yii::t('app', 'Delete'), ['delete', 'id' => $model->id], ['class' => 'btn btn-danger']) ?>
-            <?php /* Html::a(Yii::t('app', 'Delete'), ['delete', 'id' => $model->id], [
-                      'class' => 'btn btn-danger',
-                      'data' => [
-                          'confirm' => Yii::t('app', 'Are you sure you want to delete this item?'),
-                          'method' => 'post',
-                      ],
-                  ]) */?>
+            <?= \yii\helpers\Html::a(Yii::t('app', 'Delete'), ['delete', 'id' => $model->id], ['class' => 'btn btn-danger',
+              'data' => [
+                  'method' => 'post',
+                  'confirm' => Yii::t('app','Are you sure you want to delete this item?'),
+              ]]) ?>
         </p>
 
         <?= \yii\widgets\DetailView::widget([
@@ -41,3 +38,5 @@
         ]) ?>
     </div>
 </div>
+
+<?php \yii\web\YiiAsset::register($this); ?>

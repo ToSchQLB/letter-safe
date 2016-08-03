@@ -13,6 +13,10 @@ use Yii;
  * @property string $date
  * @property string $message
  * @property string $folder
+ * @property integer $status
+ * @property string $input_filename
+ * @property string $input_file_extentsion
+ * @property date $input_date
  *
  * @property Sender $sender
  */

@@ -4,7 +4,7 @@ use yii\db\Migration;
 
 class m160714_182853_create_letter extends Migration
 {
-    var $name = 'letter';
+    var $name = 'document';
     public function up()
     {
         $this->createTable(

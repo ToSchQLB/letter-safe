@@ -41,4 +41,10 @@ class ImportController extends Controller
         $document->save;
     }
 
+    public function actionStatus($id,$status){
+        $document = Document::findOne($id);
+        $document->status = $status;
+        $document->save();
+    }
+
 }
