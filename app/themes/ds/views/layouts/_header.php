@@ -14,7 +14,7 @@ use yii\helpers\Html;
 <header class="main-header">
     <?php
     \yii\bootstrap\NavBar::begin([
-        'brandLabel' => 'Document Safe',
+        'brandLabel' => 'Letter Safe',
         'brandUrl' => Yii::$app->homeUrl,
         'options' => [
             'class' => 'navbar-default navbar-fixed-top',

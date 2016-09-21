@@ -24,7 +24,7 @@ AppAsset::register($this);
     <div class="wrap">
         <?php
         NavBar::begin([
-            'brandLabel' => 'Document Safe',
+            'brandLabel' => 'Letter Safe',
             'brandUrl' => Yii::$app->homeUrl,
             'options' => [
                 'class' => 'navbar-inverse navbar-fixed-top',
@@ -63,7 +63,7 @@ AppAsset::register($this);
 
     <footer class="footer">
         <div class="container">
-            <p class="pull-left">Document Safe <?= date('Y') ?></p>
+            <p class="pull-left">Letter Safe <?= date('Y') ?></p>
 
             <p class="pull-right"><?= Yii::powered() ?></p>
         </div>
