@@ -13,10 +13,15 @@ use yii\widgets\ActiveForm;
     <?php $form = ActiveForm::begin(); ?>
 
     <?= \kartik\file\FileInput::widget([
-        'name' => 'letterFile',
+        'name' => 'letterFile[]',
         'language' => 'de',
         'options' => ['multiple' => true],
-        'pluginOptions' => ['previewFileType' => 'any', 'uploadUrl' => \yii\helpers\Url::to(['/document/ajax-file-upload'])]
+        'pluginOptions' => [
+//            'previewFileType' => 'any',
+            'uploadAsync' => false,
+            'uploadUrl' => \yii\helpers\Url::to(['/document/ajax-file-upload']),
+//            'maxFileCount' => 10
+        ]
     ]); ?>
 
 
