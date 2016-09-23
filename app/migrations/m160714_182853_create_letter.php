@@ -13,7 +13,8 @@ class m160714_182853_create_letter extends Migration
                 'id'        => $this->primaryKey(),
                 'sender_id' => $this->integer(),
                 'title'     => $this->string(255),
-                'message'   => 'longtext',
+                'date'      => $this->date(),
+//                'message'   => 'longtext',
                 'folder'    => $this->string(100)
             ]
         );

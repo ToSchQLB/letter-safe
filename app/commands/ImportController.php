@@ -28,17 +28,12 @@ class ImportController extends Controller
     public function actionText($id)
     {
         $document = Document::findOne($id);
-        $content = '';
-        if(file_exists(\Yii::$app->basePath.'/web/data/'.$document->folder.'/text.json')){
-            $data = json_decode(file_get_contents(\Yii::$app->basePath.'/web/data/'.$document->folder.'/text.json'));
-            foreach ($data->page as $page) {
-                foreach ($page as $text) {
-                    $content .= $text->content .' ';
-                }
-            }
+        if(file_exists(\Yii::$app->basePath.'/web/data/'.$document->folder.'/text.txt')){
+            $data = file_get_contents(\Yii::$app->basePath.'/web/data/'.$document->folder.'/text.txt');
+            echo 'Text: '.$data;
+            $document->full_text = $data;
+            $document->save();
         }
-        $document->message = $content;
-        $document->save;
     }
 
     public function actionStatus($id,$status){
