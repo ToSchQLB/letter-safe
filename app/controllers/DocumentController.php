@@ -10,6 +10,7 @@ use yii\db\Expression;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\web\Response;
 use yii\web\UploadedFile;
 
 /**
@@ -52,7 +53,19 @@ class DocumentController extends Controller
         ]);
     }
 
+    public function actionAjaxSearch($q){
+        $data = Document::find()
+            ->joinWith('sender')
+            ->where(['like','sender.name',$q])
+            ->asArray()
+            ->all();
 
+        $response = Yii::$app->getResponse();
+        $response->format = Response::FORMAT_JSON;
+        $response->data = $data;
+
+        return $data;
+    }
 
     public function actionAjaxFileUpload()
 	{
@@ -106,8 +119,8 @@ class DocumentController extends Controller
 
 
 
-        $letter->input_filename = $files->baseName;
-        $letter->input_file_extension = $files->extension;
+        $letter->input_filename = $files[0]->baseName;
+        $letter->input_file_extension = $files[0]->extension;
         $letter->input_date = new Expression('now()');
 //		$letter->folder = $folder;
 		$letter->save();
