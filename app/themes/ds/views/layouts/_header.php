@@ -58,7 +58,7 @@ use yii\helpers\Html;
 <!--    <div  class="row" >-->
         <div id="searchResultPanel" style="margin-top: 50px; margin-bottom: -30px; display: none;" class="panel panel-default">
               <div class="panel-heading">
-                    <h3 class="panel-title">Suchergenis</h3>
+                    <h3 class="panel-title">Suchergebnis</h3>
               </div>
               <div class="panel-body" id="searchResults">
                   <i class="fa fa-refresh fa-spin fa-3x fa-fw" aria-hidden="true"></i>
