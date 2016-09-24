@@ -9,7 +9,7 @@
     <div class="panel-body">
         <p>
             <?= \yii\helpers\Html::a(Yii::t('app', 'Update'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-            <?= \yii\helpers\Html::a(Yii::t('app', 'Download'), "./data/{$model->folder}/in.pdf", ['class' => 'btn btn-default']) ?>
+            <?= \yii\helpers\Html::a(Yii::t('app', 'Download'), "./data/{$model->folder}/in.pdf", ['class' => 'btn btn-default', 'target'=>'_blank']) ?>
             <?= \yii\helpers\Html::a(Yii::t('app', 'Delete'), ['delete', 'id' => $model->id], ['class' => 'btn btn-danger',
               'data' => [
                   'method' => 'post',

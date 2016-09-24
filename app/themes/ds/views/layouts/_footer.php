@@ -7,7 +7,7 @@
  */
 ?>
 
-<footer class="footer" style="position: static; bottom: 0; width: 100%">
+<footer class="footer" style="position: fixed; bottom: 0; width: 100%">
     <div class="container-fluid">
         <div class="row" style="background-color: #FFFFFF; padding-top: 4px;">
             <div class="col-md-12">

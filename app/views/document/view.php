@@ -10,7 +10,7 @@ $this->title = $model->title;
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Documents'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="col-lg-8">
+<div class="col-lg-8" style="position: absolute;height: calc(100% - 120px);margin-top: -20px; overflow-y: scroll">
     <?php
         $folder_relative = 'data/'.$model->folder;
         $folder_absolute = Yii::$app->basePath . "/web/data/". $model->folder;
@@ -47,7 +47,7 @@ $this->params['breadcrumbs'][] = $this->title;
             foreach ($data as $page) {
                 $resource = new Imagick("{$folder_relative}/seite-".$page->page.".png");
                 $width = $resource->getImageWidth();
-                $proportion = $width / $page->width * 0.7;
+                $proportion = $width / $page->width * 0.575;
                 $w = $page->width * $proportion;
                 echo "<div class='text-center' style='padding: 20px; margin-bottom: 20px; background-color: #3c3c3c'>";
                 echo "<img src='{$folder_relative}/seite-".$page->page.".png' usemap='#mapSeite{$page->page}' width='{$w}'/>";
@@ -76,7 +76,7 @@ $this->params['breadcrumbs'][] = $this->title;
 <!--    </div>-->
 
 </div>
-<div class="col-lg-4">
+<div class="col-lg-4 col-lg-offset-8">
 
     <?= $this->render($mode == 'view' ? '_view' : '_update', [
         'model' => $model,

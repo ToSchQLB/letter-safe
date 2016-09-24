@@ -87,6 +87,10 @@ use yii\helpers\Html;
                         result = result + '</div>';
                     }
                     
+                    if (data.length == 0){
+                        result = 'keine Dokumente gefunden <i class="fa fa-thumbs-o-down" aria-hidden="true"></i>';
+                    }
+                    
                     $('#searchResults').html(result);
                 }
             })
