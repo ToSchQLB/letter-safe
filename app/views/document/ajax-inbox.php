@@ -14,9 +14,14 @@ foreach ($documents as $document): ?>
         <td>
         </td>
         <td>
-            <div class="document-preview" style="background-image: url('./data/<?= $document->folder ?>/thumb.jpeg'); width: 250px; height: 150px;"></div>
+            <a href="<?= \yii\helpers\Url::to(['document/update','id'=>$document->id]) ?>">
+                <div class="document-preview" style="background-image: url('./data/<?= $document->folder ?>/thumb.jpeg'); width: 250px; height: 150px;"></div>
+            </a>
         </td>
-        <td><h4><?= $document->input_filename.'.'.$document->input_file_extension ?></h4>
+        <td>
+            <a href="<?= \yii\helpers\Url::to(['document/update','id'=>$document->id]) ?>">
+                <h4><?= $document->input_filename.'.'.$document->input_file_extension ?></h4>
+            </a>
         </td>
 
         <td>
