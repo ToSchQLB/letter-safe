@@ -2,6 +2,8 @@
 
 namespace app\controllers;
 
+use app\models\Document;
+use app\models\DocumentSearch;
 use Yii;
 use app\models\Sender;
 use app\models\SenderSearch;
@@ -94,8 +96,14 @@ class SenderController extends Controller
      */
     public function actionView($id)
     {
+        $searchmodel = new DocumentSearch();
+        $documents = $searchmodel->search(['DocumentSearch'=>['sender_id'=>$id]]);
+//        $documents = Document::find()
+//            ->where(['sender_id'=>$id])
+//            ->all();
         return $this->render('view', [
             'model' => $this->findModel($id),
+            'documents' => $documents
         ]);
     }
 

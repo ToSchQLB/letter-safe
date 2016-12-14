@@ -47,7 +47,7 @@ $this->params['breadcrumbs'][] = $this->title;
             foreach ($data as $page) {
                 $resource = new Imagick("{$folder_relative}/seite-".$page->page.".png");
                 $width = $resource->getImageWidth();
-                $proportion = $width / $page->width * 0.575;
+                $proportion = $width / $page->width * 0.75;
                 $w = $page->width * $proportion;
                 echo "<div class='text-center' style='padding: 20px; margin-bottom: 20px; background-color: #3c3c3c'>";
                 echo "<img src='{$folder_relative}/seite-".$page->page.".png' usemap='#mapSeite{$page->page}' width='{$w}'/>";

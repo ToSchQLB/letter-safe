@@ -32,3 +32,4 @@ phpunit.phar
 
 #config
 /config
+tests/_output/*
