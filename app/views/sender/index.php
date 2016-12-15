@@ -24,16 +24,28 @@ $this->params['breadcrumbs'][] = $this->title;
                     /* @var $model \app\models\Sender */
                     $logo = \app\models\Sender::LOGO_PATH . $model->logo;
                     $docCount = count($model->documents);
+                    $panelContent = "";
+                    if(!empty($model->logo)){
+                        $panelContent = <<<html
+                            <img src=".$logo" class="img-responsive">
+html;
+                    } else {
+                        $text = substr($model->name,0,30);
+                        $panelContent = <<<html
+                            <h2 style="width: 100%;">$text</h2>
+html;
+
+                    }
                     $html = <<<HTML
 <div class="col-md-2">
     <div class="panel panel-default">
-        <div class="panel-heading" style="height: 55px">
+        <!--<div class="panel-heading" style="height: 55px">
             <h3 class="panel-title">{$model->name}</h3>
+        </div>-->
+        <div class="panel-body text-center" style="padding: 5px 5px; height: 150px; display: flex; align-items: center; width: 100%;">
+            $panelContent
         </div>
-        <div class="panel-body text-center" style="padding: 5px 5px; height: 150px; vertical-align: middle; display: table-cell;">
-            <img class="img-responsive" src=".$logo">
-        </div>
-        <div class="panel-footer">
+        <div class="panel-footer" style="padding: 2px 15px;">
             <small>$docCount Dokumente</small>
         </div>
     </div>
