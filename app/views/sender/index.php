@@ -42,7 +42,7 @@ html;
         <!--<div class="panel-heading" style="height: 55px">
             <h3 class="panel-title">{$model->name}</h3>
         </div>-->
-        <div class="panel-body text-center" style="padding: 5px 5px; height: 150px; display: flex; align-items: center; width: 100%;">
+        <div class="panel-body text-center $model->css_class" style="padding: 5px 5px; height: 150px; display: flex; align-items: center; width: 100%;">
             $panelContent
         </div>
         <div class="panel-footer" style="padding: 2px 15px;">

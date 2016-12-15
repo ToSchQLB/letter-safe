@@ -17,6 +17,7 @@ use yii\web\UploadedFile;
  * @property string $state
  * @property string $country
  * @property string $logo
+ * @property string $css_class
  *
  * @property Document[] $documents
  * @property string fullAddress
@@ -44,8 +45,9 @@ class Sender extends \yii\db\ActiveRecord
             [['name', 'adress1', 'adress2', 'town'], 'string', 'max' => 255],
             [['zip'], 'string', 'max' => 5],
             [['state', 'country'], 'string', 'max' => 100],
+            [['css_class'],'string','max' => 40],
             [['logo'], 'string'],
-            [['logoUpload'], 'file', 'skipOnEmpty' => false, 'extensions' => 'png, jpg, jpeg'],
+            [['logoUpload'], 'file', 'skipOnEmpty' => true, 'extensions' => 'png, jpg, jpeg'],
         ];
     }
 

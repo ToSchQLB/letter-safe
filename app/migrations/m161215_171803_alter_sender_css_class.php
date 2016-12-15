@@ -2,20 +2,18 @@
 
 use yii\db\Migration;
 
-class m161214_192346_create_tag extends Migration
+class m161215_171803_alter_sender_css_class extends Migration
 {
-    const TAB_NAME = "tag";
+    const TABLE_NAME = 'sender';
+
     public function up()
     {
-        $this->createTable(self::TAB_NAME,[
-            'id'    => $this->primaryKey(),
-            'name'  => $this->string(45)
-        ]);
+        $this->addColumn(self::TABLE_NAME,'css_class',$this->string(20));
     }
 
     public function down()
     {
-        $this->dropTable(self::TAB_NAME);
+        $this->dropColumn(self::TABLE_NAME, 'css_class');
     }
 
     /*
