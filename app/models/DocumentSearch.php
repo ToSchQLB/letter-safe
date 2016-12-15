@@ -51,6 +51,10 @@ class DocumentSearch extends Document
 
         $this->load($params);
 
+        $dataProvider->sort->defaultOrder = [
+            'date' => SORT_DESC
+        ];
+
         if (!$this->validate()) {
             // uncomment the following line if you do not want to return any records when validation fails
             // $query->where('0=1');

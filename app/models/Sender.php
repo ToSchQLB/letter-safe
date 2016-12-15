@@ -47,7 +47,7 @@ class Sender extends \yii\db\ActiveRecord
             [['state', 'country'], 'string', 'max' => 100],
             [['css_class'],'string','max' => 40],
             [['logo'], 'string'],
-            [['logoUpload'], 'file', 'skipOnEmpty' => true, 'extensions' => 'png, jpg, jpeg'],
+            [['logoUpload'], 'image', 'skipOnEmpty' => true],
         ];
     }
 

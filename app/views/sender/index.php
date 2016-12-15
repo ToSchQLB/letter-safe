@@ -27,7 +27,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     $panelContent = "";
                     if(!empty($model->logo)){
                         $panelContent = <<<html
-                            <img src=".$logo" class="img-responsive">
+                            <img src=".$logo" class="img-responsive" style="max-height: 140px; margin: auto;">
 html;
                     } else {
                         $text = substr($model->name,0,30);

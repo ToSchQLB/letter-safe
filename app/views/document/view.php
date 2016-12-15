@@ -45,12 +45,18 @@ $this->params['breadcrumbs'][] = $this->title;
         } else {
             $data = json_decode(file_get_contents($folder_absolute . '/text.json'));
             foreach ($data as $page) {
-                $resource = new Imagick("{$folder_relative}/seite-".$page->page.".png");
+                if(count($data)<10)
+                    $resource = new Imagick("{$folder_relative}/seite-".$page->page.".png");
+                else
+                    $resource = new Imagick("{$folder_relative}/seite-".sprintf("%02d",$page->page).".png");
                 $width = $resource->getImageWidth();
                 $proportion = $width / $page->width * 0.75;
                 $w = $page->width * $proportion;
                 echo "<div class='text-center' style='padding: 20px; margin-bottom: 20px; background-color: #3c3c3c'>";
-                echo "<img src='{$folder_relative}/seite-".$page->page.".png' usemap='#mapSeite{$page->page}' width='{$w}'/>";
+                if(count($data)<10)
+                    echo "<img src='{$folder_relative}/seite-".$page->page.".png' usemap='#mapSeite{$page->page}' width='{$w}'/>";
+                else
+                    echo "<img src='{$folder_relative}/seite-".sprintf("%02d",$page->page).".png' usemap='#mapSeite{$page->page}' width='{$w}'/>";
                 echo "<map name='mapSeite{$page->page}'>";
                 foreach ($page->text as $text) {
                     $y1 = round($text->top * $proportion,0);
