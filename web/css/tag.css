@@ -1,0 +1,26 @@
+.tag_gold{
+    background-color: #ffcc00;
+    color: #000000;
+}
+
+a.tag_gold:hover{
+    color: #333333;
+}
+
+.tag_blue{
+    background-color: #337ab7;
+    color: #fff;
+}
+
+a.tag_blue:hover{
+    color: #eeeeee;
+}
+
+a.tag_orange{
+    background-color: #ff674c;
+    color: #ffffff;
+}
+
+a.tag_blue:hover{
+    color: #eeeeee;
+}

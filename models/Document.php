@@ -19,6 +19,7 @@ use Yii;
  * @property date $input_date
  *
  * @property Sender $sender
+ * @property DocumentHasTag[] $documentHasTags
  */
 class Document extends \yii\db\ActiveRecord
 {
@@ -66,4 +67,9 @@ class Document extends \yii\db\ActiveRecord
     {
         return $this->hasOne(Sender::className(), ['id' => 'sender_id']);
     }
+
+	public function getDocumentHasTags()
+	{
+		return $this->hasMany(DocumentHasTag::className(), ['document' => 'id']);
+	}
 }

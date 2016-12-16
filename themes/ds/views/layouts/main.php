@@ -28,6 +28,7 @@ use yii\helpers\Html;
         <link href="theme/dist/css/bootstrap-theme.css" rel="stylesheet">
 
         <link href="css/sender.css" rel="stylesheet">
+        <link href="css/tag.css" rel="stylesheet">
 
         <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->

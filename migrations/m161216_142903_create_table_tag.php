@@ -2,17 +2,21 @@
 
 use yii\db\Migration;
 
-class m161214_192346_add_sender_logo extends Migration
+class m161216_142903_create_table_tag extends Migration
 {
-    const TAB_NAME = "sender";
+	const TABLE_NAME = "tag";
     public function up()
     {
-        $this->addColumn(self::TAB_NAME,'logo',$this->string(255));
+		$this->createTable(self::TABLE_NAME,[
+			'id'    => $this->primaryKey(),
+			'name'  => $this->string(20),
+			'color' => $this->string(20)
+		]);
     }
 
     public function down()
     {
-        $this->renameColumn(self::TAB_NAME,'logo');
+        $this->dropTable(self::TABLE_NAME);
     }
 
     /*
