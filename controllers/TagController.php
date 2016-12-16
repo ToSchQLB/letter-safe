@@ -2,6 +2,9 @@
 
 namespace app\controllers;
 
+use app\models\Document;
+use app\models\DocumentHasTag;
+use app\models\DocumentSearch;
 use Yii;
 use app\models\Tag;
 use app\models\TagSearch;
@@ -104,6 +107,32 @@ class TagController extends Controller
         $this->findModel($id)->delete();
 
         return $this->redirect(['index']);
+    }
+
+    public function actionAddToDocument($document,$tag)
+    {
+        if (DocumentHasTag::find()->where(['document' => $document, 'tag' => $tag])->count() == 0) {
+            $model = new DocumentHasTag();
+            $model->document = $document;
+            $model->tag = $tag;
+            $model->save();
+        }
+        if(Yii::$app->request->isAjax)
+            echo $this->renderAjax('/document/_tags',['model'=>Document::findOne($document)]);
+        else
+            echo $this->render('/document/view',['model'=>Document::findOne($document),'mode'=>'view']);
+    }
+
+    public function actionRemoveFromDocument($document,$tag)
+    {
+        $model = DocumentHasTag::findOne(['document'=>$document,'tag'=>$tag]);
+        if(!is_null($model)){
+            $model->delete();
+        }
+        if(Yii::$app->request->isAjax)
+            echo $this->renderAjax('/document/_tags',['model'=>Document::findOne($document)]);
+        else
+            echo $this->render('/document/view',['model'=>Document::findOne($document),'mode'=>'view']);
     }
 
     /**

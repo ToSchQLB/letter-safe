@@ -1,9 +1,16 @@
+.show_on_hover{
+    display: none;
+}
+
+.show_on_hover:hover{
+    display: flex;
+}
 .tag_gold{
     background-color: #ffcc00;
     color: #000000;
 }
 
-a.tag_gold:hover{
+.tag_gold:hover{
     color: #333333;
 }
 
@@ -12,15 +19,15 @@ a.tag_gold:hover{
     color: #fff;
 }
 
-a.tag_blue:hover{
+tag_blue:hover{
     color: #eeeeee;
 }
 
-a.tag_orange{
+.tag_orange{
     background-color: #ff674c;
     color: #ffffff;
 }
 
-a.tag_blue:hover{
+tag_orange:hover{
     color: #eeeeee;
 }

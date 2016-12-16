@@ -30,7 +30,7 @@ use yii\helpers\Html;
             ['label' => '<i class="fa fa-home" aria-hidden="true"></i> '.Yii::t('app','Home'), 'url' => ['/site/index']],
             ['label' => '<i class="fa fa-file-text" aria-hidden="true"></i> ' .Yii::t('app','Documents'), 'url' => ['/document/index']],
             ['label' => '<i class="fa fa-building" aria-hidden="true"></i> '.Yii::t('app','Senders'), 'url' => ['/sender/index']],
-            ['label' => '<i class="fa fa-tags" aria-hidden="true"></i>'. Yii::t('app','Tags'), 'url'=>'#'],
+            ['label' => '<i class="fa fa-tags" aria-hidden="true"></i>'. Yii::t('app','Tags'), 'url'=>['/tag/index']],
             ['label' => '<i class="fa fa-plus-square" aria-hidden="true"></i> ' .Yii::t('app','Add Document'), 'url' => ['/document/create']]/*,
                 Yii::$app->user->isGuest ? (
                 ['label' => 'Login', 'url' => ['/site/login']]

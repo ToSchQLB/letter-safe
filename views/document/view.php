@@ -14,6 +14,9 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php
         $folder_relative = 'data/'.$model->folder;
         $folder_absolute = Yii::$app->basePath . "/web/data/". $model->folder;
+        if(isset(Yii::$app->params['mediaPath'])){
+            $folder_absolute = Yii::$app->params['mediaPath'].$model->folder;
+        }
         if(file_exists($folder_absolute.'/data.xml')) {
 
             $xml = file_get_contents($folder_absolute . '/data.xml');    // gets XML content from file
@@ -46,9 +49,9 @@ $this->params['breadcrumbs'][] = $this->title;
             $data = json_decode(file_get_contents($folder_absolute . '/text.json'));
             foreach ($data as $page) {
                 if(count($data)<10)
-                    $resource = new Imagick("{$folder_relative}/seite-".$page->page.".png");
+                    $resource = new Imagick("{$folder_absolute}/seite-".$page->page.".png");
                 else
-                    $resource = new Imagick("{$folder_relative}/seite-".sprintf("%02d",$page->page).".png");
+                    $resource = new Imagick("{$folder_absolute}/seite-".sprintf("%02d",$page->page).".png");
                 $width = $resource->getImageWidth();
                 $proportion = $width / $page->width * 0.75;
                 $w = $page->width * $proportion;

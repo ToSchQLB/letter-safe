@@ -77,6 +77,9 @@ class DocumentController extends Controller
 		$folder = uniqid();
         $basePath = Yii::$app->basePath;
         $folder_absolute = $basePath . '/web/data/'.$folder;
+        if(isset(Yii::$app->params['mediaPath'])){
+            $folder_absolute = Yii::$app->params['mediaPath'].$folder;
+        }
         mkdir( $folder_absolute);
         chmod( $folder_absolute, 0700);
 		$inFile = $folder_absolute.'/in';
