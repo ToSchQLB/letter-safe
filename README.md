@@ -1,6 +1,6 @@
 # letter-safe
 
-Letter save becomes a personal document management
+Letter-safe is still under development and will be a personal document management.
 
 ###Requires
 - tesseract-ocr
