@@ -28,8 +28,12 @@ class ImportController extends Controller
     public function actionText($id)
     {
         $document = Document::findOne($id);
-        if(file_exists(\Yii::$app->basePath.'/web/data/'.$document->folder.'/text.txt')){
-            $data = file_get_contents(\Yii::$app->basePath.'/web/data/'.$document->folder.'/text.txt');
+        $basedir = \Yii::$app->basePath.'/web/data/'.$document->folder;
+        if(isset(Yii::$app->params['mediaPath'])){
+            $basedir = \Yii::$app->params['mediaPath'].$document->folder;
+        }
+        if(file_exists($basedir.'/text.txt')){
+            $data = file_get_contents($basedir.'/text.txt');
             echo 'Text: '.$data;
             $document->full_text = $data;
             $document->save();

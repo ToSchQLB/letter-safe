@@ -22,17 +22,32 @@ $this->params['breadcrumbs'][] = $this->title;
               </p>
 		      <?= ListView::widget([
 			      'dataProvider' => $dataProvider,
-			      'itemOptions' => ['class' => 'col-md-4 text-center'],
+			      'itemOptions' => ['class' => 'col-md-4 btn'],
 			      'itemView' => function ($model, $key, $index, $widget) {
-
-				      return Html::a(
+                      $res = '<div class="btn-lg tag_'.$model->color.'" style="padding:5px 0px; height: 33px"> ';
+                      $res .= '<div class="col-md-6 text-left">';
+				      $res .= Html::a(
 				          '<i class="fa fa-tag" aria-hidden="true"></i> '.Html::encode($model->name)
                           ,['view', 'id' => $model->id]
                           ,[
-                              'class'=>'btn btn-lg tag_'.$model->color,
+                              'class'=>'tag_'.$model->color. ' text-left',
                               'style'=>'width: 95%; margin: auto;'
                           ]
                       );
+                      $res .= '</div>';
+                      $count = count($model->documentHasTags);
+                      $link_edit = \yii\helpers\Url::to(['/tag/update','id'=>$model->id]);
+                      $res .= <<<html
+                        <div class="col-md-3">$count</div>
+                        <div class="col-md-3 text-right">
+                            <a href="$link_edit" class="tag_$model->color"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a> 
+                            <i class="fa fa-trash-o" aria-hidden="true"></i>
+                        </div>
+html;
+
+                      $res .='</div>';
+
+                      return $res;
 
 			      },
 		      ]) ?>
