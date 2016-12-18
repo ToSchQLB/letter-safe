@@ -54,6 +54,7 @@ class DocumentSearch extends Document
         $dataProvider->sort->defaultOrder = [
             'date' => SORT_DESC
         ];
+        $dataProvider->pagination->defaultPageSize = 50;
 
         if (!$this->validate()) {
             // uncomment the following line if you do not want to return any records when validation fails
