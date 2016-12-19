@@ -77,7 +77,7 @@ class ImportController extends Controller
         $matches = [];
         preg_match_all("/(gesamt|brutto| )betrag[ :,a-z]*([\d,.]+)[\W]{0,1}[e,€]/i",$fulltext,$matches);
         if(count($matches[2]) > 0){
-            $document->document_type_id = 2;
+            $document->document_type_id = 1;
             $document->save();
             $docValue = new DocumentValue();
             $docValue->document_id = $document->id;
