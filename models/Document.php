@@ -17,9 +17,12 @@ use Yii;
  * @property string $input_filename
  * @property string $input_file_extentsion
  * @property date $input_date
+ * @property int document_type_id
  *
  * @property Sender $sender
+ * @property DocumentType $documentType
  * @property DocumentHasTag[] $documentHasTags
+ * @property DocumentValue[] $documentValues
  */
 class Document extends \yii\db\ActiveRecord
 {
@@ -68,8 +71,26 @@ class Document extends \yii\db\ActiveRecord
         return $this->hasOne(Sender::className(), ['id' => 'sender_id']);
     }
 
+	/**
+	 * @return \yii\db\ActiveQuery
+	 */
+	public function getDocumentType()
+	{
+		return $this->hasOne(DocumentType::className(), ['id' => 'document_type_id']);
+    }
+
+	/**
+	 * @return \yii\db\ActiveQuery
+	 */
 	public function getDocumentHasTags()
 	{
-		return $this->hasMany(DocumentHasTag::className(), ['document' => 'id']);
+		return $this->hasMany(DocumentHasTag::className(), ['document_id' => 'id']);
+	}
+
+	/**
+	 * @return \yii\db\ActiveQuery
+	 */
+	public function getDocumentValues(){
+		return $this->hasMany(DocumentValue::className(), ['document_id' => 'id']);
 	}
 }

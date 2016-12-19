@@ -12,7 +12,7 @@
     <div class="col-md-12">
     <?php
     foreach ($model->documentHasTags as $tag):?>
-        <a data-pjax href="<?= \yii\helpers\Url::to(['tag/remove-from-document','document'=>$tag->document,'tag'=>$tag->tag])?>" style="margin-bottom: 5px" class="btn btn-sm tag_<?= $tag->tag0->color?>">
+        <a data-pjax href="<?= \yii\helpers\Url::to(['tag/remove-from-document','document'=>$tag->document,'tag'=>$tag->tag_id])?>" style="margin-bottom: 5px" class="btn btn-sm tag_<?= $tag->tag->color?>">
             <i class="fa fa-tag"></i> <?= $tag->tag0->name ?>
         </a>
     <?php endforeach; ?>

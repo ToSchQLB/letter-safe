@@ -50,6 +50,6 @@ class Tag extends \yii\db\ActiveRecord
      */
     public function getDocumentHasTags()
     {
-        return $this->hasMany(DocumentHasTag::className(), ['tag' => 'id']);
+        return $this->hasMany(DocumentHasTag::className(), ['tag_id' => 'id']);
     }
 }

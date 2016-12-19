@@ -7,6 +7,7 @@ use Yii;
 use app\models\Document;
 use app\models\DocumentSearch;
 use yii\db\Expression;
+use yii\db\Query;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -85,9 +86,9 @@ class DocumentController extends Controller
 		$inFile = $folder_absolute.'/in';
         $inFilePdf = $folder_absolute.'/in.pdf';
 
-        $letter = new Document();
-        $letter->folder = $folder;
-        $letter->save();
+        $document = new Document();
+        $document->folder = $folder;
+        $document->save();
 
         $file_transfer_succes = true;
         foreach ($files as $index => $file) {
@@ -98,42 +99,42 @@ class DocumentController extends Controller
             }else{
                 $file->saveAs($inFilePdf);
                 chmod($inFilePdf, 0600);
-                Queue::createNewJob("php {$basePath}/yii import/status {$letter->id} 1");
+                Queue::createNewJob("php {$basePath}/yii import/status {$document->id} 1");
                 Queue::createNewJob("convert -density 300 $inFilePdf -background white -alpha remove {$folder_absolute}/tmp.tiff");
-                Queue::createNewJob("php {$basePath}/yii import/status {$letter->id} 20");
+                Queue::createNewJob("php {$basePath}/yii import/status {$document->id} 20");
             }
         }
         if(strcmp($files[0]->extension,'pdf')!=0) {
-            Queue::createNewJob("php {$basePath}/yii import/status {$letter->id} 1");
+            Queue::createNewJob("php {$basePath}/yii import/status {$document->id} 1");
             if (strcmp($files[0]->extension, 'tiff') != 0) {
                 Queue::createNewJob("convert {$folder_absolute}/*.{$files[0]->extension} {$folder_absolute}/tmp.tiff");
-                Queue::createNewJob("php {$basePath}/yii import/status {$letter->id} 10");
+                Queue::createNewJob("php {$basePath}/yii import/status {$document->id} 10");
             }
             Queue::createNewJob("tesseract -l deu -psm 1 {$folder_absolute}/tmp.tiff {$folder_absolute}/in pdf");
-            Queue::createNewJob("php {$basePath}/yii import/status {$letter->id} 20");
+            Queue::createNewJob("php {$basePath}/yii import/status {$document->id} 20");
         }
         Queue::createNewJob("tesseract -l deu -psm 1 {$folder_absolute}/tmp.tiff {$folder_absolute}/text hocr");
-        Queue::createNewJob("php {$basePath}/yii import/status {$letter->id} 30");
+        Queue::createNewJob("php {$basePath}/yii import/status {$document->id} 30");
         Queue::createNewJob("php {$basePath}/yii hocr/execute \"{$folder_absolute}/text.hocr\" \"{$folder_absolute}/text.json\"");
-        Queue::createNewJob("php {$basePath}/yii import/status {$letter->id} 40");
+        Queue::createNewJob("php {$basePath}/yii import/status {$document->id} 40");
         Queue::createNewJob("tesseract -l deu -psm 1 {$folder_absolute}/tmp.tiff {$folder_absolute}/text txt");
-        Queue::createNewJob("sudo rm {$basePath}/tmp.tiff");
-        Queue::createNewJob("php {$basePath}/yii import/status {$letter->id} 41");
-        Queue::createNewJob("php {$basePath}/yii import/text {$letter->id}");
-        Queue::createNewJob("php {$basePath}/yii import/status {$letter->id} 42");
+        Queue::createNewJob("php {$basePath}/yii import/status {$document->id} 41");
+        Queue::createNewJob("php {$basePath}/yii import/text {$document->id}");
+        Queue::createNewJob("php {$basePath}/yii import/status {$document->id} 42");
         Queue::createNewJob("convert -thumbnail 325 -background white -alpha remove " . $inFilePdf . "[0] " . $folder_absolute . "/thumb.jpeg");
-        Queue::createNewJob("php {$basePath}/yii import/status {$letter->id} 50");
+        Queue::createNewJob("php {$basePath}/yii import/status {$document->id} 50");
         Queue::createNewJob("pdftoppm -png " . $inFilePdf . " " . $folder_absolute . "/seite");
-        Queue::createNewJob("php {$basePath}/yii import/status {$letter->id} 60");
+        Queue::createNewJob("php {$basePath}/yii import/status {$document->id} 60");
+		Queue::createNewJob("php {$basePath}/yii import/delete-DeleteTiff {$document->id}");
 //            echo exec('php '.Yii::$app->basePath.'/yii queue/execute');// > /dev/null 2>&1 &');
 
 
 
-        $letter->input_filename = $files[0]->baseName;
-        $letter->input_file_extension = $files[0]->extension;
-        $letter->input_date = new Expression('now()');
-//		$letter->folder = $folder;
-		$letter->save();
+        $document->input_filename = $files[0]->baseName;
+        $document->input_file_extension = $files[0]->extension;
+        $document->input_date = new Expression('now()');
+//		$document->folder = $folder;
+		$document->save();
 
 
     }

@@ -5,22 +5,23 @@ namespace app\models;
 use Yii;
 
 /**
- * This is the model class for table "document_has_tag".
+ * This is the model class for table "document_value".
  *
  * @property integer $document_id
- * @property integer $tag_id
+ * @property integer $field_id
+ * @property string $value
  *
- * @property Tag $tag
+ * @property DocumentField $field
  * @property Document $document
  */
-class DocumentHasTag extends \yii\db\ActiveRecord
+class DocumentValue extends \yii\db\ActiveRecord
 {
     /**
      * @inheritdoc
      */
     public static function tableName()
     {
-        return 'document_has_tag';
+        return 'document_value';
     }
 
     /**
@@ -29,8 +30,10 @@ class DocumentHasTag extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['document_id', 'tag_id'], 'integer'],
-            [['tag_id'], 'exist', 'skipOnError' => true, 'targetClass' => Tag::className(), 'targetAttribute' => ['tag_id' => 'id']],
+            [['document_id', 'field_id'], 'required'],
+            [['document_id', 'field_id'], 'integer'],
+            [['value'], 'string', 'max' => 100],
+            [['field_id'], 'exist', 'skipOnError' => true, 'targetClass' => DocumentField::className(), 'targetAttribute' => ['field_id' => 'id']],
             [['document_id'], 'exist', 'skipOnError' => true, 'targetClass' => Document::className(), 'targetAttribute' => ['document_id' => 'id']],
         ];
     }
@@ -41,17 +44,18 @@ class DocumentHasTag extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'document_id' => 'Document',
-            'tag_id' => 'Tag',
+            'document_id' => Yii::t('app', 'Document ID'),
+            'field_id' => Yii::t('app', 'Field ID'),
+            'value' => Yii::t('app', 'Value'),
         ];
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getTag()
+    public function getField()
     {
-        return $this->hasOne(Tag::className(), ['id' => 'tag_id']);
+        return $this->hasOne(DocumentField::className(), ['id' => 'field_id']);
     }
 
     /**

@@ -20,14 +20,17 @@
         <?= \yii\widgets\DetailView::widget([
             'model' => $model,
             'attributes' => [
-                //'id'
+                [
+                    'title' => Yii::t('app','Document Type'),
+                    'value' => $model->documentType->name
+                ],
                 [
                     'attribute' => 'sender_id',
                     'format' => 'raw',
                     'value' => isset($model->sender_id) ? $model->sender->getFullAddress() : null
                 ],
 //                'sender_id',
-                'title',
+                //'title',
                 [
                     'format' => ['date','php:d.m.Y'],
                     'attribute' => 'date'

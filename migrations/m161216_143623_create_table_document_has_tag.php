@@ -10,11 +10,12 @@ class m161216_143623_create_table_document_has_tag extends Migration
     public function up()
     {
 		$this->createTable(self::TABLE_NAME,[
-			'document'  => $this->integer(),
-			'tag'       => $this->integer()
+			'document_id'  => $this->integer(),
+			'tag_id'       => $this->integer()
 		]);
-		$this->addForeignKey('fk_document_document_has_tag',self::TABLE_NAME,'document',self::TABLE_DOCUMENT,'id','CASCADE','CASCADE');
-	    $this->addForeignKey('fk_tag_document_has_tag',self::TABLE_NAME,'tag',self::TABLE_TAG,'id','CASCADE','CASCADE');
+	    $this->addPrimaryKey('pk_document_has_tag',self::TABLE_NAME,['document_id','tag_id']);
+		$this->addForeignKey('fk_document_document_has_tag',self::TABLE_NAME,'document_id',self::TABLE_DOCUMENT,'id','CASCADE','CASCADE');
+	    $this->addForeignKey('fk_tag_document_has_tag',self::TABLE_NAME,'tag_id',self::TABLE_TAG,'id','CASCADE','CASCADE');
     }
 
     public function down()

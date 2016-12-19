@@ -32,6 +32,9 @@ use yii\widgets\ActiveForm;
         ?>
     </div>
 
+    <?= $form->field($model, 'document_type_id')->dropDownList(
+        \yii\helpers\ArrayHelper::map(\app\models\DocumentType::find()->asArray()->all(),'id','name')
+    ) ?>
 
     <?= $form->field($model, 'title')->textInput(['maxlength' => true,"onclick"=>"fillInput('document-title')"]) ?>
 
