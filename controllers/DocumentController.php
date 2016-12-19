@@ -125,7 +125,9 @@ class DocumentController extends Controller
         Queue::createNewJob("php {$basePath}/yii import/status {$document->id} 50");
         Queue::createNewJob("pdftoppm -png " . $inFilePdf . " " . $folder_absolute . "/seite");
         Queue::createNewJob("php {$basePath}/yii import/status {$document->id} 60");
-		Queue::createNewJob("php {$basePath}/yii import/delete-DeleteTiff {$document->id}");
+		Queue::createNewJob("php {$basePath}/yii import/delete-tiff {$document->id}");
+		Queue::createNewJob("php {$basePath}/yii import/analyse-sender {$document->id}");
+        Queue::createNewJob("php {$basePath}/yii import/detect-document-type {$document->id}");
 //            echo exec('php '.Yii::$app->basePath.'/yii queue/execute');// > /dev/null 2>&1 &');
 
 

@@ -21,8 +21,8 @@
             'model' => $model,
             'attributes' => [
                 [
-                    'title' => Yii::t('app','Document Type'),
-                    'value' => $model->documentType->name
+                    'label' => Yii::t('app','Document Type'),
+                    'value' => isset($model->documentType) ? $model->documentType->name : null,
                 ],
                 [
                     'attribute' => 'sender_id',

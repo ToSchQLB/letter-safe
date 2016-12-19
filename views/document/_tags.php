@@ -13,7 +13,7 @@
     <?php
     foreach ($model->documentHasTags as $tag):?>
         <a data-pjax href="<?= \yii\helpers\Url::to(['tag/remove-from-document','document'=>$tag->document,'tag'=>$tag->tag_id])?>" style="margin-bottom: 5px" class="btn btn-sm tag_<?= $tag->tag->color?>">
-            <i class="fa fa-tag"></i> <?= $tag->tag0->name ?>
+            <i class="fa fa-tag"></i> <?= $tag->tag->name ?>
         </a>
     <?php endforeach; ?>
     </div>
@@ -23,7 +23,7 @@
     <div class="col-md-6">
         <?= \yii\helpers\Html::hiddenInput('document',$model->id) ?>
         <?= \yii\helpers\Html::dropDownList('tag',null,\yii\helpers\ArrayHelper::map(
-            app\models\Tag::find()->where(['not',['in','id',(new \yii\db\Query)->select('tag')->from('document_has_tag')->where(['document'=>$model->id])]])->all(),
+            app\models\Tag::find()->where(['not',['in','id',(new \yii\db\Query)->select('tag_id')->from('document_has_tag')->where(['document_id'=>$model->id])]])->asArray()->all(),
             'id',
             'name'
         )); ?>
