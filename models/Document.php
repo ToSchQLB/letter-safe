@@ -45,6 +45,7 @@ class Document extends \yii\db\ActiveRecord
             [['title'], 'string', 'max' => 255],
             [['folder'], 'string', 'max' => 100],
             [['sender_id'], 'exist', 'skipOnError' => true, 'targetClass' => Sender::className(), 'targetAttribute' => ['sender_id' => 'id']],
+	        [['document_type_id'], 'exist', 'skipOnError' => true, 'targetClass' => DocumentType::className(), 'targetAttribute' => ['document_type_id' => 'id']],
             [['date'], 'string']
         ];
     }

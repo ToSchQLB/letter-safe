@@ -42,6 +42,58 @@
     </div>
 </div>
 
+<?php if(!is_null($model->documentType)):
+	if(!is_null($model->documentType->documentTypeHasFields)): ?>
+<div class="panel panel-default">
+	  <div class="panel-heading">
+			<h3 class="panel-title"><?= Yii::t('app','documnet information')?></h3>
+	  </div>
+	  <div class="panel-body">
+          <?= \yii\helpers\Html::beginForm(['/document/save-values'],'POST',['id'=>'documentValueForm']) ?>
+          <?php foreach ($model->documentType->documentTypeHasFields as $index =>  $field):
+	          $documentValue = \app\models\DocumentValue::findOne([
+	                'document_id'=>$model->id,
+		            'field_id' => $field->field_id
+	          ]);
+	          if(is_null($documentValue)){
+		          $documentValue = new \app\models\DocumentValue();
+	          }
+          ?>
+              <?= \yii\helpers\Html::hiddenInput("documentValue[$index][document_id]",$model->id) ?>
+              <?= \yii\helpers\Html::hiddenInput("documentValue[$index][field_id]",$field->field_id) ?>
+	          <div class="form-group">
+		          <label for="documentValue-value-<?= $field->field->name ?>" class="control-label"><?= $field->field->name ?></label>
+                <?= \yii\bootstrap\Html::activeTextInput(
+	                $documentValue,
+	                'value',
+	                [
+	                	'name'=>"documentValue[$index][value]",
+		                'class'=>'form-control document-value',
+		                'id' => 'documentValue-value-'.$field->field->name,
+	                    "onclick"=>"fillInput('documentValue-value-".$field->field->name."')"
+	                ]
+                ) ?>
+	          </div>
+          <?php endforeach; ?>
+          <?= \yii\helpers\Html::endForm() ?>
+	  </div>
+</div>
+<?php endif; endif;
+$ajaxUrl = \yii\helpers\Url::to(['/document/save-values']);
+$js = <<<js
+	$('.document-value').change(function() {
+		 sendDocumentValueForm();
+	});
+
+	function sendDocumentValueForm(){
+		$.post('$ajaxUrl', $('form#documentValueForm').serialize()); 
+	}
+js;
+	$this->registerJs($js,\yii\web\View::POS_END);
+?>
+
+
+
 <div class="panel panel-info">
     <div class="panel-heading">
         <h3 class="panel-title"><?= Yii::t('app','Tags') ?></h3>

@@ -90,7 +90,7 @@ class ImportController extends Controller
 	public function actionDeleteTiff($id){
 		$document = Document::findOne($id);
 		$basedir = \Yii::$app->basePath.'/web/data/'.$document->folder;
-		if(isset(Yii::$app->params['mediaPath'])){
+		if(isset(\Yii::$app->params['mediaPath'])){
 			$basedir = \Yii::$app->params['mediaPath'].$document->folder;
 		}
 		if(file_exists($basedir.'/temp.tiff')){

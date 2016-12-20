@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use app\models\DocumentValue;
 use app\models\Queue;
 use Yii;
 use app\models\Document;
@@ -226,6 +227,22 @@ class DocumentController extends Controller
         $model->delete();
 
         return $this->redirect(['index']);
+    }
+
+    public function actionSaveValues(){
+	    if(isset($_POST['documentValue'])){
+//		    print_r($_POST['documentValue']);
+		    foreach ($_POST['documentValue'] as $attributes){
+			    $dv = DocumentValue::findOne(['document_id'=>$attributes['document_id'],'field_id'=>$attributes['field_id']]);
+			    if(is_null($dv)){
+				    $dv = new DocumentValue();
+			    }
+			    $dv->setAttributes($attributes);
+			    $dv->save();
+
+			    print_r($dv->attributes);
+		    }
+	    }
     }
 
     /**

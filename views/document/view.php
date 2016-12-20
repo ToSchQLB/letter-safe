@@ -86,9 +86,37 @@ $this->params['breadcrumbs'][] = $this->title;
 
 </div>
 <div class="col-lg-4 col-lg-offset-8">
-
+    <?= Html::hiddenInput('activeInput') ?>
     <?= $this->render($mode == 'view' ? '_view' : '_update', [
         'model' => $model,
     ]) ?>
 
 </div>
+
+<?php
+$js = <<<js
+    function fillInput(name) {
+        $('input[name="activeInput"]').val(name); 
+    }
+
+    function writeToInput(text) {
+        var inputField = $('#'+$('input[name="activeInput"]').val());
+        alt = inputField.val();
+        if(alt == '')
+            inputField.val(text);
+        else
+            inputField.val(alt + ' ' + text);
+            
+        if($('input[name="activeInput"]').val() == 'document-date'){
+            $('#document-date-disp').val(text);
+            $('#document-date-disp').change();
+        }
+        
+        if(inputField.hasClass('document-value')){
+            sendDocumentValueForm();
+        }
+    }
+js;
+
+$this->registerJs($js,\yii\web\View::POS_END);
+

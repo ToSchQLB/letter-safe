@@ -33,7 +33,10 @@ use yii\widgets\ActiveForm;
     </div>
 
     <?= $form->field($model, 'document_type_id')->dropDownList(
-        \yii\helpers\ArrayHelper::map(\app\models\DocumentType::find()->asArray()->all(),'id','name')
+        \yii\helpers\ArrayHelper::map(\app\models\DocumentType::find()->asArray()->all(),'id','name'),
+        [
+            'prompt'=>Yii::t('app', '_empty')
+        ]
     ) ?>
 
     <?= $form->field($model, 'title')->textInput(['maxlength' => true,"onclick"=>"fillInput('document-title')"]) ?>
@@ -46,7 +49,7 @@ use yii\widgets\ActiveForm;
         ]
     ]); ?>
 
-    <?= Html::hiddenInput('activeInput') ?>
+
 
     <?php //$form->field($model, 'folder')->textInput(['maxlength' => true]) ?>
 
@@ -59,22 +62,6 @@ use yii\widgets\ActiveForm;
     <?php
     $url = \yii\helpers\Url::to(['/sender/ajax-create']);
     $js = <<<JS
-function fillInput(name) {
-    $('input[name="activeInput"]').val(name); 
-}
-
-function writeToInput(text) {
-    alt = $('#'+$('input[name="activeInput"]').val()).val();
-    if(alt == '')
-        $('#'+$('input[name="activeInput"]').val()).val(text);
-    else
-        $('#'+$('input[name="activeInput"]').val()).val(alt + ' ' + text);
-        
-    if($('input[name="activeInput"]').val() == 'document-date'){
-        $('#document-date-disp').val(text);
-        $('#document-date-disp').change();
-    }
-}
 
 function toggleSenderForm() {
   $('.sender-button').toggle();
