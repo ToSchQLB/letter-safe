@@ -79,13 +79,13 @@ class ImportController extends Controller
         $documentTypeDetected = false;
 
         #Rechnung
-        if(count(preg_grep("/rechnung/i", explode("\n",$fulltext)))>0){
+        if(count(preg_grep("/(rechnung|barverkauf)/i", explode("\n",$fulltext)))>0){
             $dt = DocumentType::findOne(['name'=>'Rechnung']);
             $matches = [];
 
             #Rechnungsbetrag
-            preg_match_all("/(gesamt|brutto| )betrag[ :,a-z]*([\d,.]+)[\W]{0,1}[e,€]/i",$fulltext,$matches);
-            if(count($matches[2]) > 0){
+            preg_match_all("/(gesamt|brutto|end| )(betrag|summe)[ :,a-z]*([\d,.]+)[\W]{0,1}[e,€]{0,1}/i",$fulltext,$matches);
+            if(count($matches[3]) > 0){
 
                 Console::moveCursorNextLine();
                 Console::moveCursorNextLine();
@@ -97,32 +97,32 @@ class ImportController extends Controller
                 $docValue = new DocumentValue();
                 $docValue->document_id = $document->id;
                 $docValue->field_id = DocumentField::findOne(['name'=>'Rechnungsbetrag'])->id;
-                $docValue->value = $matches[2][0];
+                $docValue->value = $matches[3][0];
                 $docValue->save();
                 $documentTypeDetected = true;
-                Console::stdout('Betrag: '.$matches[2][0]);
+                Console::stdout('Betrag: '.$matches[3][0]);
                 Console::moveCursorNextLine();
             }
 
             if($documentTypeDetected){
                 # Rechnungsnummer
                 $matches = [];
-                preg_match_all("/rechnung(s-nr|snummer)[\W\s]*([\w-\/]*)/i",$fulltext,$matches);
-                if(count($matches[2])>0){
+                preg_match_all("/(rechnung|beleg|be1eg)(nr|nummer|s-nr|snummer)[\W\s]*([\w-\/]*)/i",$fulltext,$matches);
+                if(count($matches[3])>0){
                     $document->document_type_id = $dt->id;
                     $document->save();
                     $docValue = new DocumentValue();
                     $docValue->document_id = $document->id;
                     $docValue->field_id = DocumentField::findOne(['name'=>'Rechnungsnummer'])->id;
-                    $docValue->value = $matches[2][0];
+                    $docValue->value = $matches[3][0];
                     $docValue->save();
-                    Console::stdout('Rechnungsnummer: '.$matches[2][0]);
+                    Console::stdout('Rechnungsnummer: '.$matches[3][0]);
                     Console::moveCursorNextLine();
                 }
 
                 #Kundennummer
                 $matches = [];
-                preg_match_all("/(kunden|mitglied)(s-nr|snummer|-nr|nummer)[\W\s]*([\w-\/]*)/i",$fulltext,$matches);
+                preg_match_all("/(kd|kunden|mitglied)(s-nr|snummer|-nr|nummer)[\W\s]*([\w-\/]*)/i",$fulltext,$matches);
                 if(count($matches[2])>0){
                     $document->document_type_id = $dt->id;
                     $document->save();

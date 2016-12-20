@@ -85,7 +85,7 @@ $this->params['breadcrumbs'][] = $this->title;
 <!--    </div>-->
 
 </div>
-<div class="col-lg-4 col-lg-offset-8" style="margin-top: -20px; padding-top: 10px; height: calc(100% - 120px); overflow-y: scroll;position: absolute;">
+<div class="col-lg-4 col-lg-offset-8" style="margin-top: -20px; padding: 0px; height: calc(100% - 120px); overflow-y: scroll;position: absolute;">
     <?= Html::hiddenInput('activeInput') ?>
     <?= $this->render($mode == 'view' ? '_view' : '_update', [
         'model' => $model,
