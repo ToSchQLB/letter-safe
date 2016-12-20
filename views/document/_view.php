@@ -44,7 +44,7 @@
 
 <?php if(!is_null($model->documentType)):
 	if(!is_null($model->documentType->documentTypeHasFields)): ?>
-<div class="panel panel-default">
+<div class="panel panel-default" style="margin-top: -40px;">
 	  <div class="panel-heading">
 			<h3 class="panel-title"><?= Yii::t('app','documnet information')?></h3>
 	  </div>
@@ -94,7 +94,7 @@ js;
 
 
 
-<div class="panel panel-info">
+<div class="panel panel-info" style="margin-top: -40px;">
     <div class="panel-heading">
         <h3 class="panel-title"><?= Yii::t('app','Tags') ?></h3>
     </div>
