@@ -12,6 +12,7 @@ namespace app\commands;
 use app\components\HocrParser;
 use app\components\HocrPaser;
 use app\models\Document;
+use app\models\DocumentField;
 use app\models\DocumentType;
 use app\models\DocumentValue;
 use app\models\Sender;
@@ -74,16 +75,81 @@ class ImportController extends Controller
     public function actionDetectDocumentType($id){
         $document = Document::findOne($id);
         $fulltext = $document->full_text;
-        $matches = [];
-        preg_match_all("/(gesamt|brutto| )betrag[ :,a-z]*([\d,.]+)[\W]{0,1}[e,€]/i",$fulltext,$matches);
-        if(count($matches[2]) > 0){
-            $document->document_type_id = 1;
-            $document->save();
-            $docValue = new DocumentValue();
-            $docValue->document_id = $document->id;
-            $docValue->field_id = 2;
-            $docValue->value = $matches[2][0];
-            $docValue->save();
+
+        $documentTypeDetected = false;
+
+        #Rechnung
+        if(count(preg_grep("/rechnung/i", explode("\n",$fulltext)))>0){
+            $dt = DocumentType::findOne(['name'=>'Rechnung']);
+            $matches = [];
+
+            #Rechnungsbetrag
+            preg_match_all("/(gesamt|brutto| )betrag[ :,a-z]*([\d,.]+)[\W]{0,1}[e,€]/i",$fulltext,$matches);
+            if(count($matches[2]) > 0){
+
+                Console::moveCursorNextLine();
+                Console::moveCursorNextLine();
+                Console::stdout('RECHNUNG:');
+                Console::moveCursorNextLine();
+                Console::moveCursorNextLine();
+                $document->document_type_id = $dt->id;
+                $document->save();
+                $docValue = new DocumentValue();
+                $docValue->document_id = $document->id;
+                $docValue->field_id = DocumentField::findOne(['name'=>'Rechnungsbetrag'])->id;
+                $docValue->value = $matches[2][0];
+                $docValue->save();
+                $documentTypeDetected = true;
+                Console::stdout('Betrag: '.$matches[2][0]);
+                Console::moveCursorNextLine();
+            }
+
+            if($documentTypeDetected){
+                # Rechnungsnummer
+                $matches = [];
+                preg_match_all("/rechnung(s-nr|snummer)[\W\s]*([\w-\/]*)/i",$fulltext,$matches);
+                if(count($matches[2])>0){
+                    $document->document_type_id = $dt->id;
+                    $document->save();
+                    $docValue = new DocumentValue();
+                    $docValue->document_id = $document->id;
+                    $docValue->field_id = DocumentField::findOne(['name'=>'Rechnungsnummer'])->id;
+                    $docValue->value = $matches[2][0];
+                    $docValue->save();
+                    Console::stdout('Rechnungsnummer: '.$matches[2][0]);
+                    Console::moveCursorNextLine();
+                }
+
+                #Kundennummer
+                $matches = [];
+                preg_match_all("/(kunden|mitglied)(s-nr|snummer|-nr|nummer)[\W\s]*([\w-\/]*)/i",$fulltext,$matches);
+                if(count($matches[2])>0){
+                    $document->document_type_id = $dt->id;
+                    $document->save();
+                    $docValue = new DocumentValue();
+                    $docValue->document_id = $document->id;
+                    $docValue->field_id = DocumentField::findOne(['name'=>'Kundennummer'])->id;
+                    $docValue->value = $matches[3][0];
+                    $docValue->save();
+                    Console::stdout('Kundennummer: '.$matches[3][0]);
+                    Console::moveCursorNextLine();
+                }
+
+                #Auftragsnummer
+                $matches = [];
+                preg_match_all("/auftrag(s-nr|snummer)[\W\s]*([\w-\/]*)/i",$fulltext,$matches);
+                if(count($matches[2])>0){
+                    $document->document_type_id = $dt->id;
+                    $document->save();
+                    $docValue = new DocumentValue();
+                    $docValue->document_id = $document->id;
+                    $docValue->field_id = DocumentField::findOne(['name'=>'Auftragsnummer'])->id;
+                    $docValue->value = $matches[2][0];
+                    $docValue->save();
+                    Console::stdout('Auftragsnummer: '.$matches[2][0]);
+                    Console::moveCursorNextLine();
+                }
+            }
         }
     }
 
