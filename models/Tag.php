@@ -12,6 +12,7 @@ use Yii;
  * @property string $color
  *
  * @property DocumentHasTag[] $documentHasTags
+ * @property Document[] $documents
  */
 class Tag extends \yii\db\ActiveRecord
 {
@@ -51,5 +52,10 @@ class Tag extends \yii\db\ActiveRecord
     public function getDocumentHasTags()
     {
         return $this->hasMany(DocumentHasTag::className(), ['tag_id' => 'id']);
+    }
+
+	public function getDocuments()
+	{
+		return $this->hasMany(Document::className(),['id' => 'document_id'])->via('documentHasTags');
     }
 }

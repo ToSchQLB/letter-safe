@@ -6,9 +6,12 @@
  * Time: 20:13
  */
 
+$popoverTitle = Yii::t('app','document details');
+$popoverContent = str_replace("\"","'",$this->render('_document_popover',['model'=>$model]));
     $html = <<<HTML
-        <div class="col-md-2">
-            <div class="panel panel-default">
+        <div class="col-md-2" data-toggle="popover" title="$popoverTitle" data-content= "$popoverContent"
+		data-trigger = "hover" data-placement = "top" data-html="true">
+            <div class="panel panel-default" >
                   <div class="panel-heading" style="height: 55px">
                         <h3 class="panel-title">{$model->title}</h3>
                   </div>
@@ -21,5 +24,8 @@ HTML;
 
 echo \yii\helpers\Html::a(
     $html,
-    ['view', 'id' => $model->id]
+    ['view', 'id' => $model->id],
+	[
+
+	]
 );

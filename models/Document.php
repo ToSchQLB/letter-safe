@@ -22,6 +22,7 @@ use Yii;
  * @property Sender $sender
  * @property DocumentType $documentType
  * @property DocumentHasTag[] $documentHasTags
+ * @property Tags[] $documentTags
  * @property DocumentValue[] $documentValues
  */
 class Document extends \yii\db\ActiveRecord
@@ -86,6 +87,13 @@ class Document extends \yii\db\ActiveRecord
 	public function getDocumentHasTags()
 	{
 		return $this->hasMany(DocumentHasTag::className(), ['document_id' => 'id']);
+	}
+
+	/**
+	 * @return \yii\db\ActiveQuery
+	 */
+	public function getDocumentTags(){
+		return $this->hasMany(Tag::className(), ['id' => 'tag_id'])->via('documentHasTags');
 	}
 
 	/**

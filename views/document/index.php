@@ -58,3 +58,21 @@ $this->params['breadcrumbs'][] = $this->title;
           </div>
     </div>
 </div>
+
+<?php
+
+$js = <<<js
+$('[data-toggle="popover"]').popover(); 
+js;
+
+$this->registerJs($js);
+
+$css = <<<css
+	.popover{
+		max-width: 400px!important;
+	}
+css;
+
+$this->registerCss($css);
+
+

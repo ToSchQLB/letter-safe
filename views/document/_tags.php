@@ -11,9 +11,9 @@
 <div class="row">
     <div class="col-md-12">
     <?php
-    foreach ($model->documentHasTags as $tag):?>
-        <a data-pjax href="<?= \yii\helpers\Url::to(['tag/remove-from-document','document'=>$tag->document,'tag'=>$tag->tag_id])?>" style="margin-bottom: 5px" class="btn btn-sm tag_<?= $tag->tag->color?>">
-            <i class="fa fa-tag"></i> <?= $tag->tag->name ?>
+    foreach ($model->tags as $tag):?>
+        <a data-pjax href="<?= \yii\helpers\Url::to(['tag/remove-from-document','document'=>$model->id,'tag'=>$tag->id])?>" style="margin-bottom: 5px" class="btn btn-sm tag_<?= $tag->color?>">
+            <i class="fa fa-tag"></i> <?= $tag->name ?>
         </a>
     <?php endforeach; ?>
     </div>
