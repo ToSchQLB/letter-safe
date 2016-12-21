@@ -78,8 +78,10 @@ class ImportController extends Controller
 
         $documentTypeDetected = false;
 
+        $fulltextArray = explode("\n",$fulltext);
+
         #Rechnung
-        if(count(preg_grep("/(rechnung|barverkauf)/i", explode("\n",$fulltext)))>0){
+        if(count(preg_grep("/(rechnung|barverkauf)/i", $fulltextArray))>0){
             $dt = DocumentType::findOne(['name'=>'Rechnung']);
             $matches = [];
 
@@ -149,6 +151,33 @@ class ImportController extends Controller
                     Console::stdout('Auftragsnummer: '.$matches[2][0]);
                     Console::moveCursorNextLine();
                 }
+            }
+        }
+
+        #Versicherung
+        if(count(preg_grep("/(versicherung)/i", $fulltextArray))>0){
+            $dt = DocumentType::findOne(['name'=>'Versicherung']);
+            $matches = [];
+
+            #Rechnungsbetrag
+            preg_match_all("/(versicherung)(nr| nr|nummer|s-nr|snummer)[\W\s]*([\w-\/]*)/i",$fulltext,$matches);
+            if(count($matches[3]) > 0){
+
+                Console::moveCursorNextLine();
+                Console::moveCursorNextLine();
+                Console::stdout('Versicherung:');
+                Console::moveCursorNextLine();
+                Console::moveCursorNextLine();
+                $document->document_type_id = $dt->id;
+                $document->save();
+                $docValue = new DocumentValue();
+                $docValue->document_id = $document->id;
+                $docValue->field_id = DocumentField::findOne(['name'=>'Versicherungsnummer'])->id;
+                $docValue->value = $matches[3][0];
+                $docValue->save();
+                $documentTypeDetected = true;
+                Console::stdout('Betrag: '.$matches[3][0]);
+                Console::moveCursorNextLine();
             }
         }
     }

@@ -21,7 +21,7 @@
 	<div class="col-md-6"><?= $documentValue->value ?></div>
 <?php endforeach; ?>
 </div>
-<?php if(!is_null($model->documentTags)): ?>
+<?php if(count(($model->documentTags))>0): ?>
 	<div class="row" style="border-top-style: solid">
 		<div class="col-md-12"><?= Yii::t('app','tags')?></div>
 		<div class="col-md-12">

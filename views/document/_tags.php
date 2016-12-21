@@ -11,7 +11,7 @@
 <div class="row">
     <div class="col-md-12">
     <?php
-    foreach ($model->tags as $tag):?>
+    foreach ($model->documentTags as $tag):?>
         <a data-pjax href="<?= \yii\helpers\Url::to(['tag/remove-from-document','document'=>$model->id,'tag'=>$tag->id])?>" style="margin-bottom: 5px" class="btn btn-sm tag_<?= $tag->color?>">
             <i class="fa fa-tag"></i> <?= $tag->name ?>
         </a>
