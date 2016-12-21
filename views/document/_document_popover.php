@@ -17,8 +17,10 @@
 </div>
 <div class="row">
 <?php foreach ($model->documentValues as $documentValue):?>
-	<div class="col-md-6"><?= $documentValue->field->name ?></div>
-	<div class="col-md-6"><?= $documentValue->value ?></div>
+    <?php if(strlen($documentValue->value)>0): ?>
+        <div class="col-md-6"><?= $documentValue->field->name ?></div>
+        <div class="col-md-6"><?= $documentValue->value ?></div>
+    <?php endif; ?>
 <?php endforeach; ?>
 </div>
 <?php if(count(($model->documentTags))>0): ?>
@@ -28,7 +30,7 @@
 			<?php foreach ($model->documentTags as $tag) {
 				echo $tag->name .' ';
 			}?>
-		</div>
+        </div>
 	</div>
 <?php endif; ?>
 
