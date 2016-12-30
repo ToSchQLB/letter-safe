@@ -2,20 +2,18 @@
 
 namespace app\controllers;
 
-use app\models\Document;
-use app\models\DocumentSearch;
 use Yii;
-use app\models\Sender;
-use app\models\SenderSearch;
+use app\models\User;
+use app\models\UserSearch;
 use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * SenderController implements the CRUD actions for Sender model.
+ * UserController implements the CRUD actions for User model.
  */
-class SenderController extends Controller
+class UserController extends Controller
 {
     /**
      * @inheritdoc
@@ -44,55 +42,12 @@ class SenderController extends Controller
     }
 
     /**
-     * @param string $q Suchbegriff
-     * @return \yii\console\Response|\yii\web\Response
-     */
-    public function actionAjaxSelect2($q)
-    {
-        $result = [];
-        $response = Yii::$app->response;
-        $sender = Sender::find()->select(['id','name','adress1','zip','town'])->where(['like', 'name', $q])->asArray()->all();
-
-        for($c=0; $c < 30 && $c < count($sender); $c++){
-            array_push(
-                $result,
-                [
-                    'id'=>$sender[$c]['id'],
-                    'text'=>$sender[$c]['name'].'<br>'
-                        .$sender[$c]['adress1'].'<br>'
-                        .$sender[$c]['zip'].' '.$sender[$c]['town']]
-            );
-        }
-
-        $response = Yii::$app->response;
-        $response->format = \yii\web\Response::FORMAT_JSON;
-//        $response->data = $result;
-        $response->data = ['results' => $result];
-//        $response->data = ['results' => $sender];
-
-        return $response;
-    }
-
-    public function actionAjaxCreate(){
-
-        $model = new Sender();
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            $response = Yii::$app->response;
-            $response->format = \yii\web\Response::FORMAT_JSON;
-            $response->data = $model->toArray();
-
-            return $response;
-        }
-    }
-
-    /**
-     * Lists all Sender models.
+     * Lists all User models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $searchModel = new SenderSearch();
+        $searchModel = new UserSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -102,31 +57,27 @@ class SenderController extends Controller
     }
 
     /**
-     * Displays a single Sender model.
+     * Displays a single User model.
      * @param integer $id
      * @return mixed
      */
     public function actionView($id)
     {
-        $searchmodel = new DocumentSearch();
-        $documents = $searchmodel->search(['DocumentSearch'=>['sender_id'=>$id]]);
-//        $documents = Document::find()
-//            ->where(['sender_id'=>$id])
-//            ->all();
         return $this->render('view', [
             'model' => $this->findModel($id),
-            'documents' => $documents
         ]);
     }
 
     /**
-     * Creates a new Sender model.
+     * Creates a new User model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new Sender();
+        $model = new User();
+
+        $model->scenario = User::SCENARIO_REGISTER;
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
@@ -138,7 +89,7 @@ class SenderController extends Controller
     }
 
     /**
-     * Updates an existing Sender model.
+     * Updates an existing User model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
@@ -157,7 +108,7 @@ class SenderController extends Controller
     }
 
     /**
-     * Deletes an existing Sender model.
+     * Deletes an existing User model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
@@ -170,15 +121,15 @@ class SenderController extends Controller
     }
 
     /**
-     * Finds the Sender model based on its primary key value.
+     * Finds the User model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return Sender the loaded model
+     * @return User the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Sender::findOne($id)) !== null) {
+        if (($model = User::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
