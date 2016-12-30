@@ -18,6 +18,8 @@ use Yii;
  * @property string $input_file_extentsion
  * @property date $input_date
  * @property int document_type_id
+ * @property string $full_text
+ * @property string $short_name
  *
  * @property Sender $sender
  * @property DocumentType $documentType

@@ -57,13 +57,28 @@ class ImportController extends Controller
                 if($jsonDatum->page ==1){
                     foreach ($jsonDatum->text as $textItem) {
                         if($textItem->left >= 200 && $textItem->top >= 405 && $textItem->left <= 960 && $textItem->top <= 650){
-                            $sender = Sender::find()->where(['like','name',$textItem->content])->one();
-                            if(!is_null($sender)){
-//                                echo $textItem->content;
-//                                print_r($sender);
-                                $document->sender_id = $sender['id'];
-                                $document->save();
-                                return;
+                            Console::stdout("Suche: ".$textItem->content);
+                            $senders = Sender::find()->where(['or',['like','short_name',$textItem->content],['like','name',$textItem->content]])->all();
+                            Console::moveCursorNextLine();
+                            Console::stdout("Sender: ".count($senders));
+                            Console::moveCursorNextLine();
+                            Console::moveCursorNextLine();
+                            if(!is_null($senders)){
+                                foreach ($senders as $sender) {
+                                    print_r($sender->attributes);
+                                    Console::stdout('Suche: '.$sender['name'].' ... ');
+                                    if (stripos($document->full_text, $sender['name'])!== false) {
+                                        Console::stdout('gefunden');
+                                        Console::moveCursorNextLine();
+                                        $document->sender_id = $sender['id'];
+                                        $document->save();
+                                        return;
+                                    }
+                                    else{
+                                        Console::stdout('nein');
+                                    }
+                                    Console::moveCursorNextLine();
+                                }
                             }
                         }
                     }
