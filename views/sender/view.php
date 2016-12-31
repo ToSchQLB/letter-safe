@@ -74,6 +74,7 @@ HTML;
                       'attributes' => [
 //                          'id',
                           'name',
+                          'name_2',
                           'adress1',
                           'adress2',
                           'zip',

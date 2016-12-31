@@ -58,14 +58,29 @@ class ImportController extends Controller
                     foreach ($jsonDatum->text as $textItem) {
                         if($textItem->left >= 200 && $textItem->top >= 405 && $textItem->left <= 960 && $textItem->top <= 650){
                             Console::stdout("Suche: ".$textItem->content);
-                            $senders = Sender::find()->where(['or',['like','short_name',$textItem->content],['like','name',$textItem->content]])->all();
+                            $senders = Sender::find()->where([
+                                'or',
+                                [
+                                    'like',
+                                    'short_name',
+                                    $textItem->content
+                                ],[
+                                    'like',
+                                    'name',
+                                    $textItem->content
+                                ],[
+                                    'like',
+                                    'name_2',
+                                    $textItem->content
+                                ]
+                            ])->asArray()->all();
                             Console::moveCursorNextLine();
                             Console::stdout("Sender: ".count($senders));
                             Console::moveCursorNextLine();
                             Console::moveCursorNextLine();
                             if(!is_null($senders)){
                                 foreach ($senders as $sender) {
-                                    print_r($sender->attributes);
+                                    print_r($sender);
                                     Console::stdout('Suche: '.$sender['name'].' ... ');
                                     if (stripos($document->full_text, $sender['name'])!== false) {
                                         Console::stdout('gefunden');

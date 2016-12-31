@@ -10,6 +10,7 @@ use yii\web\UploadedFile;
  *
  * @property integer $id
  * @property string $name
+ * @property string $name_2
  * @property string $adress1
  * @property string $adress2
  * @property string $zip
@@ -18,6 +19,7 @@ use yii\web\UploadedFile;
  * @property string $country
  * @property string $logo
  * @property string $css_class
+ * @property string $short_name
  *
  * @property Document[] $documents
  * @property string fullAddress
@@ -42,10 +44,10 @@ class Sender extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name', 'adress1', 'adress2', 'town'], 'string', 'max' => 255],
+            [['name', 'name_2', 'adress1', 'adress2', 'town'], 'string', 'max' => 255],
             [['zip'], 'string', 'max' => 5],
             [['state', 'country'], 'string', 'max' => 100],
-            [['css_class'],'string','max' => 40],
+            [['css_class', 'short_name'],'string','max' => 40],
             [['logo'], 'string'],
             [['logoUpload'], 'image', 'skipOnEmpty' => true],
         ];
