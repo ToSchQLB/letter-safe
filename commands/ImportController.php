@@ -56,6 +56,7 @@ class ImportController extends Controller
             foreach ($jsonData as $jsonDatum) {
                 if($jsonDatum->page ==1){
                     foreach ($jsonDatum->text as $textItem) {
+                        $textItem->content = rtrim($textItem->content,",");
                         if($textItem->left >= 200 && $textItem->top >= 405 && $textItem->left <= 960 && $textItem->top <= 650){
                             Console::stdout("Suche: ".$textItem->content);
                             $senders = Sender::find()->where([
