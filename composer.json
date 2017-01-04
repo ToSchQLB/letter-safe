@@ -1,7 +1,7 @@
 {
   "name": "toschqlb/letter-safe",
   "description": "Letter Safe",
-  "keywords": ["document mangemant", "documents"],
+  "keywords": ["document management", "documents"],
   "homepage": "https://github.com/ToSchQLB/letter-safe",
   "type": "project",
   "license": "BSD-3-Clause",
