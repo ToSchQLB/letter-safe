@@ -11,6 +11,7 @@ use Yii;
  * @property integer $sender_id
  * @property string $title
  * @property string $date
+ * @property string $message
  * @property string $folder
  * @property integer $status
  * @property string $input_filename
@@ -42,7 +43,7 @@ class Document extends \yii\db\ActiveRecord
     {
         return [
             [['sender_id'], 'integer'],
-            //[['message'], 'string'],
+            [['message'], 'string'],
             [['title'], 'string', 'max' => 255],
             [['folder'], 'string', 'max' => 100],
             [['sender_id'], 'exist', 'skipOnError' => true, 'targetClass' => Sender::className(), 'targetAttribute' => ['sender_id' => 'id']],
@@ -60,7 +61,7 @@ class Document extends \yii\db\ActiveRecord
             'id' => Yii::t('app', 'ID'),
             'sender_id' => Yii::t('app', 'Sender'),
             'title' => Yii::t('app', 'Title'),
-            //'message' => Yii::t('app', 'Message'),
+            'message' => Yii::t('app', 'Message'),
             'folder' => Yii::t('app', 'Folder'),
         ];
     }
