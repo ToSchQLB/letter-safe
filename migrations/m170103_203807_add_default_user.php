@@ -9,6 +9,7 @@ class m170103_203807_add_default_user extends Migration
         $user = new \app\models\User();
         $user->username = "admin";
         $user->password = "admin";
+        $user->email = "admin@admin";
         $user->save();
     }
 

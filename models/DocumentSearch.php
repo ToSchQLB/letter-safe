@@ -69,7 +69,7 @@ class DocumentSearch extends Document
         ]);
 
         $query->andFilterWhere(['like', 'title', $this->title])
-            ->andFilterWhere(['like', 'message', $this->message])
+            //->andFilterWhere(['like', 'message', $this->message])
             ->andFilterWhere(['like', 'folder', $this->folder]);
 
         return $dataProvider;
