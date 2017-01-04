@@ -1,0 +1,35 @@
+{
+  "name": "vendor_name/package_name",
+  "description": "description_text",
+  "minimum-stability": "stable",
+  "license": "proprietary",
+  "authors": [
+    {
+      "name": "author's name",
+      "email": "email@example.com"
+    }
+  ],
+  "require": {
+    "yiisoft/yii2": "2.0.9",
+    "yiisoft/yii2-composer": "2.0.4",
+    "yiisoft/yii2-debug": "2.0.6",
+    "yiisoft/yii2-gii": "2.0.5",
+    "kartik-v/yii2-widget-fileinput": "v1.0.5",
+    "kartik-v/yii2-widget-select2": "v2.0.8",
+    "kartik-v/yii2-datecontrol": "v1.9.4",
+    "kartik-v/yii2-widgets": "v3.4.0",
+    "Codeception/Codeception": "^2.2"
+  },
+  "extra": {
+    "asset-installer-paths": {
+      "npm-asset-library": "vendor/npm",
+      "bower-asset-library": "vendor/bower"
+    }
+  },
+  "require-dev": {
+    "yiisoft/yii2-codeception": "^2.0",
+    "codeception/codeception": "^2.2",
+    "yiisoft/yii2-faker": "^2.0",
+    "codeception/specify": "^0.4.5"
+  }
+}
