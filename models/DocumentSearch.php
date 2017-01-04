@@ -19,7 +19,7 @@ class DocumentSearch extends Document
     {
         return [
             [['id', 'sender_id'], 'integer'],
-            [['title', 'message', 'folder'], 'safe'],
+            [['title', 'folder'], 'safe'],
         ];
     }
 
