@@ -42,7 +42,7 @@ class Document extends \yii\db\ActiveRecord
     {
         return [
             [['sender_id'], 'integer'],
-//            [['message'], 'string'],
+//            [['message'],'string'],
             [['title'], 'string', 'max' => 255],
             [['folder'], 'string', 'max' => 100],
             [['sender_id'], 'exist', 'skipOnError' => true, 'targetClass' => Sender::className(), 'targetAttribute' => ['sender_id' => 'id']],
