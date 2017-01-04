@@ -30,8 +30,8 @@ phpunit.phar
 /phpunit.xml
 
 #config
-/config/*
+/config
 
 
 #tests/_output/*
-#/web/assets/*
+/web/assets/*
