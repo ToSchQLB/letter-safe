@@ -9,14 +9,16 @@ class m170103_203807_add_default_user extends Migration
         $user = new \app\models\User();
         $user->username = "admin";
         $user->password = "admin";
+	    $user->email = "admin@local";
         $user->save();
     }
 
     public function down()
     {
-        echo "m170103_203807_add_default_user cannot be reverted.\n";
-
-        return false;
+        $user = \app\models\User::findOne(['username'=>'admin']);
+	    if(!is_null($user)){
+		    $user->delete();
+	    }
     }
 
     /*
