@@ -16,7 +16,7 @@ Thumbs.db
 /vendor
 
 # yii runtime dir
-/runtime
+#/runtime
 
 # composer itself is not needed
 composer.phar
@@ -30,7 +30,7 @@ phpunit.phar
 /phpunit.xml
 
 #config
-/config/*
+#/config/*
 
 
 tests/_output/*
