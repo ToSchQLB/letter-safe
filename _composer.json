@@ -7,9 +7,6 @@
   "license": "BSD-3-Clause",
   "support": {
     "issues": "https://github.com/ToSchQLB/letter-safe/issues?state=open",
-    //"forum": "http://www.yiiframework.com/forum/",
-    //"wiki": "http://www.yiiframework.com/wiki/",
-    //"irc": "irc://irc.freenode.net/yii",
     "source": "https://github.com/ToSchQLB/letter-safe"
   },
   "minimum-stability": "dev",
