@@ -69,6 +69,7 @@ class TagController extends Controller
         $documents = Document::find()
             ->joinWith('documentHasTags')
             ->where(['document_has_tag.tag_id'=>$id])
+            ->orderBy(['date'=>SORT_DESC])
             ->all();
         return $this->render('view', [
             'model' => $this->findModel($id),
