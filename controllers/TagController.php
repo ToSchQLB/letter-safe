@@ -66,8 +66,13 @@ class TagController extends Controller
      */
     public function actionView($id)
     {
+        $documents = Document::find()
+            ->joinWith('documentHasTags')
+            ->where(['document_has_tag.tag_id'=>$id])
+            ->all();
         return $this->render('view', [
             'model' => $this->findModel($id),
+            'documents' => $documents
         ]);
     }
 
@@ -123,10 +128,10 @@ class TagController extends Controller
 
     public function actionAddToDocument($document,$tag)
     {
-        if (DocumentHasTag::find()->where(['document' => $document, 'tag' => $tag])->count() == 0) {
+        if (DocumentHasTag::find()->where(['document_id' => $document, 'tag_id' => $tag])->count() == 0) {
             $model = new DocumentHasTag();
-            $model->document = $document;
-            $model->tag = $tag;
+            $model->document_id = $document;
+            $model->tag_id = $tag;
             $model->save();
         }
         if(Yii::$app->request->isAjax)
