@@ -31,3 +31,21 @@ tag_blue:hover{
 tag_orange:hover{
     color: #eeeeee;
 }
+
+.tag_green{
+    background-color: #008000;
+    color: #ffffff;
+}
+
+tag_green:hover{
+    color: #eeeeee;
+}
+
+.tag_silver{
+    background-color: #c0c0c0;
+    color: #000;
+}
+
+tag_silver:hover{
+    color: #eeeeee;
+}

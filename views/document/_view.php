@@ -7,17 +7,47 @@
         <h3 class="panel-title"><?= \yii\helpers\Html::encode($model->title) ?></h3>
     </div>
     <div class="panel-body">
-        <p>
-            <?= \yii\helpers\Html::a(Yii::t('app', 'Update'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-            <?= \yii\helpers\Html::a(Yii::t('app', 'Download'), "./data/{$model->folder}/in.pdf", ['class' => 'btn btn-default', 'target'=>'_blank']) ?>
-            <?= \yii\helpers\Html::a(Yii::t('app', 'Delete'), ['delete', 'id' => $model->id], ['class' => 'btn btn-danger',
-              'data' => [
-                  'method' => 'post',
-                  'confirm' => Yii::t('app','Are you sure you want to delete this item?'),
-              ]]) ?>
-        </p>
+        <div class="">
+            <div class="btn-group" role="group" style="width: 100%">
+                <?= \yii\helpers\Html::a(Yii::t('app', 'Update'), ['update', 'id' => $model->id], ['style'=>'width:33.3%','class' => 'btn btn-primary']) ?>
+                <?= \yii\helpers\Html::a(Yii::t('app', 'Download'), "./data/{$model->folder}/in.pdf", ['style'=>'width:33.3%','class' => 'btn btn-default', 'target'=>'_blank']) ?>
+                <?= \yii\helpers\Html::a(Yii::t('app', 'Delete'), ['delete', 'id' => $model->id], ['style'=>'width:33.3%','class' => 'btn btn-danger',
+                  'data' => [
+                      'method' => 'post',
+                      'confirm' => Yii::t('app','Are you sure you want to delete this item?'),
+                  ]]) ?>
+            </div>
+        </div>
 
-        <?= \yii\widgets\DetailView::widget([
+        <div class="row">
+            <div class="col-md-12">
+                <div class="col-md-3 <?= $model->sender->css_class ?>" style="height: 75px; display: flex;">
+                    <?php if(!is_null($model->sender->logo)): ?>
+                        <img src="img/sender/logo/<?= $model->sender->logo?>" class="img-responsive" style="max-height: 75px; margin: auto">
+                    <?php else: ?>
+
+                    <?php endif; ?>
+                </div>
+                <div class="col-md-9">
+                    <row>
+                        <h4><?= $model->sender->name ?></h4>
+                    </row>
+                    <row>
+                        <?= $model->sender->adress1 .' - '.$model->sender->zip.' '.$model->sender->town ?>
+                    </row>
+                </div>
+            </div>
+        </div>
+
+        <div class="row" style="margin-bottom: 5px">
+            <div class="col-md-12">
+                <div class="col-md-3">Datum:</div>
+                <div class="col-md-9"><?= Yii::$app->formatter->asDate($model->date, 'php:d.m.Y') ?></div>
+            </div>
+        </div>
+
+
+        <?php \yii\widgets\DetailView::widget([
             'model' => $model,
             'attributes' => [
                 [
@@ -41,6 +71,25 @@
         ]) ?>
     </div>
 </div>
+
+    <div class="panel panel-info" style="margin-top: -40px; margin-bottom: 25px">
+        <div class="panel-heading">
+            <h3 class="panel-title"><?= Yii::t('app','Tags') ?></h3>
+        </div>
+        <div class="panel-body">
+            <?php \yii\widgets\Pjax::begin(['id'=>'pjax_tag']); ?>
+            <?= $this->render('_tags',['model'=>$model])?>
+            <?php \yii\widgets\Pjax::end();
+            $js = <<<js
+$(document).on('submit', 'form[data-pjax]', function(event) {
+    event.preventDefault();
+    $.pjax.submit(event, '#pjax_tag');
+});
+js;
+            $this->registerJs($js);
+            ?>
+        </div>
+    </div>
 
 <?php if(!is_null($model->documentType)):
 	if(!is_null($model->documentType->documentTypeHasFields)): ?>
@@ -94,23 +143,6 @@ js;
 
 
 
-<div class="panel panel-info" style="margin-top: -40px;">
-    <div class="panel-heading">
-        <h3 class="panel-title"><?= Yii::t('app','Tags') ?></h3>
-    </div>
-    <div class="panel-body">
-        <?php \yii\widgets\Pjax::begin(['id'=>'pjax_tag']); ?>
-            <?= $this->render('_tags',['model'=>$model])?>
-        <?php \yii\widgets\Pjax::end();
-        $js = <<<js
-$(document).on('submit', 'form[data-pjax]', function(event) {
-    event.preventDefault();
-    $.pjax.submit(event, '#pjax_tag');
-});
-js;
-    $this->registerJs($js);
-        ?>
-    </div>
-</div>
+
 
 <?php \yii\web\YiiAsset::register($this); ?>
