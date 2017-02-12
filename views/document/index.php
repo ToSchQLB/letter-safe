@@ -21,13 +21,26 @@ $this->params['breadcrumbs'][] = $this->title;
               <div class="col-md-12">
                 <?php //Pjax::begin(); ?>
                 <?= $this->render('_documents_list',['models'=>$dataProvider->models,'size'=>2]) ?>
-                <?= \yii\widgets\LinkPager::widget([
-                    'id' => 'wp2',
-                    'pagination'=>$dataProvider->pagination,
-                ]); ?>
+                <div id="doc_pager" style="position: sticky; bottom: 5px; z-index: 9999;">
+                    <?= \yii\widgets\LinkPager::widget([
+                        'id' => 'wp2',
+                        'pagination'=>$dataProvider->pagination,
+                    ]); ?>
+                </div>
                 <?php //Pjax::end(); ?>
               </div>
           </div>
     </div>
 </div>
+<?php
+
+$js =<<<js
+$('#doc_pager').affix({
+    offset:{
+        bottom: 20
+    }
+});
+js;
+
+//$this->registerJs($js);
 
