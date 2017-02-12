@@ -9,6 +9,7 @@ use yii\widgets\Pjax;
 
 $this->title = Yii::t('app', 'Documents');
 $this->params['breadcrumbs'][] = $this->title;
+
 ?>
 <div class="document-index">
 
@@ -20,6 +21,10 @@ $this->params['breadcrumbs'][] = $this->title;
               <div class="col-md-12">
                 <?php Pjax::begin(); ?>
                 <?= $this->render('_documents_list',['models'=>$dataProvider->models,'size'=>2]) ?>
+                <?= \yii\widgets\LinkPager::widget([
+                    'id' => 'wp2',
+                    'pagination'=>$dataProvider->pagination,
+                ]); ?>
                 <?php Pjax::end(); ?>
               </div>
           </div>
