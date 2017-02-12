@@ -142,7 +142,7 @@ class TagController extends Controller
 
     public function actionRemoveFromDocument($document,$tag)
     {
-        $model = DocumentHasTag::findOne(['document'=>$document,'tag'=>$tag]);
+        $model = DocumentHasTag::findOne(['document_id'=>$document,'tag_id'=>$tag]);
         if(!is_null($model)){
             $model->delete();
         }
