@@ -17,7 +17,8 @@
     "kartik-v/yii2-widget-fileinput": "v1.0.5",
     "kartik-v/yii2-widget-select2": "v2.0.8",
     "kartik-v/yii2-datecontrol": "v1.9.4",
-    "kartik-v/yii2-widgets": "v3.4.0"
+    "kartik-v/yii2-widgets": "v3.4.0",
+    "kop/yii2-scroll-pager": "^2.5"
   },
   "require-dev": {
     "yiisoft/yii2-debug": "~2.0.0",

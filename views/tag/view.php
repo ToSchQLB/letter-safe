@@ -19,7 +19,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 <h3 class="panel-title"></h3>
             </div>
             <div class="panel-body">
-                <?= $this->render('/document/_documents_list',['models'=>$documents,'size'=>3]) ?>
+                <?= $this->render('/document/_documents_list',['models'=>$documents,'size'=>3,'groupByMonth'=>false]) ?>
             </div>
         </div>
     </div>

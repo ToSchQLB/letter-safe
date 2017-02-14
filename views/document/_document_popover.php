@@ -12,8 +12,23 @@
  */
 ?>
 <div class="row" style="border-bottom-style: solid">
-	<div class="col-md-6"><?= Yii::t('app','sender') ?></div>
-	<div class="col-md-6"><?= isset($model->sender) ? $model->sender->name : null;?></div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-3 <?= $model->sender->css_class ?>" style="height: 75px; display: flex;">
+                <?php if(!is_null($model->sender->logo)): ?>
+                    <img src="img/sender/logo/<?= $model->sender->logo?>" class="img-responsive" style="max-height: 75px; margin: auto">
+                <?php else: ?>
+
+                <?php endif; ?>
+            </div>
+            <div class="col-md-9">
+                <row>
+                    <b><?= $model->sender->name ?></b><br>
+                    <?= $model->sender->adress1 .' - '.$model->sender->zip.' '.$model->sender->town ?>
+                </row>
+            </div>
+        </div>
+    </div>
 </div>
 <div class="row">
 <?php foreach ($model->documentValues as $documentValue):?>
@@ -24,12 +39,13 @@
 <?php endforeach; ?>
 </div>
 <?php if(count(($model->documentTags))>0): ?>
-	<div class="row" style="border-top-style: solid">
-		<div class="col-md-12"><?= Yii::t('app','tags')?></div>
-		<div class="col-md-12">
-			<?php foreach ($model->documentTags as $tag) {
-				echo $tag->name .' ';
-			}?>
+	<div class="row" style="border-top-style: solid; margin-bottom: 5px;">
+		<div class="col-md-12" style="margin-top: 5px;">
+			<?php foreach ($model->documentTags as $tag):?>
+                <div class="btn btn-sm tag_<?= $tag->color?>">
+                    <i class="fa fa-tag"></i> <?= $tag->name ?>
+                </div>
+			<?php endforeach; ?>
         </div>
 	</div>
 <?php endif; ?>

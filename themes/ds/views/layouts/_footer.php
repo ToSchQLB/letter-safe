@@ -7,13 +7,13 @@
  */
 ?>
 
-<footer class="footer" style="position: fixed; bottom: 0; width: 100%">
-    <div class="container-fluid">
-        <div class="row" style="background-color: #FFFFFF; padding-top: 4px;">
+<footer class="footer" style="position: fixed; bottom: 0; width: 100%; z-index: 9999">
+    <div class="container-fluid navbar-inverse">
+        <div class="row" style="padding-top: 4px;">
             <div class="col-md-12">
-            <p class="pull-left">Letter Safe <?= date('Y') ?></p>
+            <p class="pull-left" style="color: #fff">Letter Safe <?= date('Y') ?></p>
 
-            <p class="pull-right"><?= Yii::powered() ?></p>
+            <p class="pull-right" style="color: #fff"><?= Yii::powered() ?></p>
             </div>
         </div>
     </div>
