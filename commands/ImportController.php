@@ -224,6 +224,18 @@ class ImportController extends Controller
 		}
     }
 
+    public function actionCreateFileList($id){
+        $fileList = '';
+	    $document = Document::findOne($id);
+        $basedir = $this->getFolderByDocument($document);
+        foreach (scandir($basedir) as $item){
+            if(strpos($item, 'pdf-page')!==false){
+                $fileList.= $basedir.'/'.$item .chr(13).chr(10);
+            }
+        }
+        file_put_contents($basedir.'/file_list.txt', $fileList);
+    }
+
     /**
      * @param $document Document
      * @return string
