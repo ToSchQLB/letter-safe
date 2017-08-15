@@ -31,7 +31,7 @@ class QueueController extends Controller
 
     public function actionLockQueue()
     {
-        $this->lockFile();
+        $this->lockQueue();
     }
 
     public function actionUnlockQueue(){
