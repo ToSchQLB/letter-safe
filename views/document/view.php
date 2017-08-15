@@ -46,7 +46,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 echo "</div>";
             }
         } else {
-            $data = json_decode(file_get_contents($folder_absolute . '/text.json'));
+            $data = file_exists($folder_absolute.'/text.json') ? json_decode(file_get_contents($folder_absolute . '/text.json')) : [];
             foreach ($data as $page) {
                 if((count($data)<10) && file_exists("{$folder_absolute}/seite-1.png"))
                     $resource = new Imagick("{$folder_absolute}/seite-".$page->page.".png");
