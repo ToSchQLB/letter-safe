@@ -34,6 +34,11 @@
                     </row>
                     <row>
                         <?= $model->sender->adress1 .' - '.$model->sender->zip.' '.$model->sender->town ?>
+                    </row><br>
+                    <row>
+                        <a href="<?= \yii\helpers\Url::to(['sender/view','id'=>$model->sender_id])?>">
+                            <?= Yii::t('app','view all documnets')?>
+                        </a>
                     </row>
                 </div>
             </div>

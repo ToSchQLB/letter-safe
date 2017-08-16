@@ -57,6 +57,12 @@ HTML;
                         ['/sender/view', 'id' => $model->id]
                     );
                 },
+                'pager'=>[
+                    'options' => [
+                        'class' => 'pagination',
+                        'style' => 'background-color: #ffffff;bottom: 35px;padding-left: 15px;position: sticky;width: 100%;',
+                    ]
+                ]
             ]) ?>
         </div>
     </div>
