@@ -27,12 +27,31 @@ use yii\helpers\Html;
         'options' => ['class' => 'navbar-nav navbar-left'],
         'encodeLabels' => false,
         'items' => [
-            ['label' => '<i class="fa fa-home" aria-hidden="true"></i> '.Yii::t('app','Home'), 'url' => ['/site/index']],
-            ['label' => '<i class="fa fa-file-text" aria-hidden="true"></i> ' .Yii::t('app','Documents'), 'url' => ['/document/index']],
-            ['label' => '<i class="fa fa-building" aria-hidden="true"></i> '.Yii::t('app','Senders'), 'url' => ['/sender/index']],
-            ['label' => '<i class="fa fa-tags" aria-hidden="true"></i> '. Yii::t('app','Tags'), 'url'=>['/tag/index']],
-            ['label' => '<i class="fa fa-user" aria-hidden="true"></i> '. Yii::t('app','User'), 'url'=>['/user/index']],
-            ['label' => '<i class="fa fa-plus-square" aria-hidden="true"></i> ' .Yii::t('app','Add Document'), 'url' => ['/document/create']]/*,
+            [
+                'label' => '<i class="fa fa-home" aria-hidden="true"></i> '.Yii::t('app','Home'),
+                'url' => ['/site/index']
+            ],[
+                'label' => '<i class="fa fa-file-text" aria-hidden="true"></i> ' .Yii::t('app','Documents'),
+                'url' => ['/document/index'],
+                'visible'=>!Yii::$app->user->isGuest
+            ],[
+                'label' => '<i class="fa fa-building" aria-hidden="true"></i> '.Yii::t('app','Senders'),
+                'url' => ['/sender/index'],
+                'visible'=>!Yii::$app->user->isGuest
+            ],[
+                'label' => '<i class="fa fa-tags" aria-hidden="true"></i> '. Yii::t('app','Tags'),
+                'url'=>['/tag/index'],
+                'visible'=>!Yii::$app->user->isGuest
+            ],[
+                'label' => '<i class="fa fa-user" aria-hidden="true"></i> '. Yii::t('app','User'),
+                'url'=>['/user/index'],
+                'visible'=>!Yii::$app->user->isGuest
+            ],[
+                'label' => '<i class="fa fa-plus-square" aria-hidden="true"></i> ' .Yii::t('app','Add Document'),
+                'url' => ['/document/create'],
+                'visible'=>!Yii::$app->user->isGuest
+            ]
+            /*,
                 Yii::$app->user->isGuest ? (
                 ['label' => 'Login', 'url' => ['/site/login']]
                 ) : (
@@ -47,14 +66,38 @@ use yii\helpers\Html;
                 )*/
         ],
     ]);
+    echo \yii\bootstrap\Nav::widget([
+        'options' => ['class' => 'navbar-nav navbar-right'],
+        'encodeLabels' => false,
+        'items' => [
+
+            Yii::$app->user->isGuest ? (
+            ['label' => '<i class="fa fa-sign-in"></i> Login', 'url' => ['/site/login']]
+            ) : (
+                '<li>'
+                . Html::beginForm(['/site/logout'], 'post', ['class' => 'navbar-form'])
+                . Html::submitButton(
+                    '<i class="fa fa-sign-out"></i> Logout (' . Yii::$app->user->identity->username . ')',
+                    ['class' => 'btn btn-link']
+                )
+                . Html::endForm()
+                . '</li>'
+            )
+        ],
+    ]);
     ?>
-    <div class="input-group" style="position: absolute; width: 275px; right: 10px; margin-top: 8px;">
+    <?php if(!Yii::$app->user->isGuest): ?>
+<!--    <div class="input-group" style="position: absolute; width: 275px; right: 10px; margin-top: 8px;">-->
+    <div class="input-group " style="float: right; width: 250px; padding-top: 8px;">
         <span class="input-group-addon" id="basic-addon1">
             <i class="fa fa-search" aria-hidden="true"></i>
         </span>
         <input id="searchTextInput" type="text" class="form-control" placeholder="suchen..." aria-describedby="basic-addon1">
     </div>
-    <?php
+    <?php else: ?>
+
+    <?php endif;
+
     \yii\bootstrap\NavBar::end();
     ?>
 <!--    <div  class="row" >-->
