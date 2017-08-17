@@ -21,6 +21,7 @@
 
         <div class="row">
             <div class="col-md-12">
+                <?php if(isset($model->sender)): ?>
                 <div class="col-md-3 <?= $model->sender->css_class ?>" style="height: 75px; display: flex;">
                     <?php if(!is_null($model->sender->logo)): ?>
                         <img src="img/sender/logo/<?= $model->sender->logo?>" class="img-responsive" style="max-height: 75px; margin: auto">
@@ -41,6 +42,7 @@
                         </a>
                     </row>
                 </div>
+                <?php endif; ?>
             </div>
         </div>
 
