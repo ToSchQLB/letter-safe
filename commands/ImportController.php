@@ -230,10 +230,13 @@ class ImportController extends Controller
         $basedir = $this->getFolderByDocument($document);
         foreach (scandir($basedir) as $item){
             if(strpos($item, 'pdf-page')!==false){
-                $fileList.= $basedir.'/'.$item .chr(13).chr(10);
+                $itemNo = intval(str_replace(['pdf-page-','.jpeg'],['',''],$item));
+                $fileList[$itemNo]= $basedir.'/'.$item .chr(13).chr(10);
             }
         }
-        file_put_contents($basedir.'/file_list.txt', $fileList);
+        ksort($fileList);
+        print_r($fileList);
+        file_put_contents($basedir.'/file_list.txt', implode('',$fileList));
     }
 
     /**
