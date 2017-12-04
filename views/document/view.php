@@ -10,7 +10,7 @@ $this->title = $model->title;
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Documents'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="col-lg-8" style="position: absolute;height: calc(100% - 120px);margin-top: -20px; overflow-y: scroll">
+<div id="doc-pages" class="col-lg-8 visible-lg" style="position: absolute;height: calc(100% - 120px);margin-top: -20px; overflow-y: scroll">
     <?php
         $folder_relative = 'data/'.$model->folder;
         $folder_absolute = Yii::$app->basePath . "/web/data/". $model->folder;
@@ -85,14 +85,15 @@ $this->params['breadcrumbs'][] = $this->title;
 <!--    </div>-->
 
 </div>
-<div class="col-lg-4 col-lg-offset-8" style="margin-top: -20px; padding: 0px; height: calc(100% - 120px); overflow-y: scroll;position: absolute;">
+<div id="doc-meta" class="col-lg-4 col-lg-offset-8 visible-lg" style="margin-top: -20px; padding: 0px; height: calc(100% - 120px); overflow-y: scroll;position: absolute;">
     <?= Html::hiddenInput('activeInput') ?>
     <?= $this->render($mode == 'view' ? '_view' : '_update', [
         'model' => $model,
     ]) ?>
 
 </div>
-
+<div id="doc-meta-small" class="col-xs-12 hidden-lg"></div>
+<div id="doc-pages-small" class="col-xs-12 hidden-lg"></div>
 <?php
 $js = <<<js
     function fillInput(name) {
@@ -116,7 +117,14 @@ $js = <<<js
             sendDocumentValueForm();
         }
     }
+    $('#doc-pages-small').html($('#doc-pages').html());
+    $('#doc-meta-small').html($('#doc-meta').html());
 js;
-
 $this->registerJs($js,\yii\web\View::POS_END);
+$css = <<<css
+#doc-pages-small img {
+    max-width: 100%;
+}
+css;
+$this->registerCss($css);
 
