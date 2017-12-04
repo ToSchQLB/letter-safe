@@ -92,8 +92,10 @@ $this->params['breadcrumbs'][] = $this->title;
     ]) ?>
 
 </div>
-<div id="doc-meta-small" class="col-xs-12 hidden-lg"></div>
-<div id="doc-pages-small" class="col-xs-12 hidden-lg"></div>
+<div class="row">
+    <div id="doc-meta-small" class="col-xs-12 hidden-lg"></div>
+    <div id="doc-pages-small" class="col-xs-12 hidden-lg" style="margin-top: -20px;"></div>
+</div>
 <?php
 $js = <<<js
     function fillInput(name) {
