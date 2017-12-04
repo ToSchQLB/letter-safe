@@ -13,7 +13,7 @@ use yii\helpers\Html;
 
 <header class="main-header">
     <?php
-    \yii\bootstrap\NavBar::begin([
+    \app\components\NavBar::begin([
         'brandLabel' => 'Letter Safe',
         'brandUrl' => Yii::$app->homeUrl,
         'options' => [
@@ -88,7 +88,7 @@ use yii\helpers\Html;
     ?>
     <?php if(!Yii::$app->user->isGuest): ?>
 <!--    <div class="input-group" style="position: absolute; width: 275px; right: 10px; margin-top: 8px;">-->
-    <div class="input-group " style="float: right; width: 250px; padding-top: 8px;">
+    <div class="input-group hidden-xs hidden-sm hidden-md" style="float: right; width: 250px; padding-top: 8px;">
         <span class="input-group-addon" id="basic-addon1">
             <i class="fa fa-search" aria-hidden="true"></i>
         </span>
@@ -98,7 +98,7 @@ use yii\helpers\Html;
 
     <?php endif;
 
-    \yii\bootstrap\NavBar::end();
+    \app\components\NavBar::end();
     ?>
 <!--    <div  class="row" >-->
         <div id="searchResultPanel" style="margin-top: 50px; margin-bottom: -30px; display: none;" class="panel panel-default">

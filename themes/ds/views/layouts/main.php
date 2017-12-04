@@ -7,6 +7,8 @@
  */
 
 use yii\helpers\Html;
+
+
 ?>
 
 <?php $this->beginPage() ?>
@@ -43,6 +45,14 @@ use yii\helpers\Html;
             '_header.php'
 //            ['directoryAsset' => $directoryAsset]
         ) ?>
+        <?php
+        $js = <<<js
+                $('#searchTextInput2').on('keyup',function() {
+                $('#searchTextInput').val($('#searchTextInput2').val());
+                $('#searchTextInput').trigger("keyup");
+        })
+js;
+        $this->registerJs($js,\yii\web\View::POS_END); ?>
 
         <?= $this->render(
             '_content.php',
