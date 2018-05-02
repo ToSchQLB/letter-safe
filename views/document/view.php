@@ -116,7 +116,8 @@ $js = <<<js
         }
         
         if(inputField.hasClass('document-value')){
-            sendDocumentValueForm();
+            form = inputField.closest('form');
+            sendDocumentValueForm(form);
         }
     }
     $('#doc-pages-small').html($('#doc-pages').html());

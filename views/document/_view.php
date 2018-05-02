@@ -138,11 +138,12 @@ js;
 $ajaxUrl = \yii\helpers\Url::to(['/document/save-values']);
 $js = <<<js
 	$('.document-value').change(function() {
-		 sendDocumentValueForm();
+	    var form = $(this).closest('form');
+		 sendDocumentValueForm(form);
 	});
 
-	function sendDocumentValueForm(){
-		$.post('$ajaxUrl', $('form#documentValueForm').serialize()); 
+	function sendDocumentValueForm(form){
+		$.post('$ajaxUrl', form.serialize()); 
 	}
 js;
 	$this->registerJs($js,\yii\web\View::POS_END);
