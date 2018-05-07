@@ -162,6 +162,19 @@ class DocumentController extends Controller
         $document->input_date = new Expression('now()');
 //		$document->folder = $folder;
 		$document->save();
+	    
+    	return yii\helpers\Json::encode([
+            'files' => [
+                0 => [
+                    'name' => Yii::t('document', 'neues Dokument hochgeladen'),
+                    'size' => count($files),
+                    'url' => './img/success.png',
+                    'url' => './img/success.png',
+                    'delete' => '/index.php?r=document/delete&id='.$document->id,
+                    'deleteType' => 'POST'
+                ]
+            ]
+        ]);
 
 
     }
