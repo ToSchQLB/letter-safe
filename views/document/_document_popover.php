@@ -14,8 +14,8 @@
 <div class="row" style="border-bottom-style: solid">
     <div class="row">
         <div class="col-md-12">
-            <div class="col-md-3 <?= $model->sender->css_class ?>" style="height: 75px; display: flex;">
-                <?php if(!is_null($model->sender->logo)): ?>
+            <div class="col-md-3 <?= isset($model->sender->css_class) ? $model->sender->css_class : '' ?>" style="height: 75px; display: flex;">
+                <?php if(!is_null(isset($model->sender->logo) ? $model->sender->logo : null )): ?>
                     <img src="img/sender/logo/<?= $model->sender->logo?>" class="img-responsive" style="max-height: 75px; margin: auto">
                 <?php else: ?>
 
@@ -23,8 +23,10 @@
             </div>
             <div class="col-md-9">
                 <row>
+                    <?php if(isset($model->sender)): ?>
                     <b><?= $model->sender->name ?></b><br>
                     <?= $model->sender->adress1 .' - '.$model->sender->zip.' '.$model->sender->town ?>
+                    <?php endif; ?>
                 </row>
             </div>
         </div>
