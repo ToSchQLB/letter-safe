@@ -11,7 +11,8 @@ use yii\widgets\ActiveForm;
 <div class="letter-form">
     <?php $form = ActiveForm::begin(['id'=>'sender-update-form']); ?>
 
-    <?= $form->field($model, 'sender_id')->widget(\kartik\select2\Select2::className(),[
+    <?= $form->field($model, 'sender_id')
+        ->widget(\kartik\select2\Select2::className(),[
         'pluginOptions' => [
             'allowClear' => true,
             'ajax' => [
@@ -23,7 +24,9 @@ use yii\widgets\ActiveForm;
         'initValueText' => isset($model->sender_id) ? $model->sender->getFullAddress() : ''
     ]) ?>
 
-    <a class="sender-button btn btn-primary col-md-12" href="javascript:toggleSenderForm()"><?= Yii::t('app/sender','Create Sender') ?></a>
+    <a class="sender-button btn btn-primary col-md-12" href="javascript:toggleSenderForm()">
+        <?= Yii::t('app/sender','Create Sender') ?>
+    </a>
 
     <div class="senderform" style="display: none">
         <?php
@@ -54,7 +57,12 @@ use yii\widgets\ActiveForm;
     <?php //$form->field($model, 'folder')->textInput(['maxlength' => true]) ?>
 
     <div class="form-group">
-        <?= Html::submitButton($model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+        <?= Html::submitButton(
+                $model->isNewRecord ?
+                    Yii::t('app', 'Create') :
+                    Yii::t('app', 'Update'),
+                ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']
+        ) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

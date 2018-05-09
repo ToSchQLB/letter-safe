@@ -9,13 +9,32 @@
     <div class="panel-body">
         <div class="">
             <div class="btn-group" role="group" style="width: 100%">
-                <?= \yii\helpers\Html::a(Yii::t('app', 'Update'), ['update', 'id' => $model->id], ['style'=>'width:33.3%','class' => 'btn btn-primary']) ?>
-                <?= \yii\helpers\Html::a(Yii::t('app', 'Download'), "./data/{$model->folder}/in.pdf", ['style'=>'width:33.3%','class' => 'btn btn-default', 'target'=>'_blank']) ?>
-                <?= \yii\helpers\Html::a(Yii::t('app', 'Delete'), ['delete', 'id' => $model->id], ['style'=>'width:33.3%','class' => 'btn btn-danger',
-                  'data' => [
-                      'method' => 'post',
-                      'confirm' => Yii::t('app','Are you sure you want to delete this item?'),
-                  ]]) ?>
+                <?= \yii\helpers\Html::a(
+                        Yii::t('app', 'Update'),
+                        ['update', 'id' => $model->id],
+                        ['style'=>'width:33.3%','class' => 'btn btn-primary']
+                ) ?>
+
+                <?= \yii\helpers\Html::a(
+                        Yii::t('app', 'Download'),
+                        "./data/{$model->folder}/in.pdf",
+                        ['style'=>'width:33.3%','class' => 'btn btn-default', 'target'=>'_blank']
+                ) ?>
+
+                <?= \yii\helpers\Html::a(
+                        Yii::t('app', 'Delete'),
+                        ['delete', 'id' => $model->id],
+                        [
+                                'style'=>'width:33.3%','class' => 'btn btn-danger',
+                                'data' => [
+                                  'method' => 'post',
+                                  'confirm' => Yii::t(
+                                          'app',
+                                          'Are you sure you want to delete this item?'
+                                  ),
+                                ]
+                        ]
+                ) ?>
             </div>
         </div>
 
@@ -148,9 +167,5 @@ $js = <<<js
 js;
 	$this->registerJs($js,\yii\web\View::POS_END);
 ?>
-
-
-
-
 
 <?php \yii\web\YiiAsset::register($this); ?>

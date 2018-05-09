@@ -22,7 +22,7 @@ foreach ($models as $model){
     $dt = new DateTime($model->date);
     $monat = $dt->format("Ym");
     if(strcmp($lastDate,$monat)!=0 && $groupByMonth){
-        $html = "</div><div class='row col-md-12'><h3>".Yii::t('app',$dt->format("F"))." ".$dt->format("Y")."</h3></div><div class='row'>";
+        $html = "</div><div class='row col-md-12'><h3>".Yii::t('calendar',$dt->format("F"))." ".$dt->format("Y")."</h3></div><div class='row'>";
         $lastDate = $dt->format("Ym");
     }else{
         $html = "";

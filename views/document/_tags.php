@@ -31,14 +31,34 @@
     </div>
 </div>
 <div class="row">
-    <?= \yii\helpers\Html::beginForm(['tag/add-to-document'],'get',['data-pjax' => '', 'class' => 'form-inline']); ?>
+    <?= \yii\helpers\Html::beginForm(
+            ['tag/add-to-document'],
+            'get',
+            ['data-pjax' => '', 'class' => 'form-inline']
+    ); ?>
     <div class="col-md-6">
         <?= \yii\helpers\Html::hiddenInput('document',$model->id) ?>
-        <?= \yii\helpers\Html::dropDownList('tag',null,\yii\helpers\ArrayHelper::map(
-            app\models\Tag::find()->where(['not',['in','id',(new \yii\db\Query)->select('tag_id')->from('document_has_tag')->where(['document_id'=>$model->id])]])->asArray()->all(),
-            'id',
-            'name'
-        )); ?>
+        <?= \yii\helpers\Html::dropDownList(
+                'tag',
+                null,
+                \yii\helpers\ArrayHelper::map(
+                    app\models\Tag::find()
+                            ->where([
+                                    'not',[
+                                            'in',
+                                            'id',
+                                            (new \yii\db\Query)
+                                                ->select('tag_id')
+                                                ->from('document_has_tag')
+                                                ->where(['document_id'=>$model->id])
+                                            ]
+                                ])
+                            ->asArray()
+                            ->all(),
+                    'id',
+                    'name'
+                )
+        ); ?>
     </div>
     <div class="col-md-6">
         <?= \yii\helpers\Html::submitButton(Yii::t('app','add')) ?>

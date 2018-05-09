@@ -51,19 +51,6 @@ use yii\helpers\Html;
                 'url' => ['/document/create'],
                 'visible'=>!Yii::$app->user->isGuest
             ]
-            /*,
-                Yii::$app->user->isGuest ? (
-                ['label' => 'Login', 'url' => ['/site/login']]
-                ) : (
-                    '<li>'
-                    . Html::beginForm(['/site/logout'], 'post', ['class' => 'navbar-form'])
-                    . Html::submitButton(
-                        'Logout (' . Yii::$app->user->identity->username . ')',
-                        ['class' => 'btn btn-link']
-                    )
-                    . Html::endForm()
-                    . '</li>'
-                )*/
         ],
     ]);
     echo \yii\bootstrap\Nav::widget([
@@ -77,7 +64,8 @@ use yii\helpers\Html;
                 '<li>'
                 . Html::beginForm(['/site/logout'], 'post', ['class' => 'navbar-form'])
                 . Html::submitButton(
-                    '<i class="fa fa-sign-out"></i> Logout (' . Yii::$app->user->identity->username . ')',
+                    '<i class="fa fa-sign-out"></i> ' . Yii::t('app','Logout') .
+                                ' (' . Yii::$app->user->identity->username . ')',
                     ['class' => 'btn btn-link']
                 )
                 . Html::endForm()
@@ -92,7 +80,7 @@ use yii\helpers\Html;
         <span class="input-group-addon" id="basic-addon1">
             <i class="fa fa-search" aria-hidden="true"></i>
         </span>
-        <input id="searchTextInput" type="text" class="form-control" placeholder="suchen..." aria-describedby="basic-addon1">
+        <input id="searchTextInput" type="text" class="form-control" placeholder="<?= Yii::t('app', 'search...')?>" aria-describedby="basic-addon1">
     </div>
     <?php else: ?>
 
@@ -103,17 +91,18 @@ use yii\helpers\Html;
 <!--    <div  class="row" >-->
         <div id="searchResultPanel" style="margin-top: 50px; margin-bottom: -30px; display: none;" class="panel panel-default">
               <div class="panel-heading">
-                    <h3 class="panel-title">Suchergebnis</h3>
+                    <h3 class="panel-title"><?= Yii::t('app','searchresults') ?></h3>
               </div>
               <div class="panel-body" id="searchResults">
                   <i class="fa fa-refresh fa-spin fa-3x fa-fw" aria-hidden="true"></i>
-                  <span class="sr-only">Refreshing...</span> bitte warten...
+                  <span class="sr-only"><?= Yii::t('app','Refreshing...') ?></span> <?= Yii::t('app','please wait...') ?>
               </div>
         </div>
 <!--    </div>-->
 </header>
 <?php
     $url = \yii\helpers\Url::to(['document/ajax-search','q'=>'']);
+    $msg_no_docs = Yii::t('app','no documents found');
     $js = <<<js
     $('#searchTextInput').keyup(function() {
         if($(this).val().length != 0){
@@ -133,7 +122,7 @@ use yii\helpers\Html;
                     }
                     
                     if (data.length == 0){
-                        result = 'keine Dokumente gefunden <i class="fa fa-thumbs-o-down" aria-hidden="true"></i>';
+                        result = '$msg_no_docs <i class="fa fa-thumbs-o-down" aria-hidden="true"></i>';
                     }
                     
                     $('#searchResults').html(result);
