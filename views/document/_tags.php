@@ -12,9 +12,21 @@
     <div class="col-md-12">
     <?php
     foreach ($model->documentTags as $tag):?>
-        <a data-pjax href="<?= \yii\helpers\Url::to(['tag/remove-from-document','document'=>$model->id,'tag'=>$tag->id])?>" style="margin-bottom: 5px" class="btn btn-sm tag_<?= $tag->color?>">
-            <i class="fa fa-tag"></i> <?= $tag->name ?>
-        </a>
+        <div class="btn-group">
+            <a href="<?= \yii\helpers\Url::to(['tag/view', 'id'=>$tag->id]) ?>"
+               style="margin-bottom: 5px"
+               class="btn btn-sm tag_<?= $tag->color ?>"
+            >
+                <?= $tag->name ?>
+            </a>
+            <a data-pjax
+               href="<?= \yii\helpers\Url::to(['tag/remove-from-document','document'=>$model->id,'tag'=>$tag->id])?>"
+               style="margin-bottom: 5px"
+               class="btn btn-sm tag_<?= $tag->color?>"
+            >
+                <i class="fa fa-close"></i>
+            </a>
+        </div>
     <?php endforeach; ?>
     </div>
 </div>
