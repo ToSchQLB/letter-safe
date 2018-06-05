@@ -1,0 +1,20 @@
+FROM php:5.6-apache
+
+#install modules
+RUN apt-get update && apt-get -y install \
+        tesseract-ocr \
+        tesseract-ocr-deu \
+        imagemagick \
+        poppler-utils \
+        wget
+
+COPY ./install-composer.sh /
+COPY ../../ /var/www/html/letter-safe
+
+RUN sh /install-composer.sh \
+    && rm /install-composer.sh
+
+WORKDIR /var/www/html/letter-safe
+
+
+EXPOSE 80/tcp
