@@ -6,13 +6,18 @@ RUN apt-get update && apt-get -y install \
         tesseract-ocr-deu \
         imagemagick \
         poppler-utils \
-        wget
+        wget \
+        git \
+        zlib1g-dev \
+        && docker-php-ext-install zip
 
 COPY ./install-composer.sh /
-COPY ../../ /var/www/html/letter-safe
 
 RUN sh /install-composer.sh \
-    && rm /install-composer.sh
+    && rm /install-composer.sh \
+    && cd /var/www/html \
+    && git clone https://github.com/toschqlb/letter-safe \
+    && letter-safe/composer install
 
 WORKDIR /var/www/html/letter-safe
 
