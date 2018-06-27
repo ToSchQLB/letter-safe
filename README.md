@@ -4,7 +4,7 @@ Letter-safe is still under development and will be a personal document managemen
 ![](http://toschqlb.alfahosting.org/letter-safe/letter-safe.jpg)
 
 ###Requires
-- tesseract-ocrrr
+- tesseract-ocr
 - tesseract-ocr-deu
 - imagemagick
 - poppler-utils 
