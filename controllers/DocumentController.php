@@ -10,6 +10,7 @@ use app\models\DocumentSearch;
 use yii\db\Expression;
 use yii\db\Query;
 use yii\filters\AccessControl;
+use yii\helpers\Json;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -163,10 +164,10 @@ class DocumentController extends Controller
 //		$document->folder = $folder;
 		$document->save();
 	    
-    	return yii\helpers\Json::encode([
+    	return Json::encode([
             'files' => [
                 0 => [
-                    'name' => Yii::t('document', 'neues Dokument hochgeladen'),
+                    'name' => 'neues Dokument hochgeladen',
                     'size' => count($files),
                     'url' => './img/success.png',
                     'url' => './img/success.png',

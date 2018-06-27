@@ -7,9 +7,16 @@ use yii\helpers\Html;
 ?>
 <div class="panel panel-info">
     <div class="panel-heading">
-        <h3 class="panel-title"><?=  Yii::t('app', 'Update {modelClass}: ', [
-                'modelClass' => 'Document',
-            ]) . "<b>" .$model->title . "</b>" ?></h3>
+        <h3 class="panel-title">
+            <?=  Yii::t(
+                    'app',
+                    'Update {modelClass}: ',
+                    [
+                        'modelClass' => 'Document',
+                    ]
+            ) .
+            "<b>" .$model->title . "</b>" ?>
+        </h3>
     </div>
     <div class="panel-body">
         <?= $this->render('_form', [
