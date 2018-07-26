@@ -20,7 +20,7 @@ foreach ($documents as $document): ?>
         </td>
         <td>
             <a href="<?= \yii\helpers\Url::to(['document/update','id'=>$document->id]) ?>">
-                <h4><?= $document->input_filename.'.'.$document->input_file_extension ?></h4>
+                <h4 style="overflow: hidden"><?= $document->input_filename.'.'.$document->input_file_extension ?></h4>
             </a>
         </td>
 
