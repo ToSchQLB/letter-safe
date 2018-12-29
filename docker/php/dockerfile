@@ -1,0 +1,25 @@
+FROM php:5.6-apache
+
+#install modules
+RUN apt-get update && apt-get -y install \
+        tesseract-ocr \
+        tesseract-ocr-deu \
+        imagemagick \
+        poppler-utils \
+        wget \
+        git \
+        zlib1g-dev \
+        && docker-php-ext-install zip
+
+COPY ./install-composer.sh /
+
+RUN sh /install-composer.sh \
+    && rm /install-composer.sh \
+    && cd /var/www/html \
+    && git clone https://github.com/toschqlb/letter-safe \
+    && letter-safe/composer install
+
+WORKDIR /var/www/html/letter-safe
+
+
+EXPOSE 80/tcp

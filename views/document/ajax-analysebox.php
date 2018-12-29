@@ -24,7 +24,7 @@ foreach ($documents as $document): ?>
         <div class="col-md-10">
             <div class="row">
                 <div class="col-md-12">
-                    <h2 style="margin-top: 0px; line-height: 1;"><?= $document->input_filename.'.'.$document->input_file_extension ?></h2>
+                    <h2 style="margin-top: 0px; line-height: 1; overflow: hidden"><?= $document->input_filename.'.'.$document->input_file_extension ?></h2>
                 </div>
             </div>
             <div class="row">
