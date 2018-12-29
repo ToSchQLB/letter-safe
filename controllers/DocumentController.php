@@ -113,12 +113,12 @@ class DocumentController extends Controller
         foreach ($files as $index => $file) {
             if(strcmp($file->extension,'pdf')!=0) {
                 if ($file->saveAs($inFile . '-' . $index . '.' . $file->extension)) {
-                    chmod($inFile . '-' . $index . '.' . $file->extension, 0600);
+                    chmod($inFile . '-' . $index . '.' . $file->extension, 0666);
                     $fileList .= $inFile. '-'.$index.'.'.$file->extension.chr(13).chr(10);
                 }
             }else{
                 $file->saveAs($inFilePdf);
-                chmod($inFilePdf, 0600);
+                chmod($inFilePdf, 0666);
                 Queue::createNewJob("php {$basePath}/yii import/status {$document->id} 1");
                 Queue::createNewJob("convert -density 300 $inFilePdf -background white -alpha remove {$folder_absolute}/pdf-page.jpeg");
                 Queue::createNewJob("php {$basePath}/yii import/create-file-list {$document->id}");
@@ -134,16 +134,16 @@ class DocumentController extends Controller
                 Queue::createNewJob("php {$basePath}/yii import/status {$document->id} 10");
             }*/
 //            Queue::createNewJob("tesseract -l deu -psm 1 {$folder_absolute}/tmp.tiff {$folder_absolute}/in pdf");
-            Queue::createNewJob("tesseract -l deu -psm 1 {$folder_absolute}/{$fileListName} {$folder_absolute}/in pdf");
+            Queue::createNewJob("tesseract {$folder_absolute}/{$fileListName} {$folder_absolute}/in pdf -l deu -psm 1");
             Queue::createNewJob("php {$basePath}/yii import/status {$document->id} 20");
         }
 //        Queue::createNewJob("tesseract -l deu -psm 1 {$folder_absolute}/tmp.tiff {$folder_absolute}/text hocr");
-        Queue::createNewJob("tesseract -l deu -psm 1 {$folder_absolute}/{$fileListName} {$folder_absolute}/text hocr");
+        Queue::createNewJob("tesseract {$folder_absolute}/{$fileListName} {$folder_absolute}/text hocr -l deu -psm 1 ");
         Queue::createNewJob("php {$basePath}/yii import/status {$document->id} 30");
         Queue::createNewJob("php {$basePath}/yii hocr/execute \"{$folder_absolute}/text.hocr\" \"{$folder_absolute}/text.json\"");
         Queue::createNewJob("php {$basePath}/yii import/status {$document->id} 40");
 //        Queue::createNewJob("tesseract -l deu -psm 1 {$folder_absolute}/tmp.tiff {$folder_absolute}/text txt");
-        Queue::createNewJob("tesseract -l deu -psm 1 {$folder_absolute}/{$fileListName} {$folder_absolute}/text txt");
+        Queue::createNewJob("tesseract {$folder_absolute}/{$fileListName} {$folder_absolute}/text txt -l deu -psm 1 ");
         Queue::createNewJob("php {$basePath}/yii import/status {$document->id} 41");
         Queue::createNewJob("php {$basePath}/yii import/text {$document->id}");
         Queue::createNewJob("php {$basePath}/yii import/status {$document->id} 42");

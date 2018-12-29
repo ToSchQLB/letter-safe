@@ -8,14 +8,15 @@
 
 namespace app\components;
 
-use yii\base\Object;
 
+
+use yii\base\BaseObject;
 
 /**
  * Class HocrPaser
  * @package app\components
  */
-class HocrParser extends Object{
+class HocrParser extends BaseObject {
 
 
 	/**
@@ -75,11 +76,13 @@ class HocrParser extends Object{
                         case 'ocrx_word':
                             $title = $domNode->attributes->getNamedItem('title')->textContent;
                             $titleData = explode(' ', $title);
+//                            var_dump($titleData);
+//                            die();
                             array_push($this->currentPage['text'], [
                                 'left' => $titleData[1],
                                 'top' => $titleData[2],
                                 'width' => $titleData[3] - $titleData[1],
-                                'height' => $titleData[4] - $titleData[2],
+                                'height' => intval($titleData[4]) - $titleData[2],
                                 'content' => $domNode->textContent
                             ]);
                             break;

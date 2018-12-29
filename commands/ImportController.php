@@ -225,15 +225,21 @@ class ImportController extends Controller
     }
 
     public function actionCreateFileList($id){
-        $fileList = '';
+        $fileList = [];
 	    $document = Document::findOne($id);
         $basedir = $this->getFolderByDocument($document);
+//        var_dump($basedir);
+//        var_dump(scandir($basedir));
         foreach (scandir($basedir) as $item){
             if(strpos($item, 'pdf-page')!==false){
+//                var_dump($item);
                 $itemNo = intval(str_replace(['pdf-page-','.jpeg'],['',''],$item));
+//                var_dump($itemNo);
                 $fileList[$itemNo]= $basedir.'/'.$item .chr(13).chr(10);
             }
         }
+//        var_dump($fileList);
+//        die();
         ksort($fileList);
         print_r($fileList);
         file_put_contents($basedir.'/file_list.txt', implode('',$fileList));
