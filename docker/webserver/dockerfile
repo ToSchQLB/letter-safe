@@ -10,7 +10,7 @@ RUN apt-get update && apt-get -y install \
         wget \
         git \
         zlib1g-dev \
-        && docker-php-ext-install zip
+        && docker-php-ext-install zip gd mysqli
 
 COPY ./install-composer.sh /var/www/html/
 
