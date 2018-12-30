@@ -1,9 +1,10 @@
-FROM php:5.6-apache
+FROM php:5.6-apache-jessie
 
 #install modules
 RUN apt-get update && apt-get -y install \
         tesseract-ocr \
         tesseract-ocr-deu \
+        tesseract-ocr-eng \
         imagemagick \
         poppler-utils \
         wget \
@@ -11,13 +12,14 @@ RUN apt-get update && apt-get -y install \
         zlib1g-dev \
         && docker-php-ext-install zip
 
-COPY ./install-composer.sh /
+COPY ./install-composer.sh /var/www/html/
 
-RUN sh /install-composer.sh \
-    && rm /install-composer.sh \
-    && cd /var/www/html \
+RUN cd /var/www/html \
+    && wget -q https://getcomposer.org/composer.phar \
     && git clone https://github.com/toschqlb/letter-safe \
-    && letter-safe/composer install
+    && cd letter-safe \
+    && php ../composer.phar install --no-dev \
+    && php yii migrate
 
 WORKDIR /var/www/html/letter-safe
 
