@@ -18,7 +18,17 @@ RUN cd /var/www/html \
     && wget -q https://getcomposer.org/composer.phar \
     && git clone https://github.com/toschqlb/letter-safe \
     && cd letter-safe \
-    && php ../composer.phar install --no-dev \
+    && php ../composer.phar install \
+    && { \
+        echo '<?php'; \
+        echo 'return ['; \
+        echo '    \'class\' => \'yii\db\Connection\','; \
+        echo '    \'dsn\' => \'mysql:host=${DB_SERVER};dbname=${DB_DB}\',';
+        echo '    \'username\' => \'${DB_USER}\','; \
+        echo '    \'password\' => \'${DB_PASS}\','; \
+        echo '    \'charset\' => \'utf8\','; \
+        echo '];'; \
+    } > config/db.php \
     && php yii migrate
 
 WORKDIR /var/www/html/letter-safe
