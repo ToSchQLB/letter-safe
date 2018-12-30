@@ -23,7 +23,7 @@ RUN cd /var/www/html \
         echo '<?php'; \
         echo 'return ['; \
         echo '    \'class\' => \'yii\db\Connection\','; \
-        echo '    \'dsn\' => \'mysql:host=${DB_SERVER};dbname=${DB_DB}\',';
+        echo '    \'dsn\' => \'mysql:host=${DB_SERVER};dbname=${DB_DB}\','; \
         echo '    \'username\' => \'${DB_USER}\','; \
         echo '    \'password\' => \'${DB_PASS}\','; \
         echo '    \'charset\' => \'utf8\','; \
