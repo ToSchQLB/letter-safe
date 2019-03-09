@@ -62,12 +62,14 @@ $this->params['breadcrumbs'][] = $this->title;
                     echo "<img src='{$folder_relative}/seite-".sprintf("%02d",$page->page).".png' usemap='#mapSeite{$page->page}' width='{$w}'/>";
                 echo "<map name='mapSeite{$page->page}'>";
                 foreach ($page->text as $text) {
-                    $y1 = round($text->top * $proportion,0);
-                    $x1 = round($text->left * $proportion);
-                    $y2 = round(($text->height * $proportion) + $y1);
-                    $x2 = round(($text->width * $proportion) + $x1);
-                    $title = $text->content;
-                    echo "<area shape='rect' coords='{$x1},{$y1},{$x2},{$y2}' href=\"javascript: writeToInput('{$title}')\" title='{$title}' alt='{$title}'>";
+                    if(!in_array($text->content, ['|'])) {
+                        $y1    = round($text->top * $proportion, 0);
+                        $x1    = round($text->left * $proportion);
+                        $y2    = round(($text->height * $proportion) + $y1);
+                        $x2    = round(($text->width * $proportion) + $x1);
+                        $title = $text->content;
+                        echo "<area shape='rect' coords='{$x1},{$y1},{$x2},{$y2}' href=\"javascript: writeToInput('{$title}')\" title='{$title}' alt='{$title}'>";
+                    }
                 }
                 echo "</map>";
                 echo "</div>";

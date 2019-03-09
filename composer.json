@@ -36,8 +36,12 @@
     }
   },
   "scripts": {
+    "post-install-cmd": [
+      "yii\\composer\\Installer::postInstall"
+    ],
     "post-create-project-cmd": [
-      "yii\\composer\\Installer::postCreateProject"
+      "yii\\composer\\Installer::postCreateProject",
+      "yii\\composer\\Installer::postInstall"
     ]
   },
   "extra": {
@@ -48,20 +52,18 @@
           "web/assets": "0777",
           "yii": "0755"
         }
-      ],
+      ]
+    },
+    "yii\\composer\\Installer::postInstall": {
       "generateCookieValidationKey": [
         "config/web.php"
       ]
-    },
-    "asset-installer-paths": {
-      "npm-asset-library": "vendor/npm",
-      "bower-asset-library": "vendor/bower"
     }
   },
-   "repositories": [
-        {
-            "type": "composer",
-            "url": "https://asset-packagist.org"
-        }
-    ]
+  "repositories": [
+    {
+      "type": "composer",
+      "url": "https://asset-packagist.org"
+    }
+  ]
 }
