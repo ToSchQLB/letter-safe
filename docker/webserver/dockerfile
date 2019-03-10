@@ -1,3 +1,4 @@
+
 FROM php:5.6-apache
 
 #install modules
@@ -11,31 +12,35 @@ RUN apt-get update && apt-get -y install \
         git \
         zlib1g-dev \
         libpng-dev \
-        && docker-php-ext-install mbstring
-        && docker-php-ext-install zip
-        && docker-php-ext-install gd
+        && docker-php-ext-install mbstring \
+        && docker-php-ext-install zip \
+        && docker-php-ext-install gd \
         && docker-php-ext-install mysqli
 
-COPY ./install-composer.sh /var/www/html/
+#COPY ./install-composer.sh /var/www/html/
 
 RUN cd /var/www/html \
     && wget -q https://getcomposer.org/composer.phar \
     && git clone https://github.com/toschqlb/letter-safe \
     && cd letter-safe \
-    && php ../composer.phar install \
-    && { \
-        echo '<?php'; \
-        echo 'return ['; \
-        echo '    "class" => "yii\db\Connection",'; \
-        echo '    "dsn" => "mysql:host=${LETTERSAFE_DB_SERVER};dbname=${LETTERSAFE_DB_DB}",'; \
-        echo '    "username" => "${LETTERSAFE_DB_USER}",'; \
-        echo '    "password" => "${LETTERSAFE_DB_PASSWORD}",'; \
-        echo '    "charset" => "utf8",'; \
-        echo '];'; \
-    } > config/db.php \
-    && php yii migrate
+    && php ../composer.phar install
+
 
 WORKDIR /var/www/html/letter-safe
 
+COPY entrypoint.sh /entrypoint.sh
+
+#COPY entrypoint.sh /usr/local/bin/
+#RUN ln -s usr/local/bin/entrypoint.sh /entrypoint.sh # backwards compat
+ENTRYPOINT ["/entrypoint.sh"]
 
 EXPOSE 80/tcp
+
+#ENV \
+#       LETTERSAFE_DB_SERVER= \
+#       LETTERSAFE_DB_DB= \
+#       LETTERSAFE_DB_USER= \
+#       LETTERSAFE_DB_PASSWORD=
+
+#ENTRYPOINT ./entrypoint.sh
+#CMD ["apache2-foreground"]
