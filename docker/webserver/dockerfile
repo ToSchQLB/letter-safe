@@ -10,6 +10,7 @@ RUN apt-get update && apt-get -y install \
         wget \
         git \
         zlib1g-dev \
+        libpng-dev \
         && docker-php-ext-install mbstring
         && docker-php-ext-install zip
         && docker-php-ext-install gd
