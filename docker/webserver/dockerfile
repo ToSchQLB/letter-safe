@@ -1,4 +1,4 @@
-FROM php:7.2-apache
+FROM php:5.6-apache
 
 #install modules
 RUN apt-get update && apt-get -y install \
@@ -22,11 +22,11 @@ RUN cd /var/www/html \
     && { \
         echo '<?php'; \
         echo 'return ['; \
-        echo '    \'class\' => \'yii\db\Connection\','; \
-        echo '    \'dsn\' => \'mysql:host=${DB_SERVER};dbname=${DB_DB}\','; \
-        echo '    \'username\' => \'${DB_USER}\','; \
-        echo '    \'password\' => \'${DB_PASS}\','; \
-        echo '    \'charset\' => \'utf8\','; \
+        echo '    "class" => "yii\db\Connection",'; \
+        echo '    "dsn" => "mysql:host=${LETTERSAFE_DB_SERVER};dbname=${LETTERSAFE_DB_DB}",'; \
+        echo '    "username" => "${LETTERSAFE_DB_USER}",'; \
+        echo '    "password" => "${LETTERSAFE_DB_PASSWORD}",'; \
+        echo '    "charset" => "utf8",'; \
         echo '];'; \
     } > config/db.php \
     && php yii migrate
