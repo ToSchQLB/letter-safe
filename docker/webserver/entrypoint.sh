@@ -11,4 +11,5 @@ cd /var/www/html/letter-safe/ \
             echo "];"; \
         } > ./config/db.php \
         && cat ./config/db.php \
+        && sleep 30 \
         && php yii migrate --interactive=0
