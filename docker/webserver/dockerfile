@@ -27,7 +27,7 @@ RUN cd /var/www/html \
     && wget -q https://getcomposer.org/composer.phar \
     && git clone https://github.com/toschqlb/letter-safe \
     && cd letter-safe \
-    && php ../composer.phar install
+    && php ../composer.phar install \
     && php ../composer.phar update
 
 ENV LETTERSAFE_DB_SERVER db
