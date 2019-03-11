@@ -44,6 +44,7 @@ RUN chmod 0777 /var/www/html/letter-safe/entrypoint.sh
 #COPY entrypoint.sh /usr/local/bin/
 #RUN ln -s usr/local/bin/entrypoint.sh /entrypoint.sh # backwards compat
 CMD ["./entrypoint.sh"]
+CMD ["apache2-foreground"]
 
 EXPOSE 80/tcp
 

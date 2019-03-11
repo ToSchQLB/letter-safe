@@ -11,5 +11,4 @@ cd /var/www/html/letter-safe/ \
             echo "];"; \
         } > ./config/db.php \
         && cat ./config/db.php \
-        && php yii migrate \
-        && php -S localhost:80 ./web
+        && php yii migrate --interactive=0
