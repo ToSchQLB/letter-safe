@@ -34,6 +34,7 @@ ENV LETTERSAFE_DB_PASSWORD letter-safe
 WORKDIR /var/www/html/letter-safe
 
 COPY entrypoint.sh /var/www/html/letter-safe/entrypoint.sh
+RUN chmod 0777 /var/www/html/letter-safe/entrypoint.sh
 #COPY entrypoint.sh /entrypoint.sh
 
 #COPY entrypoint.sh /usr/local/bin/
