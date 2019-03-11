@@ -1,5 +1,6 @@
 
-FROM php:5.6-apache
+#FROM php:5.6-apache
+FROM php:7.3-apache-stretch
 
 #install modules
 RUN apt-get update && apt-get -y install \
@@ -11,11 +12,11 @@ RUN apt-get update && apt-get -y install \
         wget \
         git \
         zlib1g-dev \
-        libpng-dev \
-        && docker-php-ext-install mbstring \
-        && docker-php-ext-install zip \
-        && docker-php-ext-install gd \
-        && docker-php-ext-install mysqli
+        libpng-dev
+        
+RUN docker-php-ext-install mbstring zip gd mysqli\
+        && docker-php-ext-install -j5 pdo \
+        && docker-php-ext-install pdo_mysql
 
 #COPY ./install-composer.sh /var/www/html/
 
@@ -25,25 +26,22 @@ RUN cd /var/www/html \
     && cd letter-safe \
     && php ../composer.phar install
 
+ENV LETTERSAFE_DB_SERVER db
+ENV LETTERSAFE_DB_DB letter-safe
+ENV LETTERSAFE_DB_USER letter-safe
+ENV LETTERSAFE_DB_PASSWORD letter-safe
 
 WORKDIR /var/www/html/letter-safe
 
 COPY entrypoint.sh /var/www/html/letter-safe/entrypoint.sh
-
-RUN chmod 0777 var/www/html/letter-safe/entrypoint.sh
+#COPY entrypoint.sh /entrypoint.sh
 
 #COPY entrypoint.sh /usr/local/bin/
 #RUN ln -s usr/local/bin/entrypoint.sh /entrypoint.sh # backwards compat
-#ENTRYPOINT ["/entrypoint.sh"]
 CMD ["./entrypoint.sh"]
 
 EXPOSE 80/tcp
 
-#ENV \
-#       LETTERSAFE_DB_SERVER= \
-#       LETTERSAFE_DB_DB= \
-#       LETTERSAFE_DB_USER= \
-#       LETTERSAFE_DB_PASSWORD=
-
-#ENTRYPOINT ./entrypoint.sh
-#CMD ["apache2-foreground"]
+#ENTRYPOINT echo $LETTERSAFE_DB_SERVER
+#ENTRYPOINT /var/www/html/letter-safe/entrypoint.sh
+#CMD ["apache2-foreground
