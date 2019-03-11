@@ -19,7 +19,8 @@ use yii\widgets\ActiveForm;
         'pluginOptions' => [
 //            'previewFileType' => 'any',
             'uploadAsync' => false,
-            'uploadUrl' => \yii\helpers\Url::to(['/document/ajax-file-upload']),
+//            'uploadUrl' => \yii\helpers\Url::to(['/document/ajax-file-upload']),
+            'uploadUrl' => 'index.php?r=/document/ajax-file-upload',
 //            'maxFileCount' => 10
         ]
     ]); ?>
