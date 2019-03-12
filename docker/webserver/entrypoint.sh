@@ -10,6 +10,7 @@ cd /var/www/html/letter-safe/
     echo "    'charset' => 'utf8',"; \
     echo "];"; \
 } > ./config/db.php 
+php /var/www/html/letter-safe/yii queue/unlock-queue
 service cron start
 php yii migrate --interactive=0 > /dev/null 
 apache2-foreground
