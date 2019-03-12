@@ -15,6 +15,7 @@ class SetupController extends Controller
 {
     public function actionInitDb()
     {
-        return '<pre>' .system('cd '. __DIR__ .'/../ && php yii migrate --interactive=0') . '</pre>';
+        echo '<pre>' .system('cd '. __DIR__ .'/../ && php yii migrate --interactive=0') . '</pre>';
+        die();
     }
 }
