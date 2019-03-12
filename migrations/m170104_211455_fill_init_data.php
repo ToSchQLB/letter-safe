@@ -24,15 +24,6 @@ class m170104_211455_fill_init_data extends Migration
         $dthf->save();
 
         $df = new \app\models\DocumentField();
-        $df->name = "Rechnungsbetrag";
-        $df->save();
-
-        $dthf = new \app\models\DocumentTypeHasField();
-        $dthf->document_type_id = $dtRechnung->id;
-        $dthf->field_id = $df->id;
-        $dthf->save();
-
-        $df = new \app\models\DocumentField();
         $df->name = "Rechnungsnummer";
         $df->save();
 
