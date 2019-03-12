@@ -13,7 +13,8 @@ RUN apt-get update && apt-get -y install \
         git \
         zlib1g-dev \
         libpng-dev \
-        libzip-dev
+        libzip-dev \
+        cron
         
 RUN docker-php-ext-install mbstring 
 RUN docker-php-ext-install zip gd 
@@ -47,8 +48,8 @@ RUN chmod 0777 /var/www/html/letter-safe/entrypoint.sh
 COPY ./files/000-default.conf /etc/apache2/sites-available/000-default.conf
 RUN echo "* * * * * php /var/www/html/letter-safe/yii queue/execute > /dev/null 2>&1 &" >> /etc/crontab
 
-CMD ["./entrypoint.sh"]
-CMD ["apache2-foreground"]
+ENTRYPOINT ["./entrypoint.sh"]
+#CMD ["apache2-foreground"]
 
 EXPOSE 80/tcp
 
