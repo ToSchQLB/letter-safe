@@ -9,6 +9,7 @@ use Yii;
  *
  * @property integer $document_type_id
  * @property integer $field_id
+ * @property integer $required
  *
  * @property DocumentField $field
  * @property DocumentType $documentType
