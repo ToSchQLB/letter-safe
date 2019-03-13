@@ -9,6 +9,8 @@ use Yii;
  *
  * @property integer $id
  * @property string $name
+ * @property string $regex
+ * @property int $element
  *
  * @property DocumentTypeHasField[] $documentTypeHasFields
  * @property DocumentType[] $documentTypes
