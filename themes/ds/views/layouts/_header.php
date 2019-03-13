@@ -105,7 +105,7 @@ use yii\helpers\Html;
     $msg_no_docs = Yii::t('app','no documents found');
     $js = <<<js
     $('#searchTextInput').keyup(function() {
-        if($(this).val().length != 0){
+        if($(this).val().length >= 3){
             $('#searchResultPanel').show(500);
             $.ajax('{$url}'+$(this).val(),{
                 dataType: "json",
