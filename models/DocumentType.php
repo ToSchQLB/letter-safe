@@ -30,7 +30,9 @@ class DocumentType extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
+            [['id'], 'integer'],
             [['name'], 'string', 'max' => 255],
+            [['regex'], 'string', 'max' => 1024],
         ];
     }
 
