@@ -26,7 +26,13 @@ $this->params['breadcrumbs'][] = $this->title;
                 'columns' => [
                     'id',
                     'name',
-                    'regex',
+                    [
+                            'attribute' => 'regex',
+                            'format'    => 'raw',
+                            'value'     => function($model){
+                                return "<code>{$model->regex}</code>";
+                            }
+                    ],
 
                     [
                         'class' => 'yii\grid\ActionColumn',

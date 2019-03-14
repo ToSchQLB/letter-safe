@@ -46,6 +46,7 @@ $config = [
         ],
         'formatter' => [
             'locale' => 'de-DE',
+            'nullDisplay' => '',
         ],
         'log' => [
             'traceLevel' => YII_DEBUG ? 3 : 0,
