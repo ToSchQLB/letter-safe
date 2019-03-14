@@ -71,7 +71,9 @@ $this->params['breadcrumbs'][] = $this->title;
                                             'value' => function($model){
         			                            return "<code>{$model->field->regex}</code>";
                                             }
-                                    ],[
+                                    ],
+                                    'field.element',
+                                    [
                                             'class'     => ActionColumn::class,
                                             'template'  => '{update} {delete}',
                                             'urlCreator'=> function ($action, $modelA, $key, $index) use ($model) {
