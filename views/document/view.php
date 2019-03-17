@@ -62,7 +62,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     echo "<img src='{$folder_relative}/seite-".sprintf("%02d",$page->page).".png' usemap='#mapSeite{$page->page}' width='{$w}'/>";
                 echo "<map name='mapSeite{$page->page}'>";
                 foreach ($page->text as $text) {
-                    if(!(in_array($text->content, ['|','>','-','_','*','+']) && $text->height > 100 && $text->width > 200))
+                    if(!(in_array($text->content, ['|','>','-','_','*','+','—']) && $text->height > 100 && $text->width > 200))
                     {
                         $y1    = round($text->top * $proportion, 0);
                         $x1    = round($text->left * $proportion);
