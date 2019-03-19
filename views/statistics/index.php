@@ -20,6 +20,7 @@ use yii\helpers\ArrayHelper;
                   <div class="col-md-4">
                       Sender: <?= \kartik\widgets\Select2::widget([
                           'name' => 'sender',
+                          'options' => ['placeholder' => Yii::t('app', 'please select...')],
                           'data' => ArrayHelper::map(\app\models\Sender::find()->asArray()->all(), 'id', 'name'),
                           'value' => $sender
                       ])?>
@@ -28,6 +29,7 @@ use yii\helpers\ArrayHelper;
                       Field: <?= \kartik\widgets\Select2::widget([
                           'name' => 'field',
                           'value' => $field,
+                          'options' => ['placeholder' => Yii::t('app', 'please select...')],
                           'data' => ArrayHelper::map(\app\models\DocumentField::find()->asArray()->all(), 'id', 'name')
                       ])?>
                   </div>
