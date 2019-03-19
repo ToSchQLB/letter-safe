@@ -60,7 +60,7 @@ class ImportController extends Controller
                     foreach ($jsonDatum->text as $textItem) {
                         $textItem->content = rtrim($textItem->content,",");
                         if($textItem->left >= 200 && $textItem->top >= 405 && $textItem->left <= 960 && $textItem->top <= 650){
-                            Console::stdout("Suche: ".$textItem->content);
+                            Console::stdout("Suche: ".$textItem->content .chr(10) . chr(13));
                             Console::moveCursorNextLine();
                             $senders = Sender::find()->where([
                                 'or',
