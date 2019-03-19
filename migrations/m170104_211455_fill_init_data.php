@@ -8,7 +8,7 @@ class m170104_211455_fill_init_data extends Migration
     {
         $dtRechnung = new \app\models\DocumentType();
         $dtRechnung->name = "Rechnung";
-        $dtRechnung->save();
+        $dtRechnung->save(false);
 
         $dtVersicherung = new \app\models\DocumentType();
         $dtVersicherung->name = "Versicherung";
