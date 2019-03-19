@@ -32,7 +32,16 @@ $this->params['breadcrumbs'][] = $this->title;
                     'regex',
 
 
-                    ['class' => 'yii\grid\ActionColumn'],
+                    [
+                            'class' => 'yii\grid\ActionColumn',
+                            'urlCreator' => function($action, $model, $key, $index)
+                            {
+                                $params = is_array($key) ? $key : ['id' => (string) $key];
+                                $params[0] = '/admin/document-type-' . $action ;
+
+                                return \yii\helpers\Url::toRoute($params);
+                            }
+                    ],
                 ],
             ]); ?>
         </div>
