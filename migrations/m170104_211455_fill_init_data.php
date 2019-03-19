@@ -12,79 +12,79 @@ class m170104_211455_fill_init_data extends Migration
 
         $dtVersicherung = new \app\models\DocumentType();
         $dtVersicherung->name = "Versicherung";
-        $dtVersicherung->save();
+        $dtVersicherung->save(false);
 
         $df = new \app\models\DocumentField();
         $df->name = "Rechnungsbetrag";
-        $df->save();
+        $df->save(false);
 
         $dthf = new \app\models\DocumentTypeHasField();
         $dthf->document_type_id = $dtRechnung->id;
         $dthf->field_id = $df->id;
-        $dthf->save();
+        $dthf->save(false);
 
         $df = new \app\models\DocumentField();
         $df->name = "Rechnungsnummer";
-        $df->save();
+        $df->save(false);
 
         $dthf = new \app\models\DocumentTypeHasField();
         $dthf->document_type_id = $dtRechnung->id;
         $dthf->field_id = $df->id;
-        $dthf->save();
+        $dthf->save(false);
 
         $df = new \app\models\DocumentField();
         $df->name = "Kundennummer";
-        $df->save();
+        $df->save(false);
 
         $dthf = new \app\models\DocumentTypeHasField();
         $dthf->document_type_id = $dtRechnung->id;
         $dthf->field_id = $df->id;
-        $dthf->save();
+        $dthf->save(false);
 
         $df = new \app\models\DocumentField();
         $df->name = "Auftragsnummer";
-        $df->save();
+        $df->save(false);
 
         $dthf = new \app\models\DocumentTypeHasField();
         $dthf->document_type_id = $dtRechnung->id;
         $dthf->field_id = $df->id;
-        $dthf->save();
+        $dthf->save(false);
 
         $df = new \app\models\DocumentField();
         $df->name = "Versicherungsnummer";
-        $df->save();
+        $df->save(false);
 
         $dthf = new \app\models\DocumentTypeHasField();
         $dthf->document_type_id = $dtVersicherung->id;
         $dthf->field_id = $df->id;
-        $dthf->save();
+        $dthf->save(false);
 
         $df = new \app\models\DocumentField();
         $df->name = "Policenummer";
-        $df->save();
+        $df->save(false);
 
         $dthf = new \app\models\DocumentTypeHasField();
         $dthf->document_type_id = $dtVersicherung->id;
         $dthf->field_id = $df->id;
-        $dthf->save();
+        $dthf->save(false);
 
         $df = new \app\models\DocumentField();
         $df->name = "Versicherungsbeginn";
-        $df->save();
+        $df->save(false);
 
         $dthf = new \app\models\DocumentTypeHasField();
         $dthf->document_type_id = $dtVersicherung->id;
         $dthf->field_id = $df->id;
-        $dthf->save();
+        $dthf->save(false);
 
         $df = new \app\models\DocumentField();
         $df->name = "Versicherungsende";
-        $df->save();
+        $df->save(false);
 
         $dthf = new \app\models\DocumentTypeHasField();
         $dthf->document_type_id = $dtVersicherung->id;
         $dthf->field_id = $df->id;
-        $dthf->save();
+        $dthf->save(false);
     }
 
     public function down()
