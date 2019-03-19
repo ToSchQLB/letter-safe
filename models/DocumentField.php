@@ -34,6 +34,8 @@ class DocumentField extends \yii\db\ActiveRecord
     {
         return [
             [['name'], 'string', 'max' => 50],
+            [['regex'], 'string', 'max'=>1024],
+            [['element'], 'integer']
         ];
     }
 

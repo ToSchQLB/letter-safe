@@ -50,6 +50,10 @@ use yii\helpers\Html;
                 'label' => '<i class="fa fa-plus-square" aria-hidden="true"></i> ' .Yii::t('app','Add Document'),
                 'url' => ['/document/create'],
                 'visible'=>!Yii::$app->user->isGuest
+            ],[
+                'label' => '<i class="fa fa-plus-square" aria-hidden="true"></i> ' .Yii::t('app','Document Type'),
+                'url' => ['/admin/document-type-index'],
+                'visible'=>!Yii::$app->user->isGuest
             ]
         ],
     ]);

@@ -12,6 +12,77 @@ $this->params['breadcrumbs'][] = ['label' => 'Document Types', 'url' => ['docume
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
 ?>
+
+<?php \yii\bootstrap\Modal::begin([
+    'id' => 'mdl-add-doc-field',
+    'size' => \yii\bootstrap\Modal::SIZE_LARGE,
+    'header' => '<h3>'.Yii::t('app', 'Add Document-Field').'</h3>'
+])?>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="panel panel-default">
+            	  <div class="panel-heading">
+            			<h3 class="panel-title"><?= Yii::t('app', 'existing Document-Field')?></h3>
+            	  </div>
+            	  <div class="panel-body">
+                      <?php $form = \kartik\form\ActiveForm::begin([
+                          'action' => \yii\helpers\Url::to([
+                              'document-field-add-to-type',
+                              'documenttype' => $model->id
+                          ])
+                      ]);
+                      $dthf = new \app\models\DocumentTypeHasField();
+                      ?>
+                      <?= Html::activeHiddenInput($dthf, 'document_type_id',['value'=>$model->id]) ?>
+                      <div class="row">
+                              <?= $form->field($dthf, 'field_id')->widget(\kartik\select2\Select2::class,[
+                                  'data' => \yii\helpers\ArrayHelper::map(
+                                      \app\models\DocumentField::find()
+                                          ->where(['not',[
+                                              'in',
+                                              'id',
+                                              \app\models\DocumentTypeHasField::find()
+                                                  ->select('field_id')
+                                                  ->where(['document_type_id'=>$model->id])
+                                          ]
+                                          ])
+                                          ->asArray()
+                                          ->all(),
+                                      'id',
+                                      'name'
+                                  )
+                              ])?>
+                              <?= $form->field($dthf, 'required')->widget(\kartik\widgets\SwitchInput::class,[
+                                  'pluginOptions' => [
+                                      'onColor' => 'success',
+                                      'offColor' => 'danger',
+                                      'onText' => Yii::t('app', 'Yes'),
+                                      'offText'=> Yii::t('app', 'No'),
+                                  ]
+                              ]) ?>
+                              <?= Html::submitButton(
+                                      Yii::t('app','add'),
+                                      ['class'=>'btn btn-success','style'=>'width:100%;']
+                              ) ?>
+                      </div>
+
+                      <?php \kartik\form\ActiveForm::end() ?>
+            	  </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="panel panel-default">
+            	  <div class="panel-heading">
+            			<h3 class="panel-title">FOLGT NOCH</h3>
+            	  </div>
+            	  <div class="panel-body">
+            			<?= Html::a('add',['/admin/document-field-create'],['class'=>'btn btn-success']) ?>
+            	  </div>
+            </div>
+        </div>
+    </div>
+
+<?php \yii\bootstrap\Modal::end() ?>
 <div class="document-type-view">
     <div class="col-md-12" style="margin-bottom: 15px">
         <?= Html::a('Update', ['document-type-update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
@@ -78,7 +149,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                             'template'  => '{update} {delete}',
                                             'urlCreator'=> function ($action, $modelA, $key, $index) use ($model) {
         			                            $action = 'document-field-'.$action;
-                                                $params = is_array($key) ? $key : ['documentType'=>$model->id, 'id' => (string) $key];
+                                                $params = is_array($key) ? $key : ['documenttype'=> $model->id, 'id' => (string) $key ];
                                                 $params[0] = $action;
                                                 return \yii\helpers\Url::toRoute($params);
                                             }
@@ -86,6 +157,15 @@ $this->params['breadcrumbs'][] = $this->title;
                             ]
                     ]) ?>
         	  </div>
+
+               <div class="panel-footer">
+                   <?= Html::a(
+                           Yii::t('app', 'add Document-Field'),
+                           null,
+                           ['class'=>'btn btn-success', 'onclick'=>'$("#mdl-add-doc-field").modal("show");']
+                   ) ?>
+               </div>
+
         </div>
     </div>
     

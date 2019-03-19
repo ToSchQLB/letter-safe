@@ -11,6 +11,7 @@ namespace app\controllers;
 
 use app\models\DocumentField;
 use app\models\DocumentType;
+use app\models\DocumentTypeHasField;
 use app\models\search\DocumentFieldSearch;
 use app\models\search\DocumentTypeSearch;
 use yii\filters\VerbFilter;
@@ -179,16 +180,29 @@ class AdminController extends Controller
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionDocumentFieldUpdate($id)
+    public function actionDocumentFieldUpdate($id, $documenttype=-1)
     {
         $model = $this->findDocumentFieldModel($id);
+        $dthf = DocumentTypeHasField::findOne(['field_id'=>$id, 'document_type_id'=>$documenttype]);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['document-field-view', 'id' => $model->id]);
+            if($documenttype == -1) {
+                return $this->redirect(['document-field-view', 'id' => $model->id]);
+            }
+            echo '<pre>';
+            var_dump($dthf->attributes);
+            $dthf->required = Yii::$app->request->post(
+                    'DocumentTypeHasField',
+                    ['required' => 0]
+                )['required'];
+            $dthf->save();
+            return $this->redirect(['document-type-view', 'id' => $documenttype]);
         }
 
         return $this->render('document-field/update', [
             'model' => $model,
+            'dthf' => $dthf,
+            'documenttype' => $documenttype,
         ]);
     }
 
@@ -199,11 +213,30 @@ class AdminController extends Controller
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionDocumentFieldDelete($id)
+    public function actionDocumentFieldDelete($id, $documenttype=-1)
     {
-        $this->findDocumentFieldModel($id)->delete();
+        if($documenttype==-1) {
+            $this->findDocumentFieldModel($id)->delete();
+            return $this->redirect(['document-field-index']);
+        }
 
-        return $this->redirect(['document-field-index']);
+        $dthf = DocumentTypeHasField::findOne(['document_type_id' => $documenttype, 'field_id'=>$id]);
+
+        if(!is_null($dthf)){
+            $dthf->delete();
+        }
+
+        return $this->redirect(['document-type-view','id'=>$documenttype]);
+    }
+
+    public function actionDocumentFieldAddToType($documenttype)
+    {
+        $model = new DocumentTypeHasField();
+        $model->load(Yii::$app->request->post());
+        $model->save();
+
+        $this->redirect(['/admin/document-type-view','id'=>$documenttype]);
+
     }
 
     /**
