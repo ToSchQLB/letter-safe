@@ -26,6 +26,8 @@ use yii\helpers\Console;
 class ImportController extends Controller
 {
 
+    const FILELIST_MODUS_LINEAR = 1;
+    const FILELIST_MODUS_SORTIERT = 2;
     /**
      * eine hocr File parsen
      * @param $file
@@ -59,6 +61,7 @@ class ImportController extends Controller
                         $textItem->content = rtrim($textItem->content,",");
                         if($textItem->left >= 200 && $textItem->top >= 405 && $textItem->left <= 960 && $textItem->top <= 650){
                             Console::stdout("Suche: ".$textItem->content);
+                            Console::moveCursorNextLine();
                             $senders = Sender::find()->where([
                                 'or',
                                 [
@@ -224,7 +227,7 @@ class ImportController extends Controller
 		}
     }
 
-    public function actionCreateFileList($id){
+    public function actionCreateFileList($id, $modus = self::FILELIST_MODUS_LINEAR){
         $fileList = [];
 	    $document = Document::findOne($id);
         $basedir = $this->getFolderByDocument($document);
@@ -241,7 +244,19 @@ class ImportController extends Controller
 //        var_dump($fileList);
 //        die();
         ksort($fileList);
-        print_r($fileList);
+        if($modus == self::FILELIST_MODUS_SORTIERT){
+            $nfl = [];
+            for($i=0; $i <= count($fileList)/2; $i++);
+            {
+                $nfl[] = $fileList[$i];
+                $nfl[] = $fileList[count($fileList)-1-$i];
+            }
+            if(count($nfl) != count($fileList)){
+                $nfl[] = $fileList[intval(count($fileList))+1];
+            }
+            $fileList = $nfl;
+        }
+
         file_put_contents($basedir.'/file_list.txt', implode('',$fileList));
     }
 
