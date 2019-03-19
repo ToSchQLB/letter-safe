@@ -22,6 +22,8 @@ use yii\web\UploadedFile;
  */
 class DocumentController extends Controller
 {
+    public $enableCsrfValidation = false;
+
     /**
      * @inheritdoc
      */

@@ -9,11 +9,14 @@
 namespace app\controllers;
 
 
+use app\models\DocumentField;
 use app\models\DocumentType;
+use app\models\search\DocumentFieldSearch;
 use app\models\search\DocumentTypeSearch;
 use yii\filters\VerbFilter;
 use yii\web\Controller;
 use Yii;
+use yii\web\NotFoundHttpException;
 
 class AdminController extends Controller
 {
@@ -37,7 +40,7 @@ class AdminController extends Controller
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
-                    'delete' => ['POST'],
+                    'document-typ-delete' => ['POST'],
                 ],
             ],
         ];
@@ -122,6 +125,103 @@ class AdminController extends Controller
 
         return $this->redirect(['document-type-index']);
     }
+
+    /**
+     * Lists all DocumentField models.
+     * @return mixed
+     */
+    public function actionDocumentFieldIndex()
+    {
+        $searchModel = new DocumentFieldSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+        return $this->render('document-field/index', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
+    }
+
+    /**
+     * Displays a single DocumentField model.
+     * @param integer $id
+     * @return mixed
+     * @throws NotFoundHttpException if the model cannot be found
+     */
+    public function actionDocumentFieldView($id)
+    {
+        return $this->render('document-field/view', [
+            'model' => $this->findDocumentFieldModel($id),
+        ]);
+    }
+
+    /**
+     * Creates a new DocumentField model.
+     * If creation is successful, the browser will be redirected to the 'view' page.
+     * @return mixed
+     */
+    public function actionDocumentFieldCreate()
+    {
+        $model = new DocumentField();
+
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            return $this->redirect(['document-field-view', 'id' => $model->id]);
+        }
+
+        return $this->render('document-field/create', [
+            'model' => $model,
+        ]);
+    }
+
+    /**
+     * Updates an existing DocumentField model.
+     * If update is successful, the browser will be redirected to the 'view' page.
+     * @param integer $id
+     * @return mixed
+     * @throws NotFoundHttpException if the model cannot be found
+     */
+    public function actionDocumentFieldUpdate($id)
+    {
+        $model = $this->findDocumentFieldModel($id);
+
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            return $this->redirect(['document-field-view', 'id' => $model->id]);
+        }
+
+        return $this->render('document-field/update', [
+            'model' => $model,
+        ]);
+    }
+
+    /**
+     * Deletes an existing DocumentField model.
+     * If deletion is successful, the browser will be redirected to the 'index' page.
+     * @param integer $id
+     * @return mixed
+     * @throws NotFoundHttpException if the model cannot be found
+     */
+    public function actionDocumentFieldDelete($id)
+    {
+        $this->findDocumentFieldModel($id)->delete();
+
+        return $this->redirect(['document-field-index']);
+    }
+
+    /**
+     * Finds the DocumentField model based on its primary key value.
+     * If the model is not found, a 404 HTTP exception will be thrown.
+     * @param integer $id
+     * @return DocumentField the loaded model
+     * @throws NotFoundHttpException if the model cannot be found
+     */
+    protected function findDocumentFieldModel($id)
+    {
+        if (($model = DocumentField::findOne($id)) !== null) {
+            return $model;
+        }
+
+        throw new NotFoundHttpException('The requested page does not exist.');
+    }
+
 
     /**
      * Finds the DocumentType model based on its primary key value.
