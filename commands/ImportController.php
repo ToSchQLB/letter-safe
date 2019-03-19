@@ -120,7 +120,7 @@ class ImportController extends Controller
             $matches = [];
 
             #Rechnungsbetrag
-            preg_match_all("/(gesamt|brutto|end| )(betrag|summe)[ :,a-z]*([\d,.]+)[\W]{0,1}[e,€]{0,1}/i",$fulltext,$matches);
+            preg_match_all("/(gesamt|brutto|end| )(betrag|summe)[ :,a-z]*([\d,.]+)[\W]{0,1}[e,€,â]{0,1}/i",$fulltext,$matches);
             if(count($matches[3]) > 0){
 
                 Console::moveCursorNextLine();
