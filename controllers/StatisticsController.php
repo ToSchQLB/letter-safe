@@ -10,10 +10,31 @@ namespace app\controllers;
 
 
 use yii\db\mssql\PDO;
+use yii\filters\AccessControl;
 use yii\web\Controller;
 
 class StatisticsController extends Controller
 {
+    /**
+     * @inheritdoc
+     */
+    public function behaviors()
+    {
+        return [
+            'access' => [
+                'class' => AccessControl::className(),
+                'only' => ['index'],
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'actions' => ['index'],
+                        'roles' => ['@'],
+                    ],
+                ],
+            ],
+        ];
+    }
+
     public function actionIndex($sender=null,$field=null)
     {
         $data = null;
