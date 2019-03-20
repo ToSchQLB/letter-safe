@@ -24,6 +24,12 @@ $this->title = 'Letter Safe';
                       <div class="col-md-6 text-right">
                           <b><?= \app\models\Sender::find()->count() ?> <i class="fa fa-building-o" aria-hidden="true"></i></b>
                       </div>
+                      <div class="col-md-12" style="margin-top: 10px">
+                          <a href="<?= \yii\helpers\Url::to(['/statistics/index'])?>" class="btn btn-info btn-sm pull-right">
+                              <i class="fa fa-line-chart" aria-hidden="true"></i>
+                              <?= Yii::t('app', 'more statistics') ?>
+                          </a>
+                      </div>
                   </div>
         	  </div>
         </div>
