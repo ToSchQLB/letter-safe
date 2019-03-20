@@ -67,6 +67,14 @@ HTML;
                               'method' => 'post',
                           ],
                       ]) ?>
+
+                      <?= Html::a(Yii::t('app', 'reanalyse'), ['reanalyse', 'id' => $model->id],[
+                          'class' => 'btn btn-warning pull-right',
+                          'data' => [
+                              'confirm' => Yii::t('app', 'Are you sure you want to reanalyse all item?'),
+                              'method' => 'post',
+                          ],
+                      ]) ?>
                   </p>
 
                   <?= DetailView::widget([

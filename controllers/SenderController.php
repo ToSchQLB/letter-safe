@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use app\commands\ImportController;
 use app\models\Document;
 use app\models\DocumentSearch;
 use Yii;
@@ -167,6 +168,14 @@ class SenderController extends Controller
         $this->findModel($id)->delete();
 
         return $this->redirect(['index']);
+    }
+
+    public function actionReanalyse($id){
+        $sender = $this->findModel($id);
+        foreach ($sender->documents as $document) {
+            ImportController::doDocumentTypeDetection($document->id);
+        }
+        $this->redirect(['view', 'id' => $id]);
     }
 
     /**

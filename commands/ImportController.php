@@ -28,6 +28,60 @@ class ImportController extends Controller
 
     const FILELIST_MODUS_LINEAR = 1;
     const FILELIST_MODUS_SORTIERT = 2;
+
+    /**
+     * @param $id
+     */
+    public static function doDocumentTypeDetection($id): void
+    {
+        $document = Document::findOne($id);
+        DocumentValue::deleteAll(['document_id' => $id]);
+        $fulltext = $document->full_text;
+
+        $documentTypeDetected = false;
+
+        $fulltextArray = explode("\n", $fulltext);
+
+        $documentTypes = DocumentType::find()->all();
+
+        foreach ($documentTypes as $documentType) {
+//            echo '::' . $documentType->name . '::' . chr(10);
+            if (count(preg_grep("/{$documentType->regex}/i", $fulltextArray)) > 0) {
+                $allRequiredFieldsDetected = true;
+                $documentValues            = [];
+                foreach ($documentType->documentTypeHasFields as $dtHasField) {
+                    $matches = [];
+                    $df      = $dtHasField->field;
+//                    echo $df->regex . " - " . $df->element . "\n";
+                    preg_match_all("/" . $df->regex . "/im", $fulltext, $matches);
+                    if (isset($matches[$df->element]) && count($matches[$df->element]) > 0) {
+//                        echo $matches[$df->element][0] . "\n";
+                        $documentValues[] = [
+                            'document_id' => $document->id,
+                            'field_id' => $df->id,
+                            'value' => $matches[$df->element][0]
+                        ];
+                    } else {
+                        if ($dtHasField->required == 1) {
+                            $allRequiredFieldsDetected = false;
+                        }
+                    }
+                }
+                if ($allRequiredFieldsDetected) {
+                    $document->document_type_id = $documentType->id;
+                    $document->save();
+
+                    foreach ($documentValues as $documentValue) {
+                        $model             = new DocumentValue();
+                        $model->attributes = $documentValue;
+                        $model->save();
+                    }
+                    return;
+                }
+            }
+        }
+    }
+
     /**
      * eine hocr File parsen
      * @param $file
@@ -107,154 +161,7 @@ class ImportController extends Controller
     }
 
     public function actionDetectDocumentType($id){
-        $document = Document::findOne($id);
-        DocumentValue::deleteAll(['document_id' => $id]);
-        $fulltext = $document->full_text;
-
-        $documentTypeDetected = false;
-
-        $fulltextArray = explode("\n",$fulltext);
-
-        $documentTypes = DocumentType::find()->all();
-
-        foreach ($documentTypes as $documentType) {
-            echo '::'.$documentType->name.'::'.chr(10);
-            if(count(preg_grep("/{$documentType->regex}/i", $fulltextArray))>0) {
-                $allRequiredFieldsDetected = true;
-                $documentValues = [];
-                foreach ($documentType->documentTypeHasFields as $dtHasField) {
-                    $matches = [];
-                    $df = $dtHasField->field;
-                    echo $df->regex." - ".$df->element."\n";
-                    preg_match_all("/".$df->regex."/im",$fulltext,$matches);
-                    if(isset($matches[$df->element]) && count($matches[$df->element]) > 0){
-                        echo $matches[$df->element][0] . "\n";
-                        $documentValues[] = [
-                            'document_id'=>$document->id,
-                            'field_id' => $df->id,
-                            'value' => $matches[$df->element][0]
-                        ];
-                    }else{
-                        if($dtHasField->required == 1){
-                            $allRequiredFieldsDetected = false;
-                        }
-                    }
-                }
-                if($allRequiredFieldsDetected)
-                {
-                    $document->document_type_id = $documentType->id;
-                    $document->save();
-
-                    foreach ($documentValues as $documentValue) {
-                        $model = new DocumentValue();
-                        $model->attributes = $documentValue;
-                        $model->save();
-                    }
-                    return ;
-                }
-            }
-        }
-
-//        #Rechnung
-//        if(count(preg_grep("/(rechnung|barverkauf)/i", $fulltextArray))>0){
-//            $dt = DocumentType::findOne(['name'=>'Rechnung']);
-//            $matches = [];
-//
-//            #Rechnungsbetrag
-//            preg_match_all("/(gesamt|brutto|end| )(betrag|summe)[ :,a-z]*([\d,.]+)[\W]{0,1}[e€â,]{0,1}/i",$fulltext,$matches);
-//            if(count($matches[3]) > 0){
-//
-//                Console::moveCursorNextLine();
-//                Console::moveCursorNextLine();
-//                Console::stdout('RECHNUNG:');
-//                Console::moveCursorNextLine();
-//                Console::moveCursorNextLine();
-//                $document->document_type_id = $dt->id;
-//                $document->save();
-//                $docValue = new DocumentValue();
-//                $docValue->document_id = $document->id;
-//                $docValue->field_id = DocumentField::findOne(['name'=>'Rechnungsbetrag'])->id;
-//                $docValue->value = $matches[3][0];
-//                $docValue->save();
-//                $documentTypeDetected = true;
-//                Console::stdout('Betrag: '.$matches[3][0]);
-//                Console::moveCursorNextLine();
-//            }
-//
-//            if($documentTypeDetected){
-//                # Rechnungsnummer
-//                $matches = [];
-//                preg_match_all("/(rechnung|beleg|be1eg)(nr|nummer|s-nr|snummer)[\W\s]*([\w-\/]*)/i",$fulltext,$matches);
-//                if(count($matches[3])>0){
-//                    $document->document_type_id = $dt->id;
-//                    $document->save();
-//                    $docValue = new DocumentValue();
-//                    $docValue->document_id = $document->id;
-//                    $docValue->field_id = DocumentField::findOne(['name'=>'Rechnungsnummer'])->id;
-//                    $docValue->value = $matches[3][0];
-//                    $docValue->save();
-//                    Console::stdout('Rechnungsnummer: '.$matches[3][0]);
-//                    Console::moveCursorNextLine();
-//                }
-//
-//                #Kundennummer
-//                $matches = [];
-//                preg_match_all("/(kd|kunden|mitglied)(s-nr|snummer|-nr|nummer)[\W\s]*([\w-\/]*)/i",$fulltext,$matches);
-//                if(count($matches[2])>0){
-//                    $document->document_type_id = $dt->id;
-//                    $document->save();
-//                    $docValue = new DocumentValue();
-//                    $docValue->document_id = $document->id;
-//                    $docValue->field_id = DocumentField::findOne(['name'=>'Kundennummer'])->id;
-//                    $docValue->value = $matches[3][0];
-//                    $docValue->save();
-//                    Console::stdout('Kundennummer: '.$matches[3][0]);
-//                    Console::moveCursorNextLine();
-//                }
-//
-//                #Auftragsnummer
-//                $matches = [];
-//                preg_match_all("/auftrag(s-nr|snummer)[\W\s]*([\w-\/]*)/i",$fulltext,$matches);
-//                if(count($matches[2])>0){
-//                    $document->document_type_id = $dt->id;
-//                    $document->save();
-//                    $docValue = new DocumentValue();
-//                    $docValue->document_id = $document->id;
-//                    $docValue->field_id = DocumentField::findOne(['name'=>'Auftragsnummer'])->id;
-//                    $docValue->value = $matches[2][0];
-//                    $docValue->save();
-//                    Console::stdout('Auftragsnummer: '.$matches[2][0]);
-//                    Console::moveCursorNextLine();
-//                }
-//            }
-//        }
-//
-//        #Versicherung
-//        if(count(preg_grep("/(versicherung)/i", $fulltextArray))>0){
-//            $dt = DocumentType::findOne(['name'=>'Versicherung']);
-//            $matches = [];
-//
-//            #Rechnungsbetrag
-//            preg_match_all("/(versicherung)(nr| nr|nummer|s-nr|snummer)[\W\s]*([\w-\/]*)/i",$fulltext,$matches);
-//            if(count($matches[3]) > 0){
-//
-//                Console::moveCursorNextLine();
-//                Console::moveCursorNextLine();
-//                Console::stdout('Versicherung:');
-//                Console::moveCursorNextLine();
-//                Console::moveCursorNextLine();
-//                $document->document_type_id = $dt->id;
-//                $document->save();
-//                $docValue = new DocumentValue();
-//                $docValue->document_id = $document->id;
-//                $docValue->field_id = DocumentField::findOne(['name'=>'Versicherungsnummer'])->id;
-//                $docValue->value = $matches[3][0];
-//                $docValue->save();
-//                $documentTypeDetected = true;
-//                Console::stdout('Betrag: '.$matches[3][0]);
-//                Console::moveCursorNextLine();
-//            }
-//        }
+        self::doDocumentTypeDetection($id);
     }
 
 	public function actionDeleteTiff($id){
