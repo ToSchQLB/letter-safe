@@ -17,7 +17,7 @@ use yii\helpers\ArrayHelper;
     	  </div>
     	  <div class="panel-body">
               <div class="row">
-                  <div class="col-md-4">
+                  <div class="col-md-2">
                       Sender: <?= \kartik\widgets\Select2::widget([
                           'name' => 'sender',
                           'options' => ['placeholder' => Yii::t('app', 'please select...')],
@@ -25,7 +25,7 @@ use yii\helpers\ArrayHelper;
                           'value' => $sender
                       ])?>
                   </div>
-                  <div class="col-md-4">
+                  <div class="col-md-2">
                       Field: <?= \kartik\widgets\Select2::widget([
                           'name' => 'field',
                           'value' => $field,
@@ -33,7 +33,20 @@ use yii\helpers\ArrayHelper;
                           'data' => ArrayHelper::map(\app\models\DocumentField::find()->asArray()->all(), 'id', 'name')
                       ])?>
                   </div>
-                  <div class="col-md-4">
+                  <div class="col-md-2">
+                      Filter: <?= \kartik\widgets\Select2::widget([
+                          'name' => 'filter',
+                          'value' => $filter,
+                          'options' => ['placeholder' => Yii::t('app', 'please select...')],
+                          'data' => ArrayHelper::map(\app\models\DocumentField::find()->asArray()->all(), 'id', 'name')
+                      ])?>
+                  </div>
+                  <div class="col-md-2">
+                      Filter-value: <?= \yii\helpers\Html::textInput('filtervalue', $filtervalue, [
+                          'class' => 'form-control',
+                      ])?>
+                  </div>
+                  <div class="col-md-2">
                       <?= \yii\bootstrap\Html::submitButton(
                           Yii::t('app', 'show diagram'),
                           [
