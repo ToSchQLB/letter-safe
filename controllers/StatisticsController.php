@@ -44,13 +44,13 @@ SELECT document.date, replace(document_value.value, '.','') value FROM document
 INNER JOIN document_value on document.id = document_value.document_id
 WHERE document.sender_id = :sender AND document_value.field_id = :field
 sql;
-            if(!is_null($filter)){
+            if(!is_null($filter) && !empty($filter)){
                 $sql .= " AND document.id in (SELECT document_id FROM document_value WHERE field_id=:filter AND value = :filterValue)";
             }
             $command = \Yii::$app->db->createCommand($sql);
             $command->bindParam('sender',$sender, PDO::PARAM_INT);
             $command->bindParam('field',$field, PDO::PARAM_INT);
-            if(!is_null($filter)){
+            if(!is_null($filter) && !empty($filter)){
                 $command->bindParam('filter', $filter, PDO::PARAM_INT);
                 $command->bindParam('filterValue', $filtervalue, PDO::PARAM_STR);
             }
