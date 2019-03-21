@@ -86,9 +86,7 @@ class m190319_184010_fill_regex_data extends Migration
      */
     public function safeDown()
     {
-        echo "m190319_184010_fill_regex_data cannot be reverted.\n";
 
-        return false;
     }
 
     /*
