@@ -12,7 +12,7 @@ class m190319_120536_update_document_table_1 extends Migration
      */
     public function safeUp()
     {
-        $this->alterColumn('document', 'full_text', 'LONGTEXT CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL');
+        $this->alterColumn('document', 'full_text', 'LONGTEXT CHARACTER SET utf8 COLLATE utf8_general_ci NULL');
     }
 
     /**
@@ -20,9 +20,7 @@ class m190319_120536_update_document_table_1 extends Migration
      */
     public function safeDown()
     {
-        echo "m190319_120536_update_document_table_1 cannot be reverted.\n";
 
-        return false;
     }
 
     /*
