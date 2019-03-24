@@ -43,17 +43,22 @@ use yii\helpers\Html;
                 'url'=>['/tag/index'],
                 'visible'=>!Yii::$app->user->isGuest
             ],[
-                'label' => '<i class="fa fa-user" aria-hidden="true"></i> '. Yii::t('app','User'),
-                'url'=>['/user/index'],
-                'visible'=>!Yii::$app->user->isGuest
-            ],[
                 'label' => '<i class="fa fa-plus-square" aria-hidden="true"></i> ' .Yii::t('app','Add Document'),
                 'url' => ['/document/create'],
                 'visible'=>!Yii::$app->user->isGuest
-            ],[
-                'label' => '<i class="fa fa-plus-square" aria-hidden="true"></i> ' .Yii::t('app','Document Type'),
-                'url' => ['/admin/document-type-index'],
-                'visible'=>!Yii::$app->user->isGuest
+            ], [
+                'label' => '<i class="fa fa-wrench" aria-hidden="true"></i> '. Yii::t('app', 'Settings'),
+                'items' => [
+                    [
+                        'label' => '<i class="fa fa-files-o" aria-hidden="true"></i> ' .Yii::t('app','Document Type'),
+                        'url' => ['/admin/document-type-index'],
+                        'visible'=>!Yii::$app->user->isGuest
+                    ], [
+                        'label' => '<i class="fa fa-user" aria-hidden="true"></i> '. Yii::t('app','User'),
+                        'url'=>['/user/index'],
+                        'visible'=>!Yii::$app->user->isGuest
+                    ],
+]
             ]
         ],
     ]);
