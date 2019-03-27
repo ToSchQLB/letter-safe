@@ -5,6 +5,50 @@
 .show_on_hover:hover{
     display: flex;
 }
+.tag_white{
+    background-color: #ffffff;
+    color: #000000;
+}
+.tag_black{
+    color: #ffffff;
+    background-color: #000000;
+}
+.tag_grey{
+    background-color: #808080;
+}
+.tag_brown{
+    background-color: #A52A2A;
+    color: #ffffff;
+}
+.tag_red{
+    background-color: #ff0000;
+}
+.tag_yellow{
+    background-color: #ffff00;
+    color: #000000;
+}
+.tag_indigo{
+    background-color: #4B0082;
+}
+.tag_maroon{
+    background-color: #800000;
+}
+.tag_pink{
+    background-color: #ffC0CB;
+    color: #000000;
+}
+.tag_violet{
+    background-color: #ee82ee;
+}
+.tag_cyan{
+    background-color: #00ffff;
+}
+.tag_magenta{
+    background-color: #ff00ff;
+}
+.tag_purple{
+    background-color: #800080;
+}
 .tag_gold{
     background-color: #ffcc00;
     color: #000000;
