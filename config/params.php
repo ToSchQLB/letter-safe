@@ -1,7 +1,9 @@
 <?php
 use kartik\datecontrol\Module;
 
-return [
+$tesseract = require __DIR__ . 'tesseract.php';
+
+$params = [
     'adminEmail' => 'admin@example.com',
 
     // format settings for displaying each date attribute (ICU format example)
@@ -21,3 +23,5 @@ return [
     'dateControlDisplayTimezone' => 'Europe/Berlin',
     'dateControlSaveTimezone' => 'Europe/Berlin',
 ];
+
+return array_merge($params, $tesseract);

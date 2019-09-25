@@ -97,6 +97,13 @@ class DocumentController extends Controller
         if(isset(Yii::$app->params['mediaPath'])){
             $folder_absolute = Yii::$app->params['mediaPath'].$folder;
         }
+
+        $tesseractPath =
+            isset(Yii::$app->params['tesseract-path']) ?
+                Yii::$app->params['tesseract-path'] . $folder :
+                $folder_absolute;
+        $tesseractCommand = Yii::$app->params['tesseract-cmd'];
+
         mkdir( $folder_absolute);
         chmod( $folder_absolute, 0700);
         $inFileName = 'in';
@@ -136,16 +143,16 @@ class DocumentController extends Controller
                 Queue::createNewJob("php {$basePath}/yii import/status {$document->id} 10");
             }*/
 //            Queue::createNewJob("tesseract -l deu -psm 1 {$folder_absolute}/tmp.tiff {$folder_absolute}/in pdf");
-            Queue::createNewJob("tesseract {$folder_absolute}/{$fileListName} {$folder_absolute}/in pdf -l deu -psm 1");
+            Queue::createNewJob("{$tesseractCommand} {$tesseractPath}/{$fileListName} {$tesseractPath}/in pdf -l deu -psm 1");
             Queue::createNewJob("php {$basePath}/yii import/status {$document->id} 20");
         }
 //        Queue::createNewJob("tesseract -l deu -psm 1 {$folder_absolute}/tmp.tiff {$folder_absolute}/text hocr");
-        Queue::createNewJob("tesseract {$folder_absolute}/{$fileListName} {$folder_absolute}/text hocr -l deu -psm 1 ");
+        Queue::createNewJob("{$tesseractCommand} {$tesseractPath}/{$fileListName} {$tesseractPath}/text hocr -l deu -psm 1 ");
         Queue::createNewJob("php {$basePath}/yii import/status {$document->id} 30");
         Queue::createNewJob("php {$basePath}/yii hocr/execute \"{$folder_absolute}/text.hocr\" \"{$folder_absolute}/text.json\"");
         Queue::createNewJob("php {$basePath}/yii import/status {$document->id} 40");
 //        Queue::createNewJob("tesseract -l deu -psm 1 {$folder_absolute}/tmp.tiff {$folder_absolute}/text txt");
-        Queue::createNewJob("tesseract {$folder_absolute}/{$fileListName} {$folder_absolute}/text txt -l deu -psm 1 ");
+        Queue::createNewJob("{$tesseractCommand} {$tesseractPath}/{$fileListName} {$tesseractPath}/text txt -l deu -psm 1 ");
         Queue::createNewJob("php {$basePath}/yii import/status {$document->id} 41");
         Queue::createNewJob("php {$basePath}/yii import/text {$document->id}");
         Queue::createNewJob("php {$basePath}/yii import/status {$document->id} 42");
@@ -165,7 +172,7 @@ class DocumentController extends Controller
         $document->input_date = new Expression('now()');
 //		$document->folder = $folder;
 		$document->save();
-	    
+
     	return Json::encode([
             'files' => [
                 0 => [
