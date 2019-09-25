@@ -28,7 +28,7 @@ RUN docker-php-ext-install \
 && cd /var/www/html \
 && mkdir letter-safe
 
-COPY ../ letter-safe
+COPY . letter-safe
 
 RUN wget -q https://getcomposer.org/composer.phar \
     && cd letter-safe \
@@ -42,9 +42,9 @@ ENV LETTERSAFE_DB_PASSWORD letter-safe
 
 WORKDIR /var/www/html/letter-safe
 
-COPY ./files/entrypoint.sh /var/www/html/letter-safe/entrypoint.sh
-COPY ./files/000-default.conf /etc/apache2/sites-available/000-default.conf
-COPY ./files/php.ini-production /usr/local/etc/php/conf.d/php.ini
+COPY docker/entrypoint.sh /var/www/html/letter-safe/entrypoint.sh
+COPY docker/000-default.conf /etc/apache2/sites-available/000-default.conf
+COPY docker/php.ini-production /usr/local/etc/php/conf.d/php.ini
 
 #Schreibrechte und Crontab
 RUN chmod 0777 /var/www/html/letter-safe/web/assets \
