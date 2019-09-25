@@ -39,6 +39,8 @@ ENV LETTERSAFE_DB_SERVER db
 ENV LETTERSAFE_DB_DB letter-safe
 ENV LETTERSAFE_DB_USER letter-safe
 ENV LETTERSAFE_DB_PASSWORD letter-safe
+ENV TESSERACT_CMD tesseract
+ENV TESSERACT_PATH null
 
 WORKDIR /var/www/html/letter-safe
 
