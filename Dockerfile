@@ -15,7 +15,7 @@ RUN apt-get update && apt-get -y install \
         cron \
         libmagickwand-dev \
 && curl -fsSL https://get.docker.com -o get-docker.sh \
-&& sudo sh get-docker.sh
+&& sh get-docker.sh
 
 #install PHP-Modules
 RUN docker-php-ext-install \
