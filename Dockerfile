@@ -14,8 +14,8 @@ RUN apt-get update && apt-get -y install \
         libzip-dev \
         cron \
         libmagickwand-dev \
-        docker-ce \
-        docker-ce-cli
+&& curl -fsSL https://get.docker.com -o get-docker.sh \
+&& sudo sh get-docker.sh
 
 #install PHP-Modules
 RUN docker-php-ext-install \
