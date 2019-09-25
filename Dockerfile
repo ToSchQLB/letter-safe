@@ -13,7 +13,9 @@ RUN apt-get update && apt-get -y install \
         libpng-dev \
         libzip-dev \
         cron \
-        libmagickwand-dev
+        libmagickwand-dev \
+        docker-ce \
+        docker-ce-cli
 
 #install PHP-Modules
 RUN docker-php-ext-install \
