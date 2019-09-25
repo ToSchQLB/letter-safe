@@ -123,7 +123,7 @@ class DocumentController extends Controller
             if(strcmp($file->extension,'pdf')!=0) {
                 if ($file->saveAs($inFile . '-' . $index . '.' . $file->extension)) {
                     chmod($inFile . '-' . $index . '.' . $file->extension, 0666);
-                    $fileList .= $inFile. '-'.$index.'.'.$file->extension.chr(13).chr(10);
+                    $fileList .= $tesseractPath. '/in-'.$index.'.'.$file->extension.chr(13).chr(10);
                 }
             }else{
                 $file->saveAs($inFilePdf);
