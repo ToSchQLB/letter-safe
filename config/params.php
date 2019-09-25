@@ -1,7 +1,7 @@
 <?php
 use kartik\datecontrol\Module;
 
-$tesseract = require __DIR__ . 'tesseract.php';
+$tesseract = require __DIR__ . '/tesseract.php';
 
 $params = [
     'adminEmail' => 'admin@example.com',
