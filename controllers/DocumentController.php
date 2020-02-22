@@ -16,6 +16,7 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\web\Response;
 use yii\web\UploadedFile;
+use app\commands\ImportController;
 
 /**
  * LetterController implements the CRUD actions for Letter model.
@@ -291,6 +292,15 @@ class DocumentController extends Controller
 		    }
 	    }
     }
+
+    public function actionReanalyse($id){
+#        $model = $this->findModel($id);
+#        foreach ($sender->documents as $document) {
+         	ImportController::doDocumentTypeDetection($id);
+#        }
+        $this->redirect(['view', 'id' => $id]);
+    }
+
 
     /**
      * Finds the Letter model based on its primary key value.

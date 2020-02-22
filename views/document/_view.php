@@ -12,20 +12,32 @@
                 <?= \yii\helpers\Html::a(
                         Yii::t('app', 'Update'),
                         ['update', 'id' => $model->id],
-                        ['style'=>'width:33.3%','class' => 'btn btn-primary']
+                        ['style'=>'width:25%','class' => 'btn btn-primary']
                 ) ?>
 
                 <?= \yii\helpers\Html::a(
                         Yii::t('app', 'Download'),
                         "./data/{$model->folder}/in.pdf",
-                        ['style'=>'width:33.3%','class' => 'btn btn-default', 'target'=>'_blank']
+                        ['style'=>'width:25%','class' => 'btn btn-default', 'target'=>'_blank']
                 ) ?>
+
+		<?= \yii\helpers\Html::a(
+			Yii::t('app', 'reanalyse'),
+			['reanalyse', 'id' => $model->id],
+			[
+				'style' => 'width: 25%',
+				'class' => 'btn btn-warning',
+				'data' =>[
+					'method' =>  'post',
+				]
+			]
+		) ?>
 
                 <?= \yii\helpers\Html::a(
                         Yii::t('app', 'Delete'),
                         ['delete', 'id' => $model->id],
                         [
-                                'style'=>'width:33.3%','class' => 'btn btn-danger',
+                                'style'=>'width:25%','class' => 'btn btn-danger',
                                 'data' => [
                                   'method' => 'post',
                                   'confirm' => Yii::t(
