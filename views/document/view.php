@@ -10,8 +10,15 @@ $this->title = $model->title;
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Documents'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div id="doc-pages" class="col-lg-8 visible-lg" style="position: absolute;height: calc(100% - 120px);margin-top: -20px; overflow-y: scroll">
-    <?php
+
+<div id="doc-meta" class="col-xs-12 col-lg-4 col-lg-push-8" style="">
+    <?= Html::hiddenInput('activeInput') ?>
+    <?= $this->render($mode == 'view' ? '_view' : '_update', [
+        'model' => $model,
+    ]) ?>
+</div>
+<div id="doc-pages" class="col-lg-8 col-xs-12" style="">
+        <?php
         $folder_relative = 'data/'.$model->folder;
         $folder_absolute = Yii::$app->basePath . "/web/data/". $model->folder;
         if(isset(Yii::$app->params['mediaPath'])){
@@ -77,28 +84,17 @@ $this->params['breadcrumbs'][] = $this->title;
             }
         }
 
-//        echo '<pre>'; print_r($doc->getElementsByTagName('page')); echo '</pre>';
-//        echo '<pre>'; print_r($doc->getElementsByTagName('page')->item(0)); echo '</pre>';
-//        echo '<pre>'; print_r($doc); echo '</pre>';
-    ?>
+        //        echo '<pre>'; print_r($doc->getElementsByTagName('page')); echo '</pre>';
+        //        echo '<pre>'; print_r($doc->getElementsByTagName('page')->item(0)); echo '</pre>';
+        //        echo '<pre>'; print_r($doc); echo '</pre>';
+        ?>
 
-<!--    <div class="row">-->
-<!--        <div class="col-md-10"></div>-->
-<!--        <div class="col-md-2"></div>-->
-<!--    </div>-->
+        <!--    <div class="row">-->
+        <!--        <div class="col-md-10"></div>-->
+        <!--        <div class="col-md-2"></div>-->
+        <!--    </div>-->
 
-</div>
-<div id="doc-meta" class="col-lg-4 col-lg-offset-8 visible-lg" style="margin-top: -20px; padding: 0px; height: calc(100% - 120px); overflow-y: scroll;position: absolute;">
-    <?= Html::hiddenInput('activeInput') ?>
-    <?= $this->render($mode == 'view' ? '_view' : '_update', [
-        'model' => $model,
-    ]) ?>
-
-</div>
-
-<div id="doc-meta-small" class="col-xs-12 hidden-lg" style="padding: 0; margin-top: -19px;"></div>
-<div id="doc-pages-small" class="col-xs-12 hidden-lg" style="margin-top: -20px; padding: 0;"></div>
-
+    </div>
 <?php
 $js = <<<js
     function fillInput(name) {
@@ -123,14 +119,31 @@ $js = <<<js
             sendDocumentValueForm(form);
         }
     }
-    $('#doc-pages-small').html($('#doc-pages').html());
-    $('#doc-meta-small').html($('#doc-meta').html());
+    //$('#doc-pages-small').html($('#doc-pages').html());
+    //$('#doc-meta-small').html($('#doc-meta').html());
 js;
 $this->registerJs($js,\yii\web\View::POS_END);
 $css = <<<css
-#doc-pages-small img {
+#doc-pages img {
     max-width: 100%;
 }
 css;
 $this->registerCss($css);
+$js = <<<js
+function resizeWindow(){
+    if(document.documentElement.clientWidth >= 1200){
+          $('#doc-meta').attr('style', 'margin-top: -20px; padding: 0px; height: calc(100% - 120px); overflow-y: scroll;position: absolute;');
+          $('#doc-pages').attr('style', 'position: absolute;height: calc(100% - 120px);margin-top: -20px; overflow-y: scroll');
+      } else {
+          $('#doc-meta').attr('style', 'padding-left:0; padding-right:0;');
+          $('#doc-pages').attr('style', 'padding-left:0; padding-right:0;');
+      }
+}
+js;
+$this->registerJs($js, \yii\web\View::POS_HEAD);
+$js = <<<js
+    $(window).on('resize', resizeWindow);
+    resizeWindow();
+js;
 
+$this->registerJs($js);
