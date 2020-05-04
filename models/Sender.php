@@ -133,7 +133,7 @@ class Sender extends \yii\db\ActiveRecord
                                 ]
                             ),
                         [
-                            'class' => 'col-md-3'
+                            'class' => 'col-xs-3'
                         ]
                     ),
                     Html::tag(
@@ -143,7 +143,7 @@ class Sender extends \yii\db\ActiveRecord
             {$attributes['adress1']}<br>
             {$attributes['zip']} {$attributes['town']}
             </small>",
-                        ['class' => 'col-md-9']
+                        ['class' => 'col-xs-9']
                     )
                 ]
             ),
