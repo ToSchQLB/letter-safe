@@ -52,16 +52,23 @@ class SenderController extends Controller
     {
         $result = [];
         $response = Yii::$app->response;
-        $sender = Sender::find()->select(['id','name','adress1','zip','town'])->where(['like', 'name', $q])->asArray()->all();
+        $sender = Sender::find()
+            ->select(['id','name','adress1','zip','town', 'logo'])
+            ->where([
+                'or',
+                ['like','short_name', $q],
+                ['like', 'name', $q]
+            ])
+            ->asArray()
+            ->all();
 
         for($c=0; $c < 30 && $c < count($sender); $c++){
             array_push(
                 $result,
                 [
                     'id'=>$sender[$c]['id'],
-                    'text'=>$sender[$c]['name'].'<br>'
-                        .$sender[$c]['adress1'].'<br>'
-                        .$sender[$c]['zip'].' '.$sender[$c]['town']]
+                    'text'=> Sender::renderSelect2Anzeige($sender[$c])
+                ]
             );
         }
 

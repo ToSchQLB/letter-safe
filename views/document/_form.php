@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use yii\web\JsExpression;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Document */
@@ -14,14 +15,15 @@ use yii\widgets\ActiveForm;
     <?= $form->field($model, 'sender_id')
         ->widget(\kartik\select2\Select2::className(),[
         'pluginOptions' => [
-            'allowClear' => true,
+            'allowClear' => false,
             'ajax' => [
                 'url' => \yii\helpers\Url::to(['/sender/ajax-select2']),
                 'dataType' => 'json',
-                'data' => new \yii\web\JsExpression("function(params) { return {q:params.term}; }")
+                'data' => new JsExpression("function(params) { return {q:params.term}; }")
             ],
+            'escapeMarkup' => new JsExpression('function (markup) { return markup; }'),
         ],
-        'initValueText' => isset($model->sender_id) ? $model->sender->getFullAddress() : ''
+        'initValueText' => isset($model->sender_id) ? $model->sender->select2Anzeige : ''
     ]) ?>
 
     <a class="sender-button btn btn-primary col-md-12" href="javascript:toggleSenderForm()">
@@ -97,3 +99,19 @@ JS;
     ?>
 
 </div>
+
+<?php
+
+$css = <<<css
+.field-document-sender_id .select2-selection--single{
+height: 70px;
+}
+.field-document-sender_id .select2-selection__rendered{
+height: 68px;
+}
+.field-document-sender_id .select2-selection--single span.select2-selection__arrow{
+ height: 68px;
+}
+css;
+
+$this->registerCss($css);
