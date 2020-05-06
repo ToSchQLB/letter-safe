@@ -103,7 +103,7 @@ class DocumentController extends Controller
             isset(Yii::$app->params['tesseract-path']) ?
                 Yii::$app->params['tesseract-path'] . $folder :
                 $folder_absolute;
-        $tesseractCommand = Yii::$app->params['tesseract-cmd'];
+        $tesseractCommand = isset(Yii::$app->params['tesseract-cmd']) ? Yii::$app->params['tesseract-cmd'] : 'tesseract';
 
         mkdir( $folder_absolute);
         chmod( $folder_absolute, 0700);
@@ -144,16 +144,16 @@ class DocumentController extends Controller
                 Queue::createNewJob("php {$basePath}/yii import/status {$document->id} 10");
             }*/
 //            Queue::createNewJob("tesseract -l deu -psm 1 {$folder_absolute}/tmp.tiff {$folder_absolute}/in pdf");
-            Queue::createNewJob("{$tesseractCommand} {$tesseractPath}/{$fileListName} {$tesseractPath}/in pdf -l deu -psm 1");
+            Queue::createNewJob("{$tesseractCommand} -l deu+eng -psm 1 {$tesseractPath}/{$fileListName} {$tesseractPath}/in pdf ");
             Queue::createNewJob("php {$basePath}/yii import/status {$document->id} 20");
         }
 //        Queue::createNewJob("tesseract -l deu -psm 1 {$folder_absolute}/tmp.tiff {$folder_absolute}/text hocr");
-        Queue::createNewJob("{$tesseractCommand} {$tesseractPath}/{$fileListName} {$tesseractPath}/text hocr -l deu -psm 1 ");
+        Queue::createNewJob("{$tesseractCommand} -l deu+eng -psm 1 {$tesseractPath}/{$fileListName} {$tesseractPath}/text hocr");
         Queue::createNewJob("php {$basePath}/yii import/status {$document->id} 30");
         Queue::createNewJob("php {$basePath}/yii hocr/execute \"{$folder_absolute}/text.hocr\" \"{$folder_absolute}/text.json\"");
         Queue::createNewJob("php {$basePath}/yii import/status {$document->id} 40");
 //        Queue::createNewJob("tesseract -l deu -psm 1 {$folder_absolute}/tmp.tiff {$folder_absolute}/text txt");
-        Queue::createNewJob("{$tesseractCommand} {$tesseractPath}/{$fileListName} {$tesseractPath}/text txt -l deu -psm 1 ");
+        Queue::createNewJob("{$tesseractCommand} -l deu+eng -psm 1 {$tesseractPath}/{$fileListName} {$tesseractPath}/text txt ");
         Queue::createNewJob("php {$basePath}/yii import/status {$document->id} 41");
         Queue::createNewJob("php {$basePath}/yii import/text {$document->id}");
         Queue::createNewJob("php {$basePath}/yii import/status {$document->id} 42");

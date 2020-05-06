@@ -5,7 +5,7 @@ $this->title = 'Letter Safe';
 <div class="site-index">
 
     <div class="jumbotron" style="padding-top: 15px; padding-bottom: 15px;">
-        <h1>Letter Safe</h1>
+        <h1>Letter Safe TEST</h1>
     </div>
     
     <div class="col-md-2">
