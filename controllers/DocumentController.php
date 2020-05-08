@@ -153,7 +153,7 @@ class DocumentController extends Controller
         Queue::createNewJob("php {$basePath}/yii hocr/execute \"{$folder_absolute}/text.hocr\" \"{$folder_absolute}/text.json\"");
         Queue::createNewJob("php {$basePath}/yii import/status {$document->id} 40");
 //        Queue::createNewJob("tesseract -l deu -psm 1 {$folder_absolute}/tmp.tiff {$folder_absolute}/text txt");
-        Queue::createNewJob("{$tesseractCommand} -l deu+eng -psm 1 {$tesseractPath}/{$fileListName} {$tesseractPath}/text txt ");
+        Queue::createNewJob("{$tesseractCommand} -l deu+eng -psm 4 {$tesseractPath}/{$fileListName} {$tesseractPath}/text txt ");
         Queue::createNewJob("php {$basePath}/yii import/status {$document->id} 41");
         Queue::createNewJob("php {$basePath}/yii import/text {$document->id}");
         Queue::createNewJob("php {$basePath}/yii import/status {$document->id} 42");
