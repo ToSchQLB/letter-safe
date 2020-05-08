@@ -32,7 +32,7 @@ class ImportController extends Controller
     /**
      * @param $id
      */
-    public static function doDocumentTypeDetection($id): void
+    public static function doDocumentTypeDetection($id)
     {
         $document = Document::findOne($id);
         DocumentValue::deleteAll(['document_id' => $id]);
